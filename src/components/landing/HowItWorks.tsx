@@ -52,7 +52,7 @@ export default function FeaturesSection() {
                 <h3 className="text-foreground mt-5 text-lg font-semibold">
                   Step 1 - See it
                 </h3>
-                <p className="text-muted-foreground mt-3 text-balance">
+                <p className="text-muted-foreground mt-3 text-balance text-sm md:text-base">
                   Scrolling TikTok, Instagram, or YouTube and something catches
                   your eye. A recipe, a workout, a travel spot. Whatever it is.
                 </p>
@@ -70,7 +70,7 @@ export default function FeaturesSection() {
                 <h3 className="text-foreground mt-5 text-lg font-semibold">
                   Step 2 - Pocket it
                 </h3>
-                <p className="text-muted-foreground mt-3 text-balance">
+                <p className="text-muted-foreground mt-3 text-balance text-sm md:text-base">
                   Hit share and tap Pocketed. Or click the bookmarklet on
                   desktop. The video is saved instantly title, thumbnail, and
                   tags handled automatically.
@@ -89,7 +89,7 @@ export default function FeaturesSection() {
                 <h3 className="text-foreground mt-5 text-lg font-semibold">
                   Step 3 - Find it
                 </h3>
-                <p className="text-muted-foreground mt-3 text-balance">
+                <p className="text-muted-foreground mt-3 text-balance text-sm md:text-base">
                   Search by topic, filter by tag, or browse your collections.
                   That video you saved six months ago? Found in two seconds.
                 </p>
