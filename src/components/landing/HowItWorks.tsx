@@ -1,6 +1,6 @@
+import { motion } from "framer-motion";
 import { CalendarCheck, Plus, Sparkles, Target } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { motion } from "framer-motion";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -19,7 +19,7 @@ const itemVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: [0.21, 0.47, 0.32, 0.98],
+      ease: [0.21, 0.47, 0.32, 0.98] as const,
     },
   },
 };
@@ -39,7 +39,7 @@ export default function FeaturesSection() {
               Three taps. Done.
             </h2>
           </motion.div>
-          <motion.div 
+          <motion.div
             className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
             variants={containerVariants}
             initial="hidden"
@@ -47,7 +47,7 @@ export default function FeaturesSection() {
             viewport={{ once: true, margin: "-100px" }}
           >
             <motion.div variants={itemVariants}>
-              <Card variant="soft" className="overflow-hidden p-6 h-full">
+              <Card variant="soft" className="overflow-hidden p-6 h-full gap-0">
                 <Target className="text-primary size-5" />
                 <h3 className="text-foreground mt-5 text-lg font-semibold">
                   Step 1 — See it
@@ -62,30 +62,36 @@ export default function FeaturesSection() {
             </motion.div>
 
             <motion.div variants={itemVariants}>
-              <Card variant="soft" className="group overflow-hidden px-6 pt-6 h-full">
+              <Card
+                variant="soft"
+                className="group overflow-hidden px-6 pt-6 h-full gap-0"
+              >
                 <CalendarCheck className="text-primary size-5" />
                 <h3 className="text-foreground mt-5 text-lg font-semibold">
                   Step 2 — Pocket it
                 </h3>
                 <p className="text-muted-foreground mt-3 text-balance">
-                  Hit share and tap Pocketed. Or click the bookmarklet on desktop.
-                  The video is saved instantly — title, thumbnail, and tags
-                  handled automatically.
+                  Hit share and tap Pocketed. Or click the bookmarklet on
+                  desktop. The video is saved instantly — title, thumbnail, and
+                  tags handled automatically.
                 </p>
 
                 <CodeReviewIllustration />
               </Card>
             </motion.div>
-            
+
             <motion.div variants={itemVariants}>
-              <Card variant="soft" className="group overflow-hidden px-6 pt-6 h-full">
+              <Card
+                variant="soft"
+                className="group overflow-hidden px-6 pt-6 h-full gap-0"
+              >
                 <Sparkles className="text-primary size-5" />
                 <h3 className="text-foreground mt-5 text-lg font-semibold">
                   Step 3 — Find it
                 </h3>
                 <p className="text-muted-foreground mt-3 text-balance">
-                  Search by topic, filter by tag, or browse your collections. That
-                  video you saved six months ago? Found in two seconds.
+                  Search by topic, filter by tag, or browse your collections.
+                  That video you saved six months ago? Found in two seconds.
                 </p>
 
                 <div className="mask-b-from-50 -mx-2 -mt-2 px-2 pt-2">

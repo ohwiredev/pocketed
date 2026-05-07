@@ -1,6 +1,7 @@
+import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 import logoSvg from "@/assets/logo.svg";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -20,7 +21,7 @@ const itemVariants = {
     y: 0,
     transition: {
       duration: 0.5,
-      ease: [0.21, 0.47, 0.32, 0.98],
+      ease: [0.21, 0.47, 0.32, 0.98] as const,
     },
   },
 };
@@ -35,21 +36,21 @@ export default function HeroSection() {
           initial="hidden"
           animate="visible"
         >
-          <motion.img 
-            src={logoSvg} 
-            alt="Pocketed" 
-            className="size-15" 
+          <motion.img
+            src={logoSvg}
+            alt="Pocketed"
+            className="size-15"
             variants={itemVariants}
           />
-          <motion.h1 
+          <motion.h1
             className="mt-8 text-balance font-serif text-5xl lg:text-7xl"
             variants={itemVariants}
           >
             Save any video. Find it in seconds.
           </motion.h1>
 
-          <motion.p 
-            className="text-muted-foreground mt-4 mb-6 text-xl"
+          <motion.p
+            className="text-muted-foreground mt-4 mb-6 text-base md:text-xl"
             variants={itemVariants}
           >
             You see it, you love it, and three weeks later it's gone forever.
@@ -57,25 +58,33 @@ export default function HeroSection() {
             makes it actually findable when you need it.
           </motion.p>
 
-          <motion.div 
+          <motion.div
             className="flex flex-col items-center gap-2 *:w-full sm:flex-row sm:*:w-auto"
             variants={itemVariants}
           >
             <Button variant="neutral">
-              <span className="text-nowrap">Start for free</span>
+              <Link to="/signup">
+                <span className="text-nowrap">Start for free</span>
+              </Link>
             </Button>
             <Button variant="ghost">
-              <span className="text-nowrap">View Demo</span>
+              <Link to="/demo">
+                <span className="text-nowrap">View demo</span>
+              </Link>
             </Button>
           </motion.div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="relative mt-12 overflow-hidden rounded-3xl bg-black/10 md:mt-16"
           initial={{ opacity: 0, y: 40, scale: 0.95 }}
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.4, ease: [0.21, 0.47, 0.32, 0.98] }}
+          transition={{
+            duration: 0.8,
+            delay: 0.4,
+            ease: [0.21, 0.47, 0.32, 0.98] as const,
+          }}
         >
           <img
             src="https://images.unsplash.com/photo-1547623641-d2c56c03e2a7?q=80&w=3087&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -92,7 +101,7 @@ export default function HeroSection() {
           </div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           className="mt-8 flex flex-wrap items-center gap-4"
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

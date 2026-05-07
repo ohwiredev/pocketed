@@ -1,12 +1,12 @@
+import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { motion } from "framer-motion";
 
 export default function CallToAction() {
   return (
     <section>
       <div className="bg-muted py-12">
-        <motion.div 
+        <motion.div
           className="mx-auto max-w-7xl px-6"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}

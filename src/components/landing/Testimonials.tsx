@@ -1,7 +1,7 @@
+import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
-import { motion } from "framer-motion";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -60,7 +60,7 @@ export default function TestimonialSection() {
     <section>
       <div className="py-24">
         <div className="@container mx-auto w-full max-w-7xl px-6">
-          <motion.h2 
+          <motion.h2
             className="text-foreground mb-12 font-serif text-5xl"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -69,7 +69,7 @@ export default function TestimonialSection() {
           >
             You're not the only one losing good videos
           </motion.h2>
-          <motion.div 
+          <motion.div
             className="@lg:grid-cols-2 @3xl:grid-cols-3 @3xl:gap-12 grid gap-6"
             variants={containerVariants}
             initial="hidden"

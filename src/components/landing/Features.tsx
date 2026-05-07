@@ -1,6 +1,6 @@
+import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/card";
-import { motion } from "framer-motion";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -19,7 +19,7 @@ const itemVariants = {
     y: 0,
     transition: {
       duration: 0.6,
-      ease: [0.21, 0.47, 0.32, 0.98],
+      ease: [0.21, 0.47, 0.32, 0.98] as const,
     },
   },
 };
@@ -45,7 +45,7 @@ export default function Features() {
             </p>
           </motion.div>
 
-          <motion.div 
+          <motion.div
             className="mt-8 grid gap-4 sm:grid-cols-2 md:mt-16 md:grid-cols-3"
             variants={containerVariants}
             initial="hidden"
