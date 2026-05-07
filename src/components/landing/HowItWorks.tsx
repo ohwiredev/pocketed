@@ -1,58 +1,99 @@
 import { CalendarCheck, Plus, Sparkles, Target } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.2,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.21, 0.47, 0.32, 0.98],
+    },
+  },
+};
 
 export default function FeaturesSection() {
   return (
     <section>
       <div className="pb-24">
         <div className="mx-auto w-full max-w-7xl px-6">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-foreground max-w-2xl text-balance font-serif text-5xl">
               Three taps. Done.
             </h2>
-          </div>
-          <div className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-            <Card variant="soft" className="overflow-hidden p-6">
-              <Target className="text-primary size-5" />
-              <h3 className="text-foreground mt-5 text-lg font-semibold">
-                Step 1 — See it
-              </h3>
-              <p className="text-muted-foreground mt-3 text-balance">
-                Scrolling TikTok, Instagram, or YouTube and something catches
-                your eye. A recipe, a workout, a travel spot. Whatever it is.
-              </p>
+          </motion.div>
+          <motion.div 
+            className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <motion.div variants={itemVariants}>
+              <Card variant="soft" className="overflow-hidden p-6 h-full">
+                <Target className="text-primary size-5" />
+                <h3 className="text-foreground mt-5 text-lg font-semibold">
+                  Step 1 — See it
+                </h3>
+                <p className="text-muted-foreground mt-3 text-balance">
+                  Scrolling TikTok, Instagram, or YouTube and something catches
+                  your eye. A recipe, a workout, a travel spot. Whatever it is.
+                </p>
 
-              <MeetingIllustration />
-            </Card>
+                <MeetingIllustration />
+              </Card>
+            </motion.div>
 
-            <Card variant="soft" className="group overflow-hidden px-6 pt-6">
-              <CalendarCheck className="text-primary size-5" />
-              <h3 className="text-foreground mt-5 text-lg font-semibold">
-                Step 2 — Pocket it
-              </h3>
-              <p className="text-muted-foreground mt-3 text-balance">
-                Hit share and tap Pocketed. Or click the bookmarklet on desktop.
-                The video is saved instantly — title, thumbnail, and tags
-                handled automatically.
-              </p>
+            <motion.div variants={itemVariants}>
+              <Card variant="soft" className="group overflow-hidden px-6 pt-6 h-full">
+                <CalendarCheck className="text-primary size-5" />
+                <h3 className="text-foreground mt-5 text-lg font-semibold">
+                  Step 2 — Pocket it
+                </h3>
+                <p className="text-muted-foreground mt-3 text-balance">
+                  Hit share and tap Pocketed. Or click the bookmarklet on desktop.
+                  The video is saved instantly — title, thumbnail, and tags
+                  handled automatically.
+                </p>
 
-              <CodeReviewIllustration />
-            </Card>
-            <Card variant="soft" className="group overflow-hidden px-6 pt-6">
-              <Sparkles className="text-primary size-5" />
-              <h3 className="text-foreground mt-5 text-lg font-semibold">
-                Step 3 — Find it
-              </h3>
-              <p className="text-muted-foreground mt-3 text-balance">
-                Search by topic, filter by tag, or browse your collections. That
-                video you saved six months ago? Found in two seconds.
-              </p>
+                <CodeReviewIllustration />
+              </Card>
+            </motion.div>
+            
+            <motion.div variants={itemVariants}>
+              <Card variant="soft" className="group overflow-hidden px-6 pt-6 h-full">
+                <Sparkles className="text-primary size-5" />
+                <h3 className="text-foreground mt-5 text-lg font-semibold">
+                  Step 3 — Find it
+                </h3>
+                <p className="text-muted-foreground mt-3 text-balance">
+                  Search by topic, filter by tag, or browse your collections. That
+                  video you saved six months ago? Found in two seconds.
+                </p>
 
-              <div className="mask-b-from-50 -mx-2 -mt-2 px-2 pt-2">
-                <AIAssistantIllustration />
-              </div>
-            </Card>
-          </div>
+                <div className="mask-b-from-50 -mx-2 -mt-2 px-2 pt-2">
+                  <AIAssistantIllustration />
+                </div>
+              </Card>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

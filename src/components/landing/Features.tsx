@@ -1,12 +1,40 @@
 import { Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.15,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: [0.21, 0.47, 0.32, 0.98],
+    },
+  },
+};
 
 export default function Features() {
   return (
     <section>
       <div className="bg-muted/50 py-24">
         <div className="mx-auto max-w-7xl px-6">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.6 }}
+          >
             <h2 className="text-foreground font-serif text-5xl">
               Built for how you actually watch
             </h2>
@@ -15,9 +43,16 @@ export default function Features() {
               — it doesn't matter where you found it. If there's a link, you can
               pocket it.
             </p>
-          </div>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 md:mt-16 md:grid-cols-3">
-            <div className="space-y-4">
+          </motion.div>
+
+          <motion.div 
+            className="mt-8 grid gap-4 sm:grid-cols-2 md:mt-16 md:grid-cols-3"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
+            <motion.div className="space-y-4" variants={itemVariants}>
               <Card
                 className="aspect-video overflow-hidden p-0 border-none shadow-md group-hover:shadow-lg transition-shadow"
                 variant="soft"
@@ -45,8 +80,9 @@ export default function Features() {
                   anywhere. One account, every device, no friction.
                 </p>
               </div>
-            </div>
-            <div className="space-y-4">
+            </motion.div>
+
+            <motion.div className="space-y-4" variants={itemVariants}>
               <Card
                 className="aspect-video overflow-hidden p-0 border-none shadow-md group-hover:shadow-lg transition-shadow"
                 variant="soft"
@@ -74,8 +110,9 @@ export default function Features() {
                   surface — no manual tagging needed.
                 </p>
               </div>
-            </div>
-            <div className="space-y-4">
+            </motion.div>
+
+            <motion.div className="space-y-4" variants={itemVariants}>
               <Card
                 className="aspect-video overflow-hidden p-0 border-none shadow-md group-hover:shadow-lg transition-shadow"
                 variant="soft"
@@ -108,8 +145,8 @@ export default function Features() {
                   dream travel spots, recipes to try. Your library, your way.
                 </p>
               </div>
-            </div>
-          </div>
+            </motion.div>
+          </motion.div>
         </div>
       </div>
     </section>

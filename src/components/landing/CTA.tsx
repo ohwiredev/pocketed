@@ -1,11 +1,18 @@
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 export default function CallToAction() {
   return (
     <section>
       <div className="bg-muted py-12">
-        <div className="mx-auto max-w-7xl px-6">
+        <motion.div 
+          className="mx-auto max-w-7xl px-6"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <h2 className="text-foreground max-w-lg text-balance font-serif text-3xl lg:text-5xl">
             Stop losing the videos you love.
           </h2>
@@ -22,7 +29,7 @@ export default function CallToAction() {
               />
             </Button>
           </div>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

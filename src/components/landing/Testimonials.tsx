@@ -1,6 +1,29 @@
 import { Star } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
+import { motion } from "framer-motion";
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+      ease: "easeOut",
+    },
+  },
+};
 
 export default function TestimonialSection() {
   const testimonials = [
@@ -37,12 +60,24 @@ export default function TestimonialSection() {
     <section>
       <div className="py-24">
         <div className="@container mx-auto w-full max-w-7xl px-6">
-          <h2 className="text-foreground mb-12 font-serif text-5xl">
+          <motion.h2 
+            className="text-foreground mb-12 font-serif text-5xl"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+          >
             You're not the only one losing good videos
-          </h2>
-          <div className="@lg:grid-cols-2 @3xl:grid-cols-3 @3xl:gap-12 grid gap-6">
+          </motion.h2>
+          <motion.div 
+            className="@lg:grid-cols-2 @3xl:grid-cols-3 @3xl:gap-12 grid gap-6"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-100px" }}
+          >
             {testimonials.map((testimonial) => (
-              <div key={testimonial.name}>
+              <motion.div key={testimonial.name} variants={itemVariants}>
                 <div className="flex gap-1">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <Star
@@ -78,9 +113,9 @@ export default function TestimonialSection() {
                     {testimonial.role}
                   </span>
                 </div>
-              </div>
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </div>
     </section>
