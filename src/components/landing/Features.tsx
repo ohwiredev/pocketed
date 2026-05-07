@@ -38,10 +38,6 @@ export default function Features() {
             <h2 className="text-foreground font-serif text-5xl">
               Built for how you actually watch
             </h2>
-            <p className="text-muted-foreground mb-12 mt-4 text-balance text-base md:text-lg max-w-2xl">
-              One account, every device, no friction. TikTok, Instagram, YouTube. It doesn't matter where you found it. If there's a link, you can
-              pocket it.
-            </p>
           </motion.div>
 
           <motion.div

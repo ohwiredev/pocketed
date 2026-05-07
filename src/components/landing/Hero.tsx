@@ -67,12 +67,16 @@ export default function HeroSection() {
                 <span className="text-nowrap">Start for free</span>
               </Link>
             </Button>
-            <Button variant="ghost">
-              <Link to="/demo">
-                <span className="text-nowrap">View demo</span>
-              </Link>
-            </Button>
           </motion.div>
+
+                  <motion.div
+          className="mt-8 flex flex-wrap items-center gap-4"
+          variants={itemVariants}
+        >
+          <p className="text-muted-foreground text-center text-sm">
+            No credit card. No install. Works on any device.
+          </p>
+        </motion.div>
         </motion.div>
 
         <motion.div
@@ -99,18 +103,6 @@ export default function HeroSection() {
               className="object-top-left size-full object-cover"
             />
           </div>
-        </motion.div>
-
-        <motion.div
-          className="mt-8 flex flex-wrap items-center gap-4"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ delay: 1 }}
-        >
-          <p className="text-muted-foreground text-center text-sm">
-            No credit card. No install. Works on any device.
-          </p>
         </motion.div>
       </div>
     </section>
