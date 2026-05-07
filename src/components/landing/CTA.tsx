@@ -16,7 +16,7 @@ export default function CallToAction() {
           <h2 className="text-foreground max-w-lg text-balance font-serif text-3xl lg:text-5xl">
             Stop losing the videos you love.
           </h2>
-          <p className="mt-4 text-lg">
+          <p className="mt-4 text-sm md:text-lg">
             Everything you save, finally organised and findable. Free to start,
             works in seconds.
           </p>

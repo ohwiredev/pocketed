@@ -38,9 +38,8 @@ export default function Features() {
             <h2 className="text-foreground font-serif text-5xl">
               Built for how you actually watch
             </h2>
-            <p className="text-muted-foreground mb-12 mt-4 text-balance text-lg max-w-2xl">
-              One account, every device, no friction. TikTok, Instagram, YouTube
-              — it doesn't matter where you found it. If there's a link, you can
+            <p className="text-muted-foreground mb-12 mt-4 text-balance text-base md:text-lg max-w-2xl">
+              One account, every device, no friction. TikTok, Instagram, YouTube. It doesn't matter where you found it. If there's a link, you can
               pocket it.
             </p>
           </motion.div>
@@ -75,7 +74,7 @@ export default function Features() {
                 <h3 className="text-foreground text-xl font-semibold">
                   Works everywhere
                 </h3>
-                <p className="text-muted-foreground my-4 text-lg">
+                <p className="text-muted-foreground my-4 text-sm md:text-base">
                   Saved on your phone, findable on your laptop, accessible
                   anywhere. One account, every device, no friction.
                 </p>
@@ -104,10 +103,10 @@ export default function Features() {
                 <h3 className="text-foreground text-xl font-semibold">
                   AI that gets it
                 </h3>
-                <p className="text-muted-foreground my-4 text-lg">
+                <p className="text-muted-foreground my-4 text-sm md:text-base">
                   Pocketed reads every video you save and tags it automatically.
                   Search "quick dinners" or "Tokyo travel" and the right videos
-                  surface — no manual tagging needed.
+                  surface, no manual tagging needed.
                 </p>
               </div>
             </motion.div>
@@ -140,7 +139,7 @@ export default function Features() {
                 <h3 className="text-foreground text-xl font-semibold">
                   Collections
                 </h3>
-                <p className="text-muted-foreground my-4 text-lg">
+                <p className="text-muted-foreground my-4 text-sm md:text-base">
                   Group videos however makes sense to you. Fitness routines,
                   dream travel spots, recipes to try. Your library, your way.
                 </p>

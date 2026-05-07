@@ -50,7 +50,7 @@ export default function FeaturesSection() {
               <Card variant="soft" className="overflow-hidden p-6 h-full gap-0">
                 <Target className="text-primary size-5" />
                 <h3 className="text-foreground mt-5 text-lg font-semibold">
-                  Step 1 — See it
+                  Step 1 - See it
                 </h3>
                 <p className="text-muted-foreground mt-3 text-balance">
                   Scrolling TikTok, Instagram, or YouTube and something catches
@@ -68,11 +68,11 @@ export default function FeaturesSection() {
               >
                 <CalendarCheck className="text-primary size-5" />
                 <h3 className="text-foreground mt-5 text-lg font-semibold">
-                  Step 2 — Pocket it
+                  Step 2 - Pocket it
                 </h3>
                 <p className="text-muted-foreground mt-3 text-balance">
                   Hit share and tap Pocketed. Or click the bookmarklet on
-                  desktop. The video is saved instantly — title, thumbnail, and
+                  desktop. The video is saved instantly title, thumbnail, and
                   tags handled automatically.
                 </p>
 
@@ -87,7 +87,7 @@ export default function FeaturesSection() {
               >
                 <Sparkles className="text-primary size-5" />
                 <h3 className="text-foreground mt-5 text-lg font-semibold">
-                  Step 3 — Find it
+                  Step 3 - Find it
                 </h3>
                 <p className="text-muted-foreground mt-3 text-balance">
                   Search by topic, filter by tag, or browse your collections.
