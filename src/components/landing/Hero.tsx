@@ -69,14 +69,14 @@ export default function HeroSection() {
             </Button>
           </motion.div>
 
-                  <motion.div
-          className="mt-8 flex flex-wrap items-center gap-4"
-          variants={itemVariants}
-        >
-          <p className="text-muted-foreground text-center text-sm">
-            No credit card. No install. Works on any device.
-          </p>
-        </motion.div>
+          <motion.div
+            className="mt-8 flex flex-wrap items-center gap-4"
+            variants={itemVariants}
+          >
+            <p className="text-muted-foreground text-center text-sm">
+              No credit card. No install. Works on any device.
+            </p>
+          </motion.div>
         </motion.div>
 
         <motion.div
