@@ -63,7 +63,7 @@ export default function HeroSection() {
             variants={itemVariants}
           >
             <Button variant="neutral">
-              <Link to="/signup">
+              <Link to="/login">
                 <span className="text-nowrap">Start for free</span>
               </Link>
             </Button>

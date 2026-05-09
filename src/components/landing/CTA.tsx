@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 export default function CallToAction() {
   return (
@@ -21,13 +22,16 @@ export default function CallToAction() {
             works in seconds.
           </p>
           <div className="mt-8 flex gap-3">
-            <Button className="pr-2">
+            
+            <Link to='/login'>
+            <Button className="pr-2 cursor-pointer">
               Get started free
               <ChevronRight
                 strokeWidth={2.5}
                 className="size-3.5! opacity-50"
               />
             </Button>
+              </Link>
           </div>
         </motion.div>
       </div>
