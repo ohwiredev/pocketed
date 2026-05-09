@@ -6,6 +6,7 @@ import trademark from "@/assets/brand/trademark.svg";
 export default function Header() {
   const { signOut, session } = useAuth();
   const user = session?.user;
+  const userName = user?.user_metadata?.display_name || user?.email?.split('@')[0] || "User";
 
   return (
     <header className="sticky top-0 z-40 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
@@ -23,7 +24,7 @@ export default function Header() {
               </AvatarFallback>
             </Avatar>
             <div className="hidden flex-col md:flex">
-              <span className="text-xs font-bold leading-none">{user?.email?.split('@')[0] || "User"}</span>
+              <span className="text-xs font-bold leading-none">{userName}</span>
               <button 
                 onClick={signOut}
                 className="flex items-center gap-1 text-[10px] font-medium text-foreground/50 hover:text-destructive transition-colors mt-0.5"

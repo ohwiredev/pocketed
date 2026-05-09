@@ -10,7 +10,7 @@ import { useAuth } from "@/hooks/useAuth";
 
 export default function HomePage() {
   const { session } = useAuth();
-  const userName = session?.user?.email?.split('@')[0] || "User";
+  const userName = session?.user?.user_metadata?.display_name || session?.user?.email?.split('@')[0] || "User";
   const videoCount = mockVideos.length;
 
   return (

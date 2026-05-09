@@ -17,7 +17,7 @@ export function useAuth() {
       if (error) {
         setError(error.message);
       }
-      
+
       setSession(data.session);
       setIsInitialized(true);
     });
@@ -56,7 +56,11 @@ export function useAuth() {
     }
   };
 
-  const signUpWithEmail = async (email: string, password: string, displayName?: string) => {
+  const signUpWithEmail = async (
+    email: string,
+    password: string,
+    displayName?: string,
+  ) => {
     try {
       setLoading(true);
       setError(null);
@@ -100,6 +104,38 @@ export function useAuth() {
     }
   };
 
+  const updateProfile = async (data: { displayName?: string }) => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const updates: any = {};
+
+      if (data.displayName !== undefined) {
+        updates.display_name = data.displayName;
+      }
+
+      const { data: updatedUser, error } = await supabase.auth.updateUser({
+        data: updates,
+      });
+
+      if (error) throw error;
+
+      if (updatedUser.user) {
+        setSession((prev) => prev ? { ...prev, user: updatedUser.user } : null);
+      }
+
+      return { data: updatedUser, error: null };
+    } catch (error: unknown) {
+      setError(
+        error instanceof Error ? error.message : "Unable to update profile.",
+      );
+      return { data: null, error };
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     session,
     loading,
@@ -108,5 +144,6 @@ export function useAuth() {
     signInWithEmail,
     signUpWithEmail,
     signOut,
+    updateProfile,
   };
 }
