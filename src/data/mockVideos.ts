@@ -3,6 +3,7 @@ import type { Video } from "@/types/video";
 export const mockVideos: Video[] = [
   {
     id: "1",
+    user_id: "user-1",
     title: "10 VS Code Shortcuts You Didn't Know",
     description:
       "Boost your productivity with these hidden VS Code shortcuts.",
@@ -18,6 +19,7 @@ export const mockVideos: Video[] = [
   },
   {
     id: "2",
+    user_id: "user-1",
     title: "Minimalist Desk Setup 2026",
     description:
       "A deep dive into the most efficient setups for creative professionals.",
@@ -33,6 +35,7 @@ export const mockVideos: Video[] = [
   },
   {
     id: "3",
+    user_id: "user-1",
     title: "Quick Healthy Breakfast Recipe",
     description:
       "Make this in under 5 minutes before work.",
@@ -48,6 +51,7 @@ export const mockVideos: Video[] = [
   },
   {
     id: "4",
+    user_id: "user-1",
     title: "The Art of Typography in UI Design",
     description:
       "How fonts shape user experiences in modern web apps.",
@@ -62,6 +66,7 @@ export const mockVideos: Video[] = [
   },
   {
     id: "5",
+    user_id: "user-1",
     title: "Day in the Life of a Software Engineer",
     description:
       "Vlog of my daily routine working from Tokyo.",
@@ -77,6 +82,7 @@ export const mockVideos: Video[] = [
   },
   {
     id: "6",
+    user_id: "user-1",
     title: "React 19 Server Components Explained",
     description:
       "Everything you need to know about the new React architecture.",

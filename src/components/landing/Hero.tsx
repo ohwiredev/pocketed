@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import logoSvg from "@/assets/brand/logo.svg";
 import { Button } from "@/components/ui/button";
+import ProductHome from "@/assets/product_home.webp"
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -98,7 +99,7 @@ export default function HeroSection() {
 
           <div className="bg-background rounded-(--radius) relative m-4 overflow-hidden border border-transparent shadow-xl shadow-black/15 ring-1 ring-black/10 sm:m-8 md:m-12">
             <img
-              src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=2874&auto=format&fit=crop"
+              src={ProductHome}
               alt="app screen"
               className="object-top-left size-full object-cover"
             />
