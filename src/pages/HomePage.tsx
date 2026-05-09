@@ -1,13 +1,65 @@
+import BottomNav from "@/components/BottomNav";
+import FilterChips from "@/components/FilterChips";
+import SearchBar from "@/components/SearchBar";
+import VideoCard from "@/components/VideoCard";
+import Header from "@/components/Header";
+import { mockVideos } from "@/data/mockVideos";
+import { motion } from "framer-motion";
+
 import { useAuth } from "@/hooks/useAuth";
 
 export default function HomePage() {
-  const { signOut } = useAuth()
+  const { session } = useAuth();
+  const userName = session?.user?.email?.split('@')[0] || "User";
+  const videoCount = mockVideos.length;
 
   return (
-    <div className="home-page">
-      <h1>Home</h1>
+    <div className="min-h-screen bg-background text-foreground pb-32">
+      <Header />
 
-      <button onClick={signOut}>Logout</button>
+      <main className="container mx-auto max-w-7xl px-4 pt-8 md:px-8">
+        
+        <section className="mb-10 mt-4 flex flex-col items-center text-center">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="mb-2 inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary"
+          >
+            Personalized Dashboard
+          </motion.div>
+          <h1 className="mb-2 font-serif text-3xl font-bold tracking-tight md:text-4xl">
+            Welcome back, {userName}!
+          </h1>
+          <p className="mb-8 text-sm text-foreground/60 max-w-md">
+            You've pocketed <span className="font-bold text-foreground">{videoCount} videos</span> so far. What would you like to watch or save today?
+          </p>
+          <SearchBar />
+        </section>
+
+        {/* Filters & Feed Section */}
+        <section className="mt-8">
+          <div className="mb-8 w-full">
+            <FilterChips />
+          </div>
+
+          {/* Masonry Layout using CSS Columns */}
+          <div className="columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4">
+            {mockVideos.map((video, idx) => (
+              <motion.div
+                key={video.id}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.4 }}
+              >
+                <VideoCard video={video} />
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      </main>
+
+      {/* Navigation */}
+      <BottomNav />
     </div>
   );
 }

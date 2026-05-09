@@ -1,0 +1,93 @@
+import type { Video } from "@/types/video";
+
+export const mockVideos: Video[] = [
+  {
+    id: "1",
+    title: "10 VS Code Shortcuts You Didn't Know",
+    description:
+      "Boost your productivity with these hidden VS Code shortcuts.",
+    thumbnailUrl:
+      "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800&h=1400",
+    videoUrl: "#",
+    duration: "00:59",
+    category: "Coding",
+    platform: "tiktok",
+    aspectRatio: "vertical",
+    notes: "Remember to try the multi-cursor shortcut (Alt+Click)!",
+    createdAt: "2 days ago",
+  },
+  {
+    id: "2",
+    title: "Minimalist Desk Setup 2026",
+    description:
+      "A deep dive into the most efficient setups for creative professionals.",
+    thumbnailUrl:
+      "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=1200",
+    videoUrl: "#",
+    duration: "08:20",
+    category: "Inspiration",
+    platform: "youtube",
+    aspectRatio: "horizontal",
+    notes: "Love the cable management tray used here.",
+    createdAt: "5 hours ago",
+  },
+  {
+    id: "3",
+    title: "Quick Healthy Breakfast Recipe",
+    description:
+      "Make this in under 5 minutes before work.",
+    thumbnailUrl:
+      "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&q=80&w=800&h=1400",
+    videoUrl: "#",
+    duration: "01:15",
+    category: "Recipes",
+    platform: "instagram",
+    aspectRatio: "vertical",
+    notes: "Substitute almond milk for oat milk.",
+    createdAt: "1 week ago",
+  },
+  {
+    id: "4",
+    title: "The Art of Typography in UI Design",
+    description:
+      "How fonts shape user experiences in modern web apps.",
+    thumbnailUrl:
+      "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=1200",
+    videoUrl: "#",
+    duration: "15:30",
+    category: "Design",
+    platform: "youtube",
+    aspectRatio: "horizontal",
+    createdAt: "3 days ago",
+  },
+  {
+    id: "5",
+    title: "Day in the Life of a Software Engineer",
+    description:
+      "Vlog of my daily routine working from Tokyo.",
+    thumbnailUrl:
+      "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800&h=1400",
+    videoUrl: "#",
+    duration: "02:10",
+    category: "Lifestyle",
+    platform: "tiktok",
+    aspectRatio: "vertical",
+    notes: "The cafe at 1:20 looks amazing.",
+    createdAt: "1 day ago",
+  },
+  {
+    id: "6",
+    title: "React 19 Server Components Explained",
+    description:
+      "Everything you need to know about the new React architecture.",
+    thumbnailUrl:
+      "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=1200",
+    videoUrl: "#",
+    duration: "25:05",
+    category: "Tutorials",
+    platform: "youtube",
+    aspectRatio: "horizontal",
+    notes: "Essential watch for the team.",
+    createdAt: "4 days ago",
+  },
+];

@@ -7,7 +7,7 @@ import Testimonials from "@/components/landing/Testimonials";
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-linear-to-b from-muted to-background">
       <HeroSection />
       <HowItWorks />
       <Features />
