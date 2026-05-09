@@ -56,7 +56,7 @@ export function useAuth() {
     }
   };
 
-  const signUpWithEmail = async (email: string, password: string) => {
+  const signUpWithEmail = async (email: string, password: string, displayName?: string) => {
     try {
       setLoading(true);
       setError(null);
@@ -64,6 +64,11 @@ export function useAuth() {
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          data: {
+            display_name: displayName,
+          },
+        },
       });
 
       if (error) throw error;

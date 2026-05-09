@@ -10,6 +10,7 @@ export default function SignupPage() {
   const navigate = useNavigate();
   const { signUpWithEmail, loading, error, session, isInitialized } = useAuth();
   const [email, setEmail] = useState("");
+  const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -26,6 +27,7 @@ export default function SignupPage() {
     const { error, needsEmailVerification } = await signUpWithEmail(
       email.trim(),
       password,
+      displayName.trim(),
     );
 
     if (!error && !needsEmailVerification) {
@@ -104,6 +106,25 @@ export default function SignupPage() {
                 {error}
               </div>
             )}
+            <div className="space-y-2">
+              <Label htmlFor="displayName" className="block text-sm">
+                Display Name
+              </Label>
+              <Input
+                type="text"
+                required
+                name="displayName"
+                id="displayName"
+                placeholder="What should we call you?"
+                value={displayName}
+                onChange={(e) => {
+                  setDisplayName(e.target.value);
+                  setSuccessMessage(null);
+                }}
+                className="ring-foreground/15 border-transparent ring-1"
+              />
+            </div>
+
             <div className="space-y-2">
               <Label htmlFor="email" className="block text-sm">
                 Email
