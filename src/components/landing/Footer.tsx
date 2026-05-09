@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import trademarkSvg from "@/assets/trademark.svg";
+import trademarkSvg from "@/assets/brand/trademark.svg";
 
 const footerLinks = [
   { name: "Features", href: "#features" },

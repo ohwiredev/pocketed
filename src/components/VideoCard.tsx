@@ -1,6 +1,9 @@
 import type { Video } from "@/types/video";
 import { motion } from "framer-motion";
-import { Clock, Play, Music2, ExternalLink } from "lucide-react";
+import { Clock, Play, ExternalLink } from "lucide-react";
+import instagramIcon from "@/assets/icons/instagram-icon.svg";
+import tiktokIcon from "@/assets/icons/tiktok-icon-dark.svg";
+import youtubeIcon from "@/assets/icons/youtube.svg";
 
 interface VideoCardProps {
   video: Video;
@@ -10,9 +13,9 @@ export default function VideoCard({ video }: VideoCardProps) {
   
   const PlatformIcon = () => {
     switch(video.platform) {
-      case "youtube": return <Music2 className="size-3" />;
-      case "instagram": return <Music2 className="size-3" />;
-      case "tiktok": return <Music2 className="size-3" />;
+      case "youtube": return <img src={youtubeIcon} alt="YouTube" className="size-3" />;
+      case "instagram": return <img src={instagramIcon} alt="Instagram" className="size-3" />;
+      case "tiktok": return <img src={tiktokIcon} alt="TikTok" className="size-3" />;
       default: return <Play className="size-3" />;
     }
   }
@@ -50,11 +53,12 @@ export default function VideoCard({ video }: VideoCardProps) {
         </div>
       </div>
       <div className="p-4">
-        <div className="mb-2 flex items-center justify-between">
-          <span className="text-[10px] font-bold uppercase tracking-widest text-primary">
+        <div className="mb-3 flex items-center gap-2">
+          <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-primary">
             {video.category}
           </span>
-          <span className="text-[10px] text-foreground/40">{video.createdAt}</span>
+          <div className="h-1 w-1 rounded-full bg-foreground/20" />
+          <span className="text-[10px] font-medium text-foreground/40">{video.createdAt}</span>
         </div>
         <h3 className="mb-2 line-clamp-2 font-sans text-base font-semibold leading-snug group-hover:text-primary transition-colors">
           {video.title}

@@ -1,7 +1,7 @@
 import { LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useAuth } from "@/hooks/useAuth";
-import trademark from "@/assets/trademark.svg";
+import trademark from "@/assets/brand/trademark.svg";
 
 export default function Header() {
   const { signOut, session } = useAuth();

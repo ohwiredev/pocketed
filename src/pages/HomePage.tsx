@@ -20,13 +20,6 @@ export default function HomePage() {
       <main className="container mx-auto max-w-7xl px-4 pt-8 md:px-8">
         
         <section className="mb-10 mt-4 flex flex-col items-center text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="mb-2 inline-flex items-center rounded-full bg-primary/10 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-primary"
-          >
-            Personalized Dashboard
-          </motion.div>
           <h1 className="mb-2 font-serif text-3xl font-bold tracking-tight md:text-4xl">
             Welcome back, {userName}!
           </h1>

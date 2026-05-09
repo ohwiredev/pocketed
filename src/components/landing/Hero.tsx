@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import logoSvg from "@/assets/logo.svg";
+import logoSvg from "@/assets/brand/logo.svg";
 import { Button } from "@/components/ui/button";
 
 const containerVariants = {
