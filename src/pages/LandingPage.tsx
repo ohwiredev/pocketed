@@ -5,7 +5,11 @@ import HeroSection from "@/components/landing/Hero";
 import HowItWorks from "@/components/landing/HowItWorks";
 import Testimonials from "@/components/landing/Testimonials";
 
+import { useTitle } from "@/hooks/useTitle";
+
 export default function LandingPage() {
+  useTitle("Your AI Powered Video Library");
+
   return (
     <main className="min-h-screen bg-linear-to-b from-muted to-background">
       <HeroSection />

@@ -6,9 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
+import { useTitle } from "@/hooks/useTitle";
 
 export default function LoginPage() {
+  useTitle("Login");
   const navigate = useNavigate();
+
   const { signInWithEmail, loading, error, session, isInitialized } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

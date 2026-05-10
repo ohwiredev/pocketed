@@ -5,9 +5,12 @@ import VideoCard from "@/components/VideoCard";
 import { mockVideos } from "@/data/mockVideos";
 
 import { useAuth } from "@/hooks/useAuth";
+import { useTitle } from "@/hooks/useTitle";
 
 export default function HomePage() {
+  useTitle("Home");
   const { session } = useAuth();
+
   const userName =
     session?.user?.user_metadata?.display_name ||
     session?.user?.email?.split("@")[0] ||
@@ -29,7 +32,6 @@ export default function HomePage() {
             so far. What would you like to watch today?
           </p>
           <SearchBar />
-
         </section>
 
         {/* Filters & Feed Section */}

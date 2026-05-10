@@ -1,19 +1,26 @@
 import { useSearchParams } from "react-router-dom";
+import { useTitle } from "@/hooks/useTitle";
 
 export default function SavePage() {
+  useTitle("Save");
   const [searchParams] = useSearchParams();
+
   const urlToSave = searchParams.get("url") || "";
 
   return (
     <div className="save-page p-8 max-w-md mx-auto">
-      <h1 className="text-2xl font-bold mb-6 text-foreground">Save to Pocketed</h1>
+      <h1 className="text-2xl font-bold mb-6 text-foreground">
+        Save to Pocketed
+      </h1>
       {urlToSave ? (
         <div className="flex flex-col gap-4">
-          <p className="text-sm text-muted-foreground">Preparing to save URL:</p>
-          <input 
-            type="url" 
-            value={urlToSave} 
-            readOnly 
+          <p className="text-sm text-muted-foreground">
+            Preparing to save URL:
+          </p>
+          <input
+            type="url"
+            value={urlToSave}
+            readOnly
             className="w-full p-3 border rounded-md bg-muted text-foreground"
           />
           {/* Automatic save flow kicking off here */}

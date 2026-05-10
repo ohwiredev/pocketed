@@ -1,5 +1,5 @@
 import { Bell, LogOut, Palette } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -12,9 +12,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
+import { useTitle } from "@/hooks/useTitle";
 
 export default function ProfilePage() {
+  useTitle("Profile");
   const { session, signOut, updateProfile } = useAuth();
+
   const user = session?.user;
   const currentDisplayName =
     session?.user?.user_metadata?.display_name ||

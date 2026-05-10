@@ -6,7 +6,11 @@ interface SearchBarProps {
   placeholder?: string;
 }
 
-export default function SearchBar({ value, onChange, placeholder = "Search your library..." }: SearchBarProps) {
+export default function SearchBar({
+  value,
+  onChange,
+  placeholder = "Search your library...",
+}: SearchBarProps) {
   return (
     <div className="relative w-full max-w-2xl mx-auto group">
       <input
@@ -22,4 +26,3 @@ export default function SearchBar({ value, onChange, placeholder = "Search your 
     </div>
   );
 }
-

@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
-import { Home, ArrowLeft } from "lucide-react";
+import { ArrowLeft, Home } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useTitle } from "@/hooks/useTitle";
+
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -27,7 +29,9 @@ const itemVariants = {
 };
 
 export default function NotFoundPage() {
+  useTitle("Page Not Found");
   return (
+
     <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-linear-to-b from-muted to-background px-6">
       {/* Decorative Background Elements */}
       <div className="absolute inset-0 z-0">
@@ -64,7 +68,6 @@ export default function NotFoundPage() {
         initial="hidden"
         animate="visible"
       >
-
         <motion.h1
           variants={itemVariants}
           className="font-serif text-8xl font-bold tracking-tighter text-primary lg:text-[12rem]"
@@ -112,7 +115,10 @@ export default function NotFoundPage() {
         className="text-muted-foreground absolute bottom-8 text-sm"
       >
         Need help?{" "}
-        <a href="mailto:support@pocketed.com" className="hover:text-primary underline">
+        <a
+          href="mailto:support@pocketed.com"
+          className="hover:text-primary underline"
+        >
           Contact Support
         </a>
       </motion.div>
