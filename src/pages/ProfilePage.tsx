@@ -1,5 +1,5 @@
 import { Bell, LogOut, Palette } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -20,9 +20,16 @@ export default function ProfilePage() {
     session?.user?.user_metadata?.display_name ||
     session?.user?.email?.split("@")[0];
 
-  const [displayName, setDisplayName] = useState(currentDisplayName);
+  const [displayName, setDisplayName] = useState(currentDisplayName || "");
   const [isUpdating, setIsUpdating] = useState(false);
   const [updateMessage, setUpdateMessage] = useState("");
+
+  // Sync displayName state when currentDisplayName changes (e.g., when session loads)
+  useEffect(() => {
+    if (currentDisplayName) {
+      setDisplayName(currentDisplayName);
+    }
+  }, [currentDisplayName]);
 
   const initials = currentDisplayName
     ? currentDisplayName.slice(0, 2).toUpperCase()
