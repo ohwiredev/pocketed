@@ -1,4 +1,3 @@
-import { Sparkles } from "lucide-react";
 import { useState } from "react";
 
 const categories = [
@@ -17,12 +16,6 @@ export default function FilterChips() {
 
   return (
     <div className="no-scrollbar flex w-full items-center gap-2 overflow-x-auto pb-2">
-      <div className="flex h-9 items-center justify-center rounded-full bg-primary/10 px-3 text-primary mr-2 flex-none">
-        <Sparkles className="mr-1.5 size-4" />
-        <span className="text-xs font-bold uppercase tracking-wider">
-          AI Tags
-        </span>
-      </div>
       {categories.map((category) => (
         <button
           key={category}

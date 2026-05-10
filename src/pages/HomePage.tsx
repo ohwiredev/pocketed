@@ -26,9 +26,10 @@ export default function HomePage() {
             <span className="font-bold text-foreground">
               {videoCount} videos
             </span>{" "}
-            so far. What would you like to watch or save today?
+            so far. What would you like to watch today?
           </p>
           <SearchBar />
+
         </section>
 
         {/* Filters & Feed Section */}
