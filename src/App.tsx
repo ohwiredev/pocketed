@@ -1,24 +1,28 @@
+import React from "react";
 import {
   Navigate,
+  Outlet,
   Route,
   BrowserRouter as Router,
   Routes,
 } from "react-router-dom";
+import MainLayout from "./components/MainLayout";
 import { useAuth } from "./hooks/useAuth";
+import CollectionsPage from "./pages/CollectionsPage";
 import HomePage from "./pages/HomePage";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
-import SignupPage from "./pages/SignupPage";
-import CollectionsPage from "./pages/CollectionsPage";
-import ProfilePage from "./pages/ProfilePage";
-import SearchPage from "./pages/SearchPage";
-import SavePage from "./pages/SavePage";
+import NotFoundPage from "./pages/NotFoundPage";
 import OnboardingPage from "./pages/OnboardingPage";
+import ProfilePage from "./pages/ProfilePage";
+import SavePage from "./pages/SavePage";
+import SearchPage from "./pages/SearchPage";
+import SignupPage from "./pages/SignupPage";
 import VideoDetailPage from "./pages/VideoDetailPage";
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = () => {
   const { session, isInitialized } = useAuth();
-  
+
   if (!isInitialized) {
     return (
       <div className="flex h-screen items-center justify-center">
@@ -27,7 +31,7 @@ const ProtectedRoute = ({ children }) => {
     );
   }
 
-  return session ? children : <Navigate to="/login" />;
+  return session ? <Outlet /> : <Navigate to="/login" replace />;
 };
 
 function App() {
@@ -37,64 +41,21 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
-        
-        {/* Protected Routes */}
-        <Route
-          path="/home"
-          element={
-            <ProtectedRoute>
-              <HomePage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/collections"
-          element={
-            <ProtectedRoute>
-              <CollectionsPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/search"
-          element={
-            <ProtectedRoute>
-              <SearchPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/save"
-          element={
-            <ProtectedRoute>
-              <SavePage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/profile"
-          element={
-            <ProtectedRoute>
-              <ProfilePage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/onboarding"
-          element={
-            <ProtectedRoute>
-              <OnboardingPage />
-            </ProtectedRoute>
-          }
-        />
-        <Route
-          path="/video/:id"
-          element={
-            <ProtectedRoute>
-              <VideoDetailPage />
-            </ProtectedRoute>
-          }
-        />
+
+        <Route element={<ProtectedRoute />}>
+          <Route element={<MainLayout />}>
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/collections" element={<CollectionsPage />} />
+            <Route path="/search" element={<SearchPage />} />
+            <Route path="/save" element={<SavePage />} />
+            <Route path="/profile" element={<ProfilePage />} />
+            <Route path="/video/:id" element={<VideoDetailPage />} />
+          </Route>
+
+          <Route path="/onboarding" element={<OnboardingPage />} />
+        </Route>
+
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </Router>
   );

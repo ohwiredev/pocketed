@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import trademark from "@/assets/brand/trademark.svg";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [displayName, setDisplayName] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -149,21 +151,35 @@ export default function SignupPage() {
               <Label htmlFor="password" className="block text-sm">
                 Password
               </Label>
-              <Input
-                type="password"
-                required
-                name="password"
-                id="password"
-                placeholder="Create a password"
-                autoComplete="new-password"
-                minLength={8}
-                value={password}
-                onChange={(e) => {
-                  setPassword(e.target.value);
-                  setSuccessMessage(null);
-                }}
-                className="ring-foreground/15 border-transparent ring-1"
-              />
+              <div className="relative">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  required
+                  name="password"
+                  id="password"
+                  placeholder="Create a password"
+                  autoComplete="new-password"
+                  minLength={8}
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setSuccessMessage(null);
+                  }}
+                  className="ring-foreground/15 border-transparent ring-1 pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground focus:outline-hidden"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? (
+                    <EyeOff className="size-4" />
+                  ) : (
+                    <Eye className="size-4" />
+                  )}
+                </button>
+              </div>
             </div>
 
             <Button

@@ -1,30 +1,32 @@
-import BottomNav from "@/components/BottomNav";
+import { motion } from "framer-motion";
 import FilterChips from "@/components/FilterChips";
 import SearchBar from "@/components/SearchBar";
 import VideoCard from "@/components/VideoCard";
-import Header from "@/components/Header";
 import { mockVideos } from "@/data/mockVideos";
-import { motion } from "framer-motion";
 
 import { useAuth } from "@/hooks/useAuth";
 
 export default function HomePage() {
   const { session } = useAuth();
-  const userName = session?.user?.user_metadata?.display_name || session?.user?.email?.split('@')[0] || "User";
+  const userName =
+    session?.user?.user_metadata?.display_name ||
+    session?.user?.email?.split("@")[0] ||
+    "User";
   const videoCount = mockVideos.length;
 
   return (
-    <div className="min-h-screen bg-background text-foreground pb-32">
-      <Header />
-
+    <>
       <main className="container mx-auto max-w-7xl px-4 pt-8 md:px-8">
-        
         <section className="mb-10 mt-4 flex flex-col items-center text-center">
           <h1 className="mb-2 font-serif text-3xl font-bold tracking-tight md:text-4xl">
             Welcome back, {userName}!
           </h1>
           <p className="mb-8 text-sm text-foreground/60 max-w-md">
-            You've pocketed <span className="font-bold text-foreground">{videoCount} videos</span> so far. What would you like to watch or save today?
+            You've pocketed{" "}
+            <span className="font-bold text-foreground">
+              {videoCount} videos
+            </span>{" "}
+            so far. What would you like to watch or save today?
           </p>
           <SearchBar />
         </section>
@@ -50,9 +52,6 @@ export default function HomePage() {
           </div>
         </section>
       </main>
-
-      {/* Navigation */}
-      <BottomNav />
-    </div>
+    </>
   );
 }

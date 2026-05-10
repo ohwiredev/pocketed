@@ -47,7 +47,10 @@ export default function FeaturesSection() {
             viewport={{ once: true, margin: "-100px" }}
           >
             <motion.div variants={itemVariants}>
-              <Card variant="soft" className="overflow-hidden p-6 h-full gap-0">
+              <Card
+                variant="default"
+                className="overflow-hidden p-6 h-full gap-0"
+              >
                 <Target className="text-primary size-5" />
                 <h3 className="text-foreground mt-5 text-lg font-semibold">
                   Step 1 - See it
@@ -63,7 +66,7 @@ export default function FeaturesSection() {
 
             <motion.div variants={itemVariants}>
               <Card
-                variant="soft"
+                variant="default"
                 className="group overflow-hidden px-6 pt-6 h-full gap-0"
               >
                 <CalendarCheck className="text-primary size-5" />
@@ -82,7 +85,7 @@ export default function FeaturesSection() {
 
             <motion.div variants={itemVariants}>
               <Card
-                variant="soft"
+                variant="default"
                 className="group overflow-hidden px-6 pt-6 h-full gap-0"
               >
                 <Sparkles className="text-primary size-5" />

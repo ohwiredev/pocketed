@@ -1,4 +1,4 @@
-import { Search, Plus } from "lucide-react";
+import { Plus, Search } from "lucide-react";
 import { Button } from "./ui/button";
 
 export default function SearchBar() {
@@ -13,7 +13,10 @@ export default function SearchBar() {
         <Search className="size-5 text-foreground/60 group-focus-within:text-primary transition-colors" />
       </div>
       <div className="absolute inset-y-0 right-1.5 flex items-center">
-        <Button size="sm" className="h-11 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 px-4 font-semibold shadow-md">
+        <Button
+          size="sm"
+          className="h-11 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 px-4 font-semibold shadow-md"
+        >
           <Plus className="mr-1.5 size-4" />
           Save
         </Button>

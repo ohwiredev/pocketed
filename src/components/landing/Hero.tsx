@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import logoSvg from "@/assets/brand/logo.svg";
+import ProductHome from "@/assets/product_home.webp";
 import { Button } from "@/components/ui/button";
-import ProductHome from "@/assets/product_home.webp"
 
 const containerVariants = {
   hidden: { opacity: 0 },

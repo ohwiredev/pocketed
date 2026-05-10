@@ -1,4 +1,5 @@
-import { useState, useEffect } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import trademark from "@/assets/brand/trademark.svg";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,7 @@ export default function LoginPage() {
   const { signInWithEmail, loading, error, session, isInitialized } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     if (isInitialized && session) {
@@ -21,7 +23,7 @@ export default function LoginPage() {
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     const result = await signInWithEmail(email.trim(), password);
-    
+
     if (!result.error) {
       navigate("/home");
     }
@@ -110,17 +112,31 @@ export default function LoginPage() {
               <Label htmlFor="password" className="block text-sm">
                 Password
               </Label>
-              <Input
-                type="password"
-                required
-                name="password"
-                id="password"
-                placeholder="Your password"
-                autoComplete="current-password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="ring-foreground/15 border-transparent ring-1"
-              />
+              <div className="relative">
+                <Input
+                  type={showPassword ? "text" : "password"}
+                  required
+                  name="password"
+                  id="password"
+                  placeholder="Your password"
+                  autoComplete="current-password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="ring-foreground/15 border-transparent ring-1 pr-10"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground focus:outline-hidden"
+                  aria-label={showPassword ? "Hide password" : "Show password"}
+                >
+                  {showPassword ? (
+                    <EyeOff className="size-4" />
+                  ) : (
+                    <Eye className="size-4" />
+                  )}
+                </button>
+              </div>
             </div>
 
             <Button
@@ -129,7 +145,11 @@ export default function LoginPage() {
               size="default"
               disabled={loading || !isInitialized}
             >
-              {loading ? "Signing in..." : !isInitialized ? "Loading..." : "Continue"}
+              {loading
+                ? "Signing in..."
+                : !isInitialized
+                  ? "Loading..."
+                  : "Continue"}
             </Button>
           </div>
         </div>

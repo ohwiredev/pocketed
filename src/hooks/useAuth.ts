@@ -122,7 +122,9 @@ export function useAuth() {
       if (error) throw error;
 
       if (updatedUser.user) {
-        setSession((prev) => prev ? { ...prev, user: updatedUser.user } : null);
+        setSession((prev) =>
+          prev ? { ...prev, user: updatedUser.user } : null,
+        );
       }
 
       return { data: updatedUser, error: null };

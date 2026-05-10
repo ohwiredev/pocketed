@@ -5,8 +5,7 @@ export const mockVideos: Video[] = [
     id: "1",
     user_id: "user-1",
     title: "10 VS Code Shortcuts You Didn't Know",
-    description:
-      "Boost your productivity with these hidden VS Code shortcuts.",
+    description: "Boost your productivity with these hidden VS Code shortcuts.",
     thumbnailUrl:
       "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800&h=1400",
     videoUrl: "#",
@@ -37,8 +36,7 @@ export const mockVideos: Video[] = [
     id: "3",
     user_id: "user-1",
     title: "Quick Healthy Breakfast Recipe",
-    description:
-      "Make this in under 5 minutes before work.",
+    description: "Make this in under 5 minutes before work.",
     thumbnailUrl:
       "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&q=80&w=800&h=1400",
     videoUrl: "#",
@@ -53,8 +51,7 @@ export const mockVideos: Video[] = [
     id: "4",
     user_id: "user-1",
     title: "The Art of Typography in UI Design",
-    description:
-      "How fonts shape user experiences in modern web apps.",
+    description: "How fonts shape user experiences in modern web apps.",
     thumbnailUrl:
       "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=1200",
     videoUrl: "#",
@@ -68,8 +65,7 @@ export const mockVideos: Video[] = [
     id: "5",
     user_id: "user-1",
     title: "Day in the Life of a Software Engineer",
-    description:
-      "Vlog of my daily routine working from Tokyo.",
+    description: "Vlog of my daily routine working from Tokyo.",
     thumbnailUrl:
       "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800&h=1400",
     videoUrl: "#",
