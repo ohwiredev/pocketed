@@ -1,11 +1,11 @@
 import { motion } from "framer-motion";
-import { Bookmark, Home, Search, User } from "lucide-react";
+import { Bookmark, Home, Library, User } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 const navItems = [
   { icon: Home, label: "Home", path: "/home" },
-  { icon: Search, label: "Search", path: "/search" },
+  { icon: Library, label: "Collections", path: "/collections" },
   { icon: Bookmark, label: "Saves", path: "/save" },
   { icon: User, label: "Profile", path: "/profile" },
 ];

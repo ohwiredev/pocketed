@@ -39,7 +39,7 @@ export default function HomePage() {
 
           {/* Masonry Layout using CSS Columns */}
           <div className="columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4">
-            {mockVideos.map((video, idx) => (
+            {mockVideos.map((video) => (
               <motion.div
                 key={video.id}
                 initial={{ opacity: 0 }}

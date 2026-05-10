@@ -1,4 +1,4 @@
-export default function CollectionCard({ collection }) {
+export default function CollectionCard({ }) {
   return (
     <div className="collection-card">
       <p>Collection Card</p>

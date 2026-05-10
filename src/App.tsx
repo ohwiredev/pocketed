@@ -1,4 +1,3 @@
-import React from "react";
 import {
   Navigate,
   Outlet,
@@ -16,7 +15,6 @@ import NotFoundPage from "./pages/NotFoundPage";
 import OnboardingPage from "./pages/OnboardingPage";
 import ProfilePage from "./pages/ProfilePage";
 import SavePage from "./pages/SavePage";
-import SearchPage from "./pages/SearchPage";
 import SignupPage from "./pages/SignupPage";
 import VideoDetailPage from "./pages/VideoDetailPage";
 
@@ -46,7 +44,6 @@ function App() {
           <Route element={<MainLayout />}>
             <Route path="/home" element={<HomePage />} />
             <Route path="/collections" element={<CollectionsPage />} />
-            <Route path="/search" element={<SearchPage />} />
             <Route path="/save" element={<SavePage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/video/:id" element={<VideoDetailPage />} />

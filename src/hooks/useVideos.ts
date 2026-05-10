@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 export function useVideos() {
-  const [videos, setVideos] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [videos, _setVideos] = useState([]);
+  const [loading, _setLoading] = useState(true);
 
   useEffect(() => {
     // Fetch videos
