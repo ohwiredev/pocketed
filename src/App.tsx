@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import MainLayout from "./components/MainLayout";
 import { useAuth } from "./hooks/useAuth";
+import CollectionDetailPage from "./pages/CollectionDetailPage";
 import CollectionsPage from "./pages/CollectionsPage";
 import HomePage from "./pages/HomePage";
 import LandingPage from "./pages/LandingPage";
@@ -47,6 +48,7 @@ function App() {
             <Route path="/save" element={<SavePage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/video/:id" element={<VideoDetailPage />} />
+            <Route path="/collection/:id" element={<CollectionDetailPage />} />
           </Route>
 
           <Route path="/onboarding" element={<OnboardingPage />} />

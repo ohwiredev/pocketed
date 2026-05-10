@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { useTitle } from "@/hooks/useTitle";
 
-
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -31,7 +30,6 @@ const itemVariants = {
 export default function NotFoundPage() {
   useTitle("Page Not Found");
   return (
-
     <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-linear-to-b from-muted to-background px-6">
       {/* Decorative Background Elements */}
       <div className="absolute inset-0 z-0">

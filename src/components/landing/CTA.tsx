@@ -22,7 +22,7 @@ export default function CallToAction() {
             works in seconds.
           </p>
           <div className="mt-8 flex gap-3">
-            <Link to="/login">
+            <Link to="/signup">
               <Button className="pr-2 cursor-pointer">
                 Get started free
                 <ChevronRight

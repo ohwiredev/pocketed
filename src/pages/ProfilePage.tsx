@@ -55,7 +55,7 @@ export default function ProfilePage() {
 
   return (
     <>
-      <main className="container mx-auto max-w-3xl px-4 pt-8 md:px-8">
+      <main className="container mx-auto max-w-7xl px-4 pt-8 md:px-8">
         <h1 className="mb-8 font-serif text-3xl font-bold tracking-tight md:text-4xl">
           Profile Settings
         </h1>

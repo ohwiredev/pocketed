@@ -1,15 +1,25 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Clock, ExternalLink, Play } from "lucide-react";
+import { Clock, ExternalLink, MoreVertical, Play, Trash2 } from "lucide-react";
+import { cn } from "@/lib/utils";
 import instagramIcon from "@/assets/icons/instagram-icon.svg";
 import tiktokIcon from "@/assets/icons/tiktok-icon-dark.svg";
 import youtubeIcon from "@/assets/icons/youtube.svg";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import type { Video } from "@/types/video";
 
 interface VideoCardProps {
   video: Video;
+  onRemove?: (id: string) => void;
 }
 
-export default function VideoCard({ video }: VideoCardProps) {
+export default function VideoCard({ video, onRemove }: VideoCardProps) {
+  const [isOpen, setIsOpen] = useState(false);
   const PlatformIcon = () => {
     switch (video.platform) {
       case "youtube":
@@ -27,7 +37,7 @@ export default function VideoCard({ video }: VideoCardProps) {
     <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
-      className="group cursor-pointer overflow-hidden rounded-2xl border border-border/50 bg-white/5 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-white/10 hover:shadow-xl mb-6 break-inside-avoid"
+      className="group relative cursor-pointer overflow-hidden rounded-2xl border border-border/50 bg-white/5 backdrop-blur-sm transition-all duration-300 hover:border-primary/30 hover:bg-white/10 hover:shadow-xl mb-6 break-inside-avoid"
     >
       <div className="relative overflow-hidden bg-black/20">
         <img
@@ -64,7 +74,7 @@ export default function VideoCard({ video }: VideoCardProps) {
           </span>
           <div className="h-1 w-1 rounded-full bg-foreground/20" />
           <span className="text-[10px] font-medium text-foreground/40">
-            {video.createdAt}
+            {new Date(video.createdAt).toLocaleDateString()}
           </span>
         </div>
         <h3 className="mb-2 line-clamp-2 font-sans text-base font-semibold leading-snug group-hover:text-primary transition-colors">
@@ -76,6 +86,31 @@ export default function VideoCard({ video }: VideoCardProps) {
           </p>
         )}
       </div>
+
+      {/* Action Menu */}
+      {onRemove && (
+        <div
+          className={cn(
+            "absolute top-3 right-3 z-10 transition-opacity",
+            isOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100",
+          )}
+        >
+          <DropdownMenu onOpenChange={setIsOpen}>
+            <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md hover:bg-black/80 transition-colors">
+              <MoreVertical className="size-4" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="bg-white/95 backdrop-blur-xl border-none shadow-2xl">
+              <DropdownMenuItem
+                onClick={() => onRemove(video.id)}
+                className="cursor-pointer text-destructive focus:text-destructive"
+              >
+                <Trash2 className="mr-2 h-4 w-4" />
+                Remove from collection
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      )}
     </motion.div>
   );
 }

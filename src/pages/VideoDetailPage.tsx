@@ -4,8 +4,8 @@ export default function VideoDetailPage() {
   useTitle("Video Details");
 
   return (
-    <div className="video-detail-page">
-      <h1>Video Detail</h1>
-    </div>
+    <main className="container mx-auto max-w-7xl px-4 pt-8 md:px-8">
+      <h1 className="font-serif text-4xl font-bold">Video Detail</h1>
+    </main>
   );
 }
