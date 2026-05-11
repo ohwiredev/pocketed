@@ -137,7 +137,7 @@ export default function CollectionDetailPage() {
           <Button
             onClick={() => setIsAddModalOpen(true)}
             variant="outline"
-            className="mt-8 gap-2 rounded-full px-8 hover:bg-primary hover:text-white transition-all"
+            className="mt-8 gap-2 px-8 hover:bg-primary hover:text-white transition-all"
           >
             <Plus className="h-5 w-5" />
             Add videos
