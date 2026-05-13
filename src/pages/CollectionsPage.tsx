@@ -3,6 +3,7 @@ import { FolderPlus, Loader2, Plus } from "lucide-react";
 import { useState } from "react";
 import CollectionCard from "@/components/CollectionCard";
 import CreateCollectionModal from "@/components/modals/CreateCollectionModal";
+import RenameCollectionModal from "@/components/modals/RenameCollectionModal";
 import { Button } from "@/components/ui/button";
 import { useCollections } from "@/hooks/useCollections";
 import { useTitle } from "@/hooks/useTitle";
@@ -17,6 +18,7 @@ export default function CollectionsPage() {
     renameCollection,
   } = useCollections();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
+  const [renamingCollection, setRenamingCollection] = useState<{ id: string; name: string } | null>(null);
 
   const container = {
     hidden: { opacity: 0 },
@@ -94,7 +96,7 @@ export default function CollectionsPage() {
                 key={collection.id}
                 collection={collection}
                 onDelete={deleteCollection}
-                onRename={renameCollection}
+                onRename={(id, name) => setRenamingCollection({ id, name })}
               />
             ))}
           </motion.div>
@@ -114,6 +116,14 @@ export default function CollectionsPage() {
         isOpen={isCreateModalOpen}
         onClose={() => setIsCreateModalOpen(false)}
         onCreate={createCollection}
+      />
+
+      <RenameCollectionModal
+        isOpen={!!renamingCollection}
+        onClose={() => setRenamingCollection(null)}
+        onRename={renameCollection}
+        collectionId={renamingCollection?.id || null}
+        currentName={renamingCollection?.name || ""}
       />
     </main>
   );

@@ -93,7 +93,10 @@ export default function CollectionCard({
             className="min-w-40 bg-white/95 backdrop-blur-xl border-none shadow-2xl p-1.5"
           >
             <DropdownMenuItem
-              onClick={() => onRename?.(collection.id, collection.name)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onRename?.(collection.id, collection.name);
+              }}
               className="cursor-pointer gap-2 py-2"
             >
               <Pencil className="h-4 w-4 text-muted-foreground" />
@@ -101,7 +104,10 @@ export default function CollectionCard({
             </DropdownMenuItem>
             <DropdownMenuItem
               variant="destructive"
-              onClick={() => onDelete?.(collection.id)}
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete?.(collection.id);
+              }}
               className="cursor-pointer gap-2 py-2"
             >
               <Trash2 className="h-4 w-4" />

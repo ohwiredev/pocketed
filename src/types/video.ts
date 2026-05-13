@@ -4,10 +4,10 @@ export interface Video {
   title: string;
   thumbnailUrl: string;
   videoUrl: string;
-  category: string;
   platform: "tiktok" | "youtube" | "instagram";
   aspectRatio: "vertical" | "horizontal";
   notes?: string;
   author?: string;
+  tags?: string[];
   createdAt: string;
 }

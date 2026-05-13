@@ -1,7 +1,11 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
 import FilterChips from "@/components/FilterChips";
+import type { PlatformFilter } from "@/components/FilterChips";
 import SearchBar from "@/components/SearchBar";
 import VideoCard from "@/components/VideoCard";
+import EditTagsModal from "@/components/modals/EditTagsModal";
+import type { Video } from "@/types/video";
 
 import { useAuth } from "@/hooks/useAuth";
 import { useTitle } from "@/hooks/useTitle";
@@ -9,13 +13,21 @@ import { useVideos } from "@/hooks/useVideos";
 
 export default function HomePage() {
   useTitle("Home");
+  
   const { session } = useAuth();
-  const { videos, loading } = useVideos();
+  const { videos, loading, updateVideoTags } = useVideos();
+  const [activePlatform, setActivePlatform] = useState<PlatformFilter>("all");
+  const [editingVideo, setEditingVideo] = useState<Video | null>(null);
+
+  const filteredVideos = videos.filter((video) =>
+    activePlatform === "all" || video.platform === activePlatform
+  );
 
   const userName =
     session?.user?.user_metadata?.display_name ||
     session?.user?.email?.split("@")[0] ||
     "User";
+
   const videoCount = videos.length;
 
   return (
@@ -35,8 +47,12 @@ export default function HomePage() {
       {/* Filters & Feed Section */}
       <section className="mt-8">
         <div className="mb-8 w-full">
-          <FilterChips />
-        </div>
+          <FilterChips
+            activePlatform={activePlatform}
+            onSelectPlatform={setActivePlatform}
+            videos={videos}
+          />
+        </div>             
 
         {loading ? (
           <div className="flex justify-center py-20">
@@ -44,27 +60,37 @@ export default function HomePage() {
           </div>
         ) : (
           <div className="columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4">
-            {videos.map((video) => (
+            {filteredVideos.map((video) => (
               <motion.div
                 key={video.id}
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.4 }}
               >
-                <VideoCard video={video} />
+                <VideoCard 
+                  video={video} 
+                  onEditTags={(v) => setEditingVideo(v)}
+                />
               </motion.div>
             ))}
           </div>
         )}
 
-        {!loading && videos.length === 0 && (
+        {!loading && filteredVideos.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 text-center">
             <p className="text-lg font-medium text-foreground/60">
-              No videos found. Start by adding some!
+              No videos saved from this platform yet.
             </p>
           </div>
         )}
       </section>
+
+      <EditTagsModal
+        isOpen={!!editingVideo}
+        onClose={() => setEditingVideo(null)}
+        video={editingVideo}
+        onSaveTags={updateVideoTags}
+      />
     </main>
   );
 }

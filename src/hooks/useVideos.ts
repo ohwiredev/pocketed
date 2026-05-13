@@ -12,7 +12,7 @@ export function useVideos() {
     async () => {
       const { data, error: fetchError } = await supabase
         .from("videos")
-        .select("*")
+        .select("*, tags(label)")
         .eq("user_id", user?.id)
         .order("created_at", { ascending: false });
 
@@ -24,11 +24,11 @@ export function useVideos() {
         title: v.title,
         thumbnailUrl: v.thumbnail_url,
         videoUrl: v.video_url,
-        category: v.category,
         platform: v.platform,
         aspectRatio: v.aspect_ratio,
         notes: v.notes,
         author: v.author,
+        tags: v.tags ? v.tags.map((t: any) => t.label) : [],
         createdAt: v.created_at,
       }));
 
@@ -40,10 +40,44 @@ export function useVideos() {
     },
   );
 
+  const updateVideoTags = async (videoId: string, newTags: string[]) => {
+    try {
+      // 1. Delete existing tags
+      const { error: deleteError } = await supabase
+        .from("tags")
+        .delete()
+        .eq("video_id", videoId);
+
+      if (deleteError) throw deleteError;
+
+      // 2. Insert new tags
+      if (newTags.length > 0) {
+        const { error: insertError } = await supabase
+          .from("tags")
+          .insert(newTags.map(tag => ({ video_id: videoId, label: tag })));
+
+        if (insertError) throw insertError;
+      }
+
+      // 3. Optimistically update local data
+      mutate(
+        (prevVideos) =>
+          prevVideos?.map((v) =>
+            v.id === videoId ? { ...v, tags: newTags } : v
+          ),
+        false
+      );
+    } catch (err: any) {
+      console.error("Failed to update tags", err.message);
+      throw err;
+    }
+  };
+
   return {
     videos: data || [],
     loading: isLoading,
     error: error?.message || null,
     refresh: mutate,
+    updateVideoTags,
   };
 }

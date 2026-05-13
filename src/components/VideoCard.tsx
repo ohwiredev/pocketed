@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ExternalLink, MoreVertical, Play, Trash2 } from "lucide-react";
+import { ExternalLink, MoreVertical, Play, Trash2, Tags } from "lucide-react";
 import { useState } from "react";
 import instagramIcon from "@/assets/icons/instagram-icon.svg";
 import tiktokIcon from "@/assets/icons/tiktok-icon-dark.svg";
@@ -16,9 +16,10 @@ import type { Video } from "@/types/video";
 interface VideoCardProps {
   video: Video;
   onRemove?: (id: string) => void;
+  onEditTags?: (video: Video) => void;
 }
 
-export default function VideoCard({ video, onRemove }: VideoCardProps) {
+export default function VideoCard({ video, onRemove, onEditTags }: VideoCardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const PlatformIcon = () => {
     switch (video.platform) {
@@ -65,19 +66,28 @@ export default function VideoCard({ video, onRemove }: VideoCardProps) {
       </div>
 
       <div className="p-4">
-        <div className="mb-3 flex items-center gap-2">
-          <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-primary">
-            {video.category}
-          </span>
-          <div className="h-1 w-1 rounded-full bg-foreground/20" />
-          <span className="text-[10px] font-medium text-foreground/40">
-            {video.author || "Unknown Author"}
-          </span>
-        </div>
+        {video.author && (
+          <p className="mb-2 text-[10px] font-medium text-foreground/40">
+            {video.author}
+          </p>
+        )}
 
         <h3 className="mb-2 line-clamp-2 font-sans text-base font-semibold leading-snug group-hover:text-primary transition-colors">
           {video.title}
         </h3>
+
+        {video.tags && video.tags.length > 0 && (
+          <div className="mb-2 flex flex-wrap gap-1.5">
+            {video.tags.map((tag) => (
+              <span
+                key={tag}
+                className="inline-flex items-center rounded-md bg-secondary/80 px-2 py-0.5 text-[10px] font-medium text-secondary-foreground"
+              >
+                #{tag}
+              </span>
+            ))}
+          </div>
+        )}
 
         {video.notes && (
           <p className="line-clamp-2 text-xs italic text-foreground/60 border-l-2 border-primary/20 pl-2">
@@ -87,7 +97,7 @@ export default function VideoCard({ video, onRemove }: VideoCardProps) {
       </div>
 
       {/* Action Menu */}
-      {onRemove && (
+      {(onRemove || onEditTags) && (
         <div
           className={cn(
             "absolute top-3 right-3 z-10 transition-opacity",
@@ -102,14 +112,31 @@ export default function VideoCard({ video, onRemove }: VideoCardProps) {
               align="end"
               className="min-w-48 bg-white/95 backdrop-blur-xl border-none shadow-2xl p-1.5"
             >
-              <DropdownMenuItem
-                variant="destructive"
-                onClick={() => onRemove(video.id)}
-                className="cursor-pointer gap-3"
-              >
-                <Trash2 className="h-4 w-4" />
-                <span className="text-sm">Remove from collection</span>
-              </DropdownMenuItem>
+              {onEditTags && (
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onEditTags(video);
+                  }}
+                  className="cursor-pointer gap-3"
+                >
+                  <Tags className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm">Edit Tags</span>
+                </DropdownMenuItem>
+              )}
+              {onRemove && (
+                <DropdownMenuItem
+                  variant="destructive"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onRemove(video.id);
+                  }}
+                  className="cursor-pointer gap-3"
+                >
+                  <Trash2 className="h-4 w-4" />
+                  <span className="text-sm">Remove from collection</span>
+                </DropdownMenuItem>
+              )}
             </DropdownMenuContent>
           </DropdownMenu>
         </div>

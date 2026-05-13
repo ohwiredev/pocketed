@@ -3,9 +3,11 @@ import { ArrowLeft, Loader2, Pencil, Play, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AddVideosModal from "@/components/modals/AddVideosModal";
+import EditTagsModal from "@/components/modals/EditTagsModal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import VideoCard from "@/components/VideoCard";
+import type { Video } from "@/types/video";
 import { useCollectionDetail } from "@/hooks/useCollectionDetail";
 import { useCollections } from "@/hooks/useCollections";
 import { useTitle } from "@/hooks/useTitle";
@@ -18,8 +20,11 @@ export default function CollectionDetailPage() {
     loading,
     collectionName,
     addVideosToCollection,
-    removeVideoFromCollection, // Need to add this to the hook return or fetch it from useCollections
+    removeVideoFromCollection,
+    updateVideoTags,
   } = useCollectionDetail(id);
+
+  const [editingVideo, setEditingVideo] = useState<Video | null>(null);
 
   // Actually, let's use the renameCollection from useCollections if needed,
   // or just implement a simple update here.
@@ -150,6 +155,7 @@ export default function CollectionDetailPage() {
               key={video.id}
               video={video}
               onRemove={removeVideoFromCollection}
+              onEditTags={(v) => setEditingVideo(v)}
             />
           ))}
         </div>
@@ -160,6 +166,13 @@ export default function CollectionDetailPage() {
         onClose={() => setIsAddModalOpen(false)}
         onAdd={addVideosToCollection}
         alreadyInCollection={videos.map((v) => v.id)}
+      />
+
+      <EditTagsModal
+        isOpen={!!editingVideo}
+        onClose={() => setEditingVideo(null)}
+        video={editingVideo}
+        onSaveTags={updateVideoTags}
       />
     </main>
   );

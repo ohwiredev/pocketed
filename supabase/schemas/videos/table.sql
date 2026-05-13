@@ -4,7 +4,6 @@ create table videos (
   video_url text not null,
   title text not null,
   thumbnail_url text,
-  category text,
   platform text,
   aspect_ratio text,
   notes text,

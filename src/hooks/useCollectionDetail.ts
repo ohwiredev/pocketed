@@ -29,7 +29,7 @@ export function useCollectionDetail(collectionId: string | undefined) {
       const { data, error } = await supabase
         .from("collection_videos")
         .select(`
-          video:videos(*)
+          video:videos(*, tags(label))
         `)
         .eq("collection_id", collectionId)
         .order("created_at", { ascending: false });
@@ -41,11 +41,11 @@ export function useCollectionDetail(collectionId: string | undefined) {
         title: v.video.title,
         thumbnailUrl: v.video.thumbnail_url,
         videoUrl: v.video.video_url,
-        category: v.video.category,
         platform: v.video.platform,
         aspectRatio: v.video.aspect_ratio,
         notes: v.video.notes,
         author: v.video.author,
+        tags: v.video.tags ? v.video.tags.map((t: any) => t.label) : [],
         createdAt: v.video.created_at,
       })) as Video[];
     },
@@ -94,6 +94,39 @@ export function useCollectionDetail(collectionId: string | undefined) {
     }
   };
 
+  const updateVideoTags = async (videoId: string, newTags: string[]) => {
+    try {
+      // 1. Delete existing tags
+      const { error: deleteError } = await supabase
+        .from("tags")
+        .delete()
+        .eq("video_id", videoId);
+
+      if (deleteError) throw deleteError;
+
+      // 2. Insert new tags
+      if (newTags.length > 0) {
+        const { error: insertError } = await supabase
+          .from("tags")
+          .insert(newTags.map((tag) => ({ video_id: videoId, label: tag })));
+
+        if (insertError) throw insertError;
+      }
+
+      // 3. Optimistically update local data
+      mutateVideos(
+        (prevVideos) =>
+          prevVideos?.map((v) =>
+            v.id === videoId ? { ...v, tags: newTags } : v
+          ),
+        false,
+      );
+    } catch (err: any) {
+      console.error("Failed to update tags in collection", err.message);
+      throw err;
+    }
+  };
+
   return {
     videos: videos || [],
     loading: colLoading || videosLoading,
@@ -101,6 +134,7 @@ export function useCollectionDetail(collectionId: string | undefined) {
     error: (colError || videosError)?.message || null,
     addVideosToCollection,
     removeVideoFromCollection,
+    updateVideoTags,
     mutateVideos,
   };
 }
