@@ -81,7 +81,7 @@ export default function CollectionCard({
       <div
         className={cn(
           "absolute top-2 right-2 transition-opacity",
-          isOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100",
+          isOpen ? "opacity-100" : "opacity-100 md:opacity-0 md:group-hover:opacity-100",
         )}
       >
         <DropdownMenu onOpenChange={setIsOpen}>

@@ -91,7 +91,7 @@ export default function VideoCard({ video, onRemove }: VideoCardProps) {
         <div
           className={cn(
             "absolute top-3 right-3 z-10 transition-opacity",
-            isOpen ? "opacity-100" : "opacity-0 group-hover:opacity-100",
+            isOpen ? "opacity-100" : "opacity-100 md:opacity-0 md:group-hover:opacity-100",
           )}
         >
           <DropdownMenu onOpenChange={setIsOpen}>
