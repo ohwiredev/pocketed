@@ -7,10 +7,10 @@ import EditTagsModal from "@/components/modals/EditTagsModal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import VideoCard from "@/components/VideoCard";
-import type { Video } from "@/types/video";
 import { useCollectionDetail } from "@/hooks/useCollectionDetail";
 import { useCollections } from "@/hooks/useCollections";
 import { useTitle } from "@/hooks/useTitle";
+import type { Video } from "@/types/video";
 
 export default function CollectionDetailPage() {
   const { id } = useParams<{ id: string }>();

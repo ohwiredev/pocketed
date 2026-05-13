@@ -18,7 +18,10 @@ export default function CollectionsPage() {
     renameCollection,
   } = useCollections();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
-  const [renamingCollection, setRenamingCollection] = useState<{ id: string; name: string } | null>(null);
+  const [renamingCollection, setRenamingCollection] = useState<{
+    id: string;
+    name: string;
+  } | null>(null);
 
   const container = {
     hidden: { opacity: 0 },

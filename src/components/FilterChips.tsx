@@ -18,9 +18,13 @@ interface FilterChipsProps {
   videos: Video[];
 }
 
-export default function FilterChips({ activePlatform, onSelectPlatform, videos }: FilterChipsProps) {
+export default function FilterChips({
+  activePlatform,
+  onSelectPlatform,
+  videos,
+}: FilterChipsProps) {
   const populatedPlatforms = PLATFORMS.filter(
-    (p) => p.value === "all" || videos.some((v) => v.platform === p.value)
+    (p) => p.value === "all" || videos.some((v) => v.platform === p.value),
   );
 
   return (
@@ -42,4 +46,3 @@ export default function FilterChips({ activePlatform, onSelectPlatform, videos }
     </div>
   );
 }
-

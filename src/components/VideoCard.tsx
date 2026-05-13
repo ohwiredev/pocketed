@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ExternalLink, MoreVertical, Play, Trash2, Tags } from "lucide-react";
+import { ExternalLink, MoreVertical, Play, Tags, Trash2 } from "lucide-react";
 import { useState } from "react";
 import instagramIcon from "@/assets/icons/instagram-icon.svg";
 import tiktokIcon from "@/assets/icons/tiktok-icon-dark.svg";
@@ -19,7 +19,11 @@ interface VideoCardProps {
   onEditTags?: (video: Video) => void;
 }
 
-export default function VideoCard({ video, onRemove, onEditTags }: VideoCardProps) {
+export default function VideoCard({
+  video,
+  onRemove,
+  onEditTags,
+}: VideoCardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const PlatformIcon = () => {
     switch (video.platform) {
@@ -101,7 +105,9 @@ export default function VideoCard({ video, onRemove, onEditTags }: VideoCardProp
         <div
           className={cn(
             "absolute top-3 right-3 z-10 transition-opacity",
-            isOpen ? "opacity-100" : "opacity-100 md:opacity-0 md:group-hover:opacity-100",
+            isOpen
+              ? "opacity-100"
+              : "opacity-100 md:opacity-0 md:group-hover:opacity-100",
           )}
         >
           <DropdownMenu onOpenChange={setIsOpen}>

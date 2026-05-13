@@ -40,10 +40,12 @@ async function getInstagramMetadata(url: string) {
 
   const description = data.description || "";
   const afterColon = description.split(": ").slice(1).join(": ");
-  const content = afterColon.replace(
-    /^[\u201c\u201d\u2018\u2019"']+|[\u201c\u201d\u2018\u2019"'.]+$/g,
-    "",
-  ).trim();
+  const content = afterColon
+    .replace(
+      /^[\u201c\u201d\u2018\u2019"']+|[\u201c\u201d\u2018\u2019"'.]+$/g,
+      "",
+    )
+    .trim();
   const firstSentence = content.split(/[.!?\n]/)[0].trim();
 
   return {
@@ -64,11 +66,9 @@ async function getOEmbedMetadata(
 ) {
   const oembedUrls = {
     tiktok: `https://www.tiktok.com/oembed?url=${encodeURIComponent(url)}`,
-    youtube: `https://www.youtube.com/oembed?url=${
-      encodeURIComponent(
-        url,
-      )
-    }&format=json`,
+    youtube: `https://www.youtube.com/oembed?url=${encodeURIComponent(
+      url,
+    )}&format=json`,
   };
 
   const response = await fetch(oembedUrls[platform]);
@@ -141,9 +141,8 @@ Deno.serve(async (req) => {
       meta = await getOEmbedMetadata(platform, url);
     }
   } catch (err: unknown) {
-    const message = err instanceof Error
-      ? err.message
-      : "Failed to fetch metadata";
+    const message =
+      err instanceof Error ? err.message : "Failed to fetch metadata";
 
     console.error("Metadata fetch error:", message);
 
@@ -170,7 +169,8 @@ Deno.serve(async (req) => {
     .insert({
       title: meta.title || "Untitled",
       thumbnail_url: meta.thumbnail_url,
-      aspect_ratio: meta.aspect_ratio ||
+      aspect_ratio:
+        meta.aspect_ratio ||
         getAspectRatio(
           meta.thumbnail_width || meta.width || 0,
           meta.thumbnail_height || meta.height || 0,

@@ -54,7 +54,7 @@ export function useVideos() {
       if (newTags.length > 0) {
         const { error: insertError } = await supabase
           .from("tags")
-          .insert(newTags.map(tag => ({ video_id: videoId, label: tag })));
+          .insert(newTags.map((tag) => ({ video_id: videoId, label: tag })));
 
         if (insertError) throw insertError;
       }
@@ -63,9 +63,9 @@ export function useVideos() {
       mutate(
         (prevVideos) =>
           prevVideos?.map((v) =>
-            v.id === videoId ? { ...v, tags: newTags } : v
+            v.id === videoId ? { ...v, tags: newTags } : v,
           ),
-        false
+        false,
       );
     } catch (err: any) {
       console.error("Failed to update tags", err.message);

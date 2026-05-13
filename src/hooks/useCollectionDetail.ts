@@ -117,7 +117,7 @@ export function useCollectionDetail(collectionId: string | undefined) {
       mutateVideos(
         (prevVideos) =>
           prevVideos?.map((v) =>
-            v.id === videoId ? { ...v, tags: newTags } : v
+            v.id === videoId ? { ...v, tags: newTags } : v,
           ),
         false,
       );

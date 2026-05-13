@@ -1,7 +1,12 @@
-import { X, Plus, Tags } from "lucide-react";
-import { useState, type KeyboardEvent } from "react";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Plus, Tags, X } from "lucide-react";
+import { type KeyboardEvent, useState } from "react";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import type { Video } from "@/types/video";
 
@@ -12,7 +17,12 @@ interface EditTagsModalProps {
   onSaveTags: (videoId: string, newTags: string[]) => Promise<void>;
 }
 
-export default function EditTagsModal({ isOpen, onClose, video, onSaveTags }: EditTagsModalProps) {
+export default function EditTagsModal({
+  isOpen,
+  onClose,
+  video,
+  onSaveTags,
+}: EditTagsModalProps) {
   const [tags, setTags] = useState<string[]>([]);
   const [inputValue, setInputValue] = useState("");
   const [isSaving, setIsSaving] = useState(false);

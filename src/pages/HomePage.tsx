@@ -1,26 +1,25 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import FilterChips from "@/components/FilterChips";
+import { useState } from "react";
 import type { PlatformFilter } from "@/components/FilterChips";
+import FilterChips from "@/components/FilterChips";
+import EditTagsModal from "@/components/modals/EditTagsModal";
 import SearchBar from "@/components/SearchBar";
 import VideoCard from "@/components/VideoCard";
-import EditTagsModal from "@/components/modals/EditTagsModal";
-import type { Video } from "@/types/video";
-
 import { useAuth } from "@/hooks/useAuth";
 import { useTitle } from "@/hooks/useTitle";
 import { useVideos } from "@/hooks/useVideos";
+import type { Video } from "@/types/video";
 
 export default function HomePage() {
   useTitle("Home");
-  
+
   const { session } = useAuth();
   const { videos, loading, updateVideoTags } = useVideos();
   const [activePlatform, setActivePlatform] = useState<PlatformFilter>("all");
   const [editingVideo, setEditingVideo] = useState<Video | null>(null);
 
-  const filteredVideos = videos.filter((video) =>
-    activePlatform === "all" || video.platform === activePlatform
+  const filteredVideos = videos.filter(
+    (video) => activePlatform === "all" || video.platform === activePlatform,
   );
 
   const userName =
@@ -52,7 +51,7 @@ export default function HomePage() {
             onSelectPlatform={setActivePlatform}
             videos={videos}
           />
-        </div>             
+        </div>
 
         {loading ? (
           <div className="flex justify-center py-20">
@@ -67,8 +66,8 @@ export default function HomePage() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.4 }}
               >
-                <VideoCard 
-                  video={video} 
+                <VideoCard
+                  video={video}
                   onEditTags={(v) => setEditingVideo(v)}
                 />
               </motion.div>
