@@ -5,11 +5,9 @@ export const mockVideos: Video[] = [
     id: "1",
     user_id: "user-1",
     title: "10 VS Code Shortcuts You Didn't Know",
-    description: "Boost your productivity with these hidden VS Code shortcuts.",
     thumbnailUrl:
       "https://images.unsplash.com/photo-1542831371-29b0f74f9713?auto=format&fit=crop&q=80&w=800&h=1400",
     videoUrl: "#",
-    duration: "00:59",
     category: "Coding",
     platform: "tiktok",
     aspectRatio: "vertical",
@@ -20,12 +18,9 @@ export const mockVideos: Video[] = [
     id: "2",
     user_id: "user-1",
     title: "Minimalist Desk Setup 2026",
-    description:
-      "A deep dive into the most efficient setups for creative professionals.",
     thumbnailUrl:
       "https://images.unsplash.com/photo-1497215728101-856f4ea42174?auto=format&fit=crop&q=80&w=1200",
     videoUrl: "#",
-    duration: "08:20",
     category: "Inspiration",
     platform: "youtube",
     aspectRatio: "horizontal",
@@ -36,11 +31,9 @@ export const mockVideos: Video[] = [
     id: "3",
     user_id: "user-1",
     title: "Quick Healthy Breakfast Recipe",
-    description: "Make this in under 5 minutes before work.",
     thumbnailUrl:
       "https://images.unsplash.com/photo-1494859802809-d069c3b71a8a?auto=format&fit=crop&q=80&w=800&h=1400",
     videoUrl: "#",
-    duration: "01:15",
     category: "Recipes",
     platform: "instagram",
     aspectRatio: "vertical",
@@ -51,11 +44,9 @@ export const mockVideos: Video[] = [
     id: "4",
     user_id: "user-1",
     title: "The Art of Typography in UI Design",
-    description: "How fonts shape user experiences in modern web apps.",
     thumbnailUrl:
       "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=1200",
     videoUrl: "#",
-    duration: "15:30",
     category: "Design",
     platform: "youtube",
     aspectRatio: "horizontal",
@@ -65,11 +56,9 @@ export const mockVideos: Video[] = [
     id: "5",
     user_id: "user-1",
     title: "Day in the Life of a Software Engineer",
-    description: "Vlog of my daily routine working from Tokyo.",
     thumbnailUrl:
       "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=800&h=1400",
     videoUrl: "#",
-    duration: "02:10",
     category: "Lifestyle",
     platform: "tiktok",
     aspectRatio: "vertical",
@@ -80,12 +69,9 @@ export const mockVideos: Video[] = [
     id: "6",
     user_id: "user-1",
     title: "React 19 Server Components Explained",
-    description:
-      "Everything you need to know about the new React architecture.",
     thumbnailUrl:
       "https://images.unsplash.com/photo-1633356122544-f134324a6cee?auto=format&fit=crop&q=80&w=1200",
     videoUrl: "#",
-    duration: "25:05",
     category: "Tutorials",
     platform: "youtube",
     aspectRatio: "horizontal",

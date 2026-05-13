@@ -1,14 +1,14 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
 import { Folder, MoreVertical, Play } from "lucide-react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-import { cn } from "@/lib/utils";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 import type { Collection } from "@/types/collection";
 
 interface CollectionCardProps {
@@ -89,7 +89,10 @@ export default function CollectionCard({
           <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 backdrop-blur shadow-sm hover:bg-white transition-colors">
             <MoreVertical className="h-4 w-4 text-foreground" />
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end" className="w-32 bg-white/95 backdrop-blur-xl border-none shadow-2xl">
+          <DropdownMenuContent
+            align="end"
+            className="w-32 bg-white/95 backdrop-blur-xl border-none shadow-2xl"
+          >
             <DropdownMenuItem
               onClick={() => onRename?.(collection.id, collection.name)}
               className="cursor-pointer"

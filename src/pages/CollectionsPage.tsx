@@ -77,7 +77,8 @@ export default function CollectionsPage() {
               No collections yet
             </h2>
             <p className="mt-3 max-w-sm text-base md:text-lg text-muted-foreground">
-              Group your saved videos into curated collections to find them in seconds.
+              Group your saved videos into curated collections to find them in
+              seconds.
             </p>
           </motion.div>
         ) : (

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { ArrowLeft, Loader2, Pencil, Play, Plus } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AddVideosModal from "@/components/modals/AddVideosModal";
 import { Button } from "@/components/ui/button";

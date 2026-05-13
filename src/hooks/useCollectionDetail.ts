@@ -1,6 +1,6 @@
 import useSWR from "swr";
 import { supabase } from "@/lib/supabase";
-import { type Video } from "@/types/video";
+import type { Video } from "@/types/video";
 
 export function useCollectionDetail(collectionId: string | undefined) {
   // Fetch collection name separately if needed or together
@@ -8,18 +8,15 @@ export function useCollectionDetail(collectionId: string | undefined) {
     data: collection,
     error: colError,
     isLoading: colLoading,
-  } = useSWR(
-    collectionId ? ["collection", collectionId] : null,
-    async () => {
-      const { data, error } = await supabase
-        .from("collections")
-        .select("name")
-        .eq("id", collectionId)
-        .single();
-      if (error) throw error;
-      return data;
-    },
-  );
+  } = useSWR(collectionId ? ["collection", collectionId] : null, async () => {
+    const { data, error } = await supabase
+      .from("collections")
+      .select("name")
+      .eq("id", collectionId)
+      .single();
+    if (error) throw error;
+    return data;
+  });
 
   const {
     data: videos,
@@ -42,10 +39,8 @@ export function useCollectionDetail(collectionId: string | undefined) {
         id: v.video.id,
         user_id: v.video.user_id,
         title: v.video.title,
-        description: v.video.description,
         thumbnailUrl: v.video.thumbnail_url,
         videoUrl: v.video.video_url,
-        duration: v.video.duration,
         category: v.video.category,
         platform: v.video.platform,
         aspectRatio: v.video.aspect_ratio,

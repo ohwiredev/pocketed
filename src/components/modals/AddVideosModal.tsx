@@ -90,9 +90,7 @@ export default function AddVideosModal({
                 <Search className="h-8 w-8 text-muted-foreground/40" />
               </div>
               <p className="text-sm font-medium text-foreground">
-                {searchQuery
-                  ? "No matching videos found"
-                  : "Nothing to add"}
+                {searchQuery ? "No matching videos found" : "Nothing to add"}
               </p>
               <p className="mt-1 text-xs text-muted-foreground">
                 {searchQuery

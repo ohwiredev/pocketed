@@ -41,7 +41,7 @@ export function useCollections() {
     {
       revalidateOnFocus: false, // Optional: adjust based on preference
       dedupingInterval: 10000,
-    }
+    },
   );
 
   const createCollection = async (name: string) => {
@@ -96,7 +96,7 @@ export function useCollections() {
 
       mutate(
         (prev) => prev?.map((c) => (c.id === id ? { ...c, name } : c)),
-        false
+        false,
       );
     } catch (err: any) {
       throw err;

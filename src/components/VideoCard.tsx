@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { motion } from "framer-motion";
-import { Clock, ExternalLink, MoreVertical, Play, Trash2 } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { ExternalLink, MoreVertical, Play, Trash2 } from "lucide-react";
+import { useState } from "react";
 import instagramIcon from "@/assets/icons/instagram-icon.svg";
 import tiktokIcon from "@/assets/icons/tiktok-icon-dark.svg";
 import youtubeIcon from "@/assets/icons/youtube.svg";
@@ -11,6 +10,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { cn } from "@/lib/utils";
 import type { Video } from "@/types/video";
 
 interface VideoCardProps {
@@ -56,11 +56,6 @@ export default function VideoCard({ video, onRemove }: VideoCardProps) {
           {video.platform}
         </div>
 
-        <div className="absolute bottom-3 right-3 flex items-center gap-1 rounded-md bg-black/60 px-2 py-1 text-[10px] font-medium text-white backdrop-blur-md">
-          <Clock className="size-3" />
-          {video.duration}
-        </div>
-
         <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md shadow-lg border border-white/30">
             <ExternalLink className="size-5" />
@@ -99,7 +94,10 @@ export default function VideoCard({ video, onRemove }: VideoCardProps) {
             <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md hover:bg-black/80 transition-colors">
               <MoreVertical className="size-4" />
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end" className="bg-white/95 backdrop-blur-xl border-none shadow-2xl">
+            <DropdownMenuContent
+              align="end"
+              className="bg-white/95 backdrop-blur-xl border-none shadow-2xl"
+            >
               <DropdownMenuItem
                 onClick={() => onRemove(video.id)}
                 className="cursor-pointer text-destructive focus:text-destructive"
