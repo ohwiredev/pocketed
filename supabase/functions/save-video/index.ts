@@ -172,8 +172,8 @@ Deno.serve(async (req) => {
       thumbnail_url: meta.thumbnail_url,
       aspect_ratio: meta.aspect_ratio ||
         getAspectRatio(
-          meta.width || meta.thumbnail_width || 0,
-          meta.height || meta.thumbnail_height || 0,
+          meta.thumbnail_width || meta.width || 0,
+          meta.thumbnail_height || meta.height || 0,
         ),
       video_url: url,
       platform,
