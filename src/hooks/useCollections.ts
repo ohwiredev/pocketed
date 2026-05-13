@@ -18,7 +18,7 @@ export function useCollections() {
             video:videos(thumbnail_url)
           )
         `)
-        .eq("user_id", user!.id)
+        .eq("user_id", user?.id)
         .order("created_at", { ascending: false });
 
       if (fetchError) throw fetchError;
@@ -46,61 +46,48 @@ export function useCollections() {
 
   const createCollection = async (name: string) => {
     if (!user) return;
+    const { data, error: createError } = await supabase
+      .from("collections")
+      .insert([{ name, user_id: user.id }])
+      .select()
+      .single();
 
-    try {
-      const { data, error: createError } = await supabase
-        .from("collections")
-        .insert([{ name, user_id: user.id }])
-        .select()
-        .single();
+    if (createError) throw createError;
 
-      if (createError) throw createError;
+    // Optimistic update
+    const newCollection: Collection = {
+      ...data,
+      video_count: 0,
+      thumbnails: [],
+    };
 
-      // Optimistic update
-      const newCollection: Collection = {
-        ...data,
-        video_count: 0,
-        thumbnails: [],
-      };
-
-      mutate((prev) => [newCollection, ...(prev || [])], false);
-      return data;
-    } catch (err: any) {
-      throw err;
-    }
+    mutate((prev) => [newCollection, ...(prev || [])], false);
+    return data;
   };
 
   const deleteCollection = async (id: string) => {
-    try {
-      const { error: deleteError } = await supabase
-        .from("collections")
-        .delete()
-        .eq("id", id);
+    const { error: deleteError } = await supabase
+      .from("collections")
+      .delete()
+      .eq("id", id);
 
-      if (deleteError) throw deleteError;
+    if (deleteError) throw deleteError;
 
-      mutate((prev) => prev?.filter((c) => c.id !== id), false);
-    } catch (err: any) {
-      throw err;
-    }
+    mutate((prev) => prev?.filter((c) => c.id !== id), false);
   };
 
   const renameCollection = async (id: string, name: string) => {
-    try {
-      const { error: updateError } = await supabase
-        .from("collections")
-        .update({ name })
-        .eq("id", id);
+    const { error: updateError } = await supabase
+      .from("collections")
+      .update({ name })
+      .eq("id", id);
 
-      if (updateError) throw updateError;
+    if (updateError) throw updateError;
 
-      mutate(
-        (prev) => prev?.map((c) => (c.id === id ? { ...c, name } : c)),
-        false,
-      );
-    } catch (err: any) {
-      throw err;
-    }
+    mutate(
+      (prev) => prev?.map((c) => (c.id === id ? { ...c, name } : c)),
+      false,
+    );
   };
 
   return {

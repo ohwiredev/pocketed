@@ -51,7 +51,7 @@ export function useVideos() {
     if (isInitialized) {
       fetchVideos();
     }
-  }, [user, isInitialized]);
+  }, [isInitialized, fetchVideos]);
 
   return { videos, loading, error, refresh: fetchVideos };
 }

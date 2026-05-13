@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Folder, MoreVertical, Play } from "lucide-react";
+import { Folder, MoreVertical } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
