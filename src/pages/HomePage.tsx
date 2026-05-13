@@ -16,11 +16,24 @@ export default function HomePage() {
   const { session } = useAuth();
   const { videos, loading, updateVideoTags } = useVideos();
   const [activePlatform, setActivePlatform] = useState<PlatformFilter>("all");
+  const [searchQuery, setSearchQuery] = useState("");
   const [editingVideo, setEditingVideo] = useState<Video | null>(null);
 
-  const filteredVideos = videos.filter(
-    (video) => activePlatform === "all" || video.platform === activePlatform,
-  );
+  const filteredVideos = videos.filter((video) => {
+    const matchesPlatform =
+      activePlatform === "all" || video.platform === activePlatform;
+
+    const query = searchQuery.toLowerCase();
+    
+    const matchesSearch =
+      !searchQuery ||
+      video.title.toLowerCase().includes(query) ||
+      video.author?.toLowerCase().includes(query) ||
+      video.tags?.some((tag) => tag.toLowerCase().includes(query)) ||
+      video.notes?.toLowerCase().includes(query);
+
+    return matchesPlatform && matchesSearch;
+  });
 
   const userName =
     session?.user?.user_metadata?.display_name ||
@@ -40,7 +53,7 @@ export default function HomePage() {
           <span className="font-bold text-foreground">{videoCount} videos</span>{" "}
           so far. What would you like to watch today?
         </p>
-        <SearchBar />
+        <SearchBar value={searchQuery} onChange={setSearchQuery} />
       </section>
 
       {/* Filters & Feed Section */}
@@ -78,7 +91,11 @@ export default function HomePage() {
         {!loading && filteredVideos.length === 0 && (
           <div className="flex flex-col items-center justify-center py-20 text-center">
             <p className="text-lg font-medium text-foreground/60">
-              No videos saved from this platform yet.
+              {searchQuery
+                ? `No videos found matching "${searchQuery}"`
+                : activePlatform === "all"
+                  ? "You haven't pocketed any videos yet."
+                  : `No videos saved from ${activePlatform} yet.`}
             </p>
           </div>
         )}
