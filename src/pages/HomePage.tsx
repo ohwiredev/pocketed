@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import type { PlatformFilter } from "@/components/FilterChips";
 import FilterChips from "@/components/FilterChips";
+import AddToCollectionModal from "@/components/modals/AddToCollectionModal";
 import EditTagsModal from "@/components/modals/EditTagsModal";
 import SearchBar from "@/components/SearchBar";
 import VideoCard from "@/components/VideoCard";
@@ -18,13 +19,15 @@ export default function HomePage() {
   const [activePlatform, setActivePlatform] = useState<PlatformFilter>("all");
   const [searchQuery, setSearchQuery] = useState("");
   const [editingVideo, setEditingVideo] = useState<Video | null>(null);
+  const [addingVideoToCollection, setAddingVideoToCollection] =
+    useState<Video | null>(null);
 
   const filteredVideos = videos.filter((video) => {
     const matchesPlatform =
       activePlatform === "all" || video.platform === activePlatform;
 
     const query = searchQuery.toLowerCase();
-    
+
     const matchesSearch =
       !searchQuery ||
       video.title.toLowerCase().includes(query) ||
@@ -82,6 +85,7 @@ export default function HomePage() {
                 <VideoCard
                   video={video}
                   onEditTags={(v) => setEditingVideo(v)}
+                  onAddToCollection={(v) => setAddingVideoToCollection(v)}
                 />
               </motion.div>
             ))}
@@ -106,6 +110,12 @@ export default function HomePage() {
         onClose={() => setEditingVideo(null)}
         video={editingVideo}
         onSaveTags={updateVideoTags}
+      />
+
+      <AddToCollectionModal
+        isOpen={!!addingVideoToCollection}
+        onClose={() => setAddingVideoToCollection(null)}
+        video={addingVideoToCollection}
       />
     </main>
   );

@@ -1,5 +1,12 @@
 import { motion } from "framer-motion";
-import { ExternalLink, MoreVertical, Play, Tags, Trash2 } from "lucide-react";
+import {
+  ExternalLink,
+  FolderPlus,
+  MoreVertical,
+  Play,
+  Tags,
+  Trash2,
+} from "lucide-react";
 import { useState } from "react";
 import instagramIcon from "@/assets/icons/instagram-icon.svg";
 import tiktokIcon from "@/assets/icons/tiktok-icon-dark.svg";
@@ -17,12 +24,14 @@ interface VideoCardProps {
   video: Video;
   onRemove?: (id: string) => void;
   onEditTags?: (video: Video) => void;
+  onAddToCollection?: (video: Video) => void;
 }
 
 export default function VideoCard({
   video,
   onRemove,
   onEditTags,
+  onAddToCollection,
 }: VideoCardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const PlatformIcon = () => {
@@ -101,7 +110,7 @@ export default function VideoCard({
       </div>
 
       {/* Action Menu */}
-      {(onRemove || onEditTags) && (
+      {(onRemove || onEditTags || onAddToCollection) && (
         <div
           className={cn(
             "absolute top-3 right-3 z-10 transition-opacity",
@@ -128,6 +137,18 @@ export default function VideoCard({
                 >
                   <Tags className="h-4 w-4 text-muted-foreground" />
                   <span className="text-sm">Edit Tags</span>
+                </DropdownMenuItem>
+              )}
+              {onAddToCollection && (
+                <DropdownMenuItem
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onAddToCollection(video);
+                  }}
+                  className="cursor-pointer gap-3"
+                >
+                  <FolderPlus className="h-4 w-4 text-muted-foreground" />
+                  <span className="text-sm">Add to collection</span>
                 </DropdownMenuItem>
               )}
               {onRemove && (
