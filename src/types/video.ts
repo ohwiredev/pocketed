@@ -8,5 +8,6 @@ export interface Video {
   platform: "tiktok" | "youtube" | "instagram";
   aspectRatio: "vertical" | "horizontal";
   notes?: string;
+  author?: string;
   createdAt: string;
 }

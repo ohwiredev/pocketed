@@ -28,6 +28,7 @@ export function useVideos() {
         platform: v.platform,
         aspectRatio: v.aspect_ratio,
         notes: v.notes,
+        author: v.author,
         createdAt: v.created_at,
       }));
 

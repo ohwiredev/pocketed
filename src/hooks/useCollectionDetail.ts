@@ -45,6 +45,7 @@ export function useCollectionDetail(collectionId: string | undefined) {
         platform: v.video.platform,
         aspectRatio: v.video.aspect_ratio,
         notes: v.video.notes,
+        author: v.video.author,
         createdAt: v.video.created_at,
       })) as Video[];
     },

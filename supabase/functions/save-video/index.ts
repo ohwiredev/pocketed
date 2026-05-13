@@ -40,8 +40,11 @@ async function getInstagramMetadata(url: string) {
 
   const description = data.description || "";
   const afterColon = description.split(": ").slice(1).join(": ");
-  const content = afterColon.replace(/^[""']|[""']\.*$/g, "").trim();
-  const firstSentence = content.match(/^[^.!?]*[.!?]/)?.[0].trim() ?? content;
+  const content = afterColon.replace(
+    /^[\u201c\u201d\u2018\u2019"']+|[\u201c\u201d\u2018\u2019"'.]+$/g,
+    "",
+  ).trim();
+  const firstSentence = content.split(/[.!?\n]/)[0].trim();
 
   return {
     title: firstSentence,
@@ -51,6 +54,7 @@ async function getInstagramMetadata(url: string) {
       data.image?.height || 0,
     ),
     video_url: url,
+    author: data.author,
   };
 }
 
@@ -60,9 +64,11 @@ async function getOEmbedMetadata(
 ) {
   const oembedUrls = {
     tiktok: `https://www.tiktok.com/oembed?url=${encodeURIComponent(url)}`,
-    youtube: `https://www.youtube.com/oembed?url=${encodeURIComponent(
-      url,
-    )}&format=json`,
+    youtube: `https://www.youtube.com/oembed?url=${
+      encodeURIComponent(
+        url,
+      )
+    }&format=json`,
   };
 
   const response = await fetch(oembedUrls[platform]);
@@ -135,8 +141,9 @@ Deno.serve(async (req) => {
       meta = await getOEmbedMetadata(platform, url);
     }
   } catch (err: unknown) {
-    const message =
-      err instanceof Error ? err.message : "Failed to fetch metadata";
+    const message = err instanceof Error
+      ? err.message
+      : "Failed to fetch metadata";
 
     console.error("Metadata fetch error:", message);
 
@@ -163,8 +170,7 @@ Deno.serve(async (req) => {
     .insert({
       title: meta.title || "Untitled",
       thumbnail_url: meta.thumbnail_url,
-      aspect_ratio:
-        meta.aspect_ratio ||
+      aspect_ratio: meta.aspect_ratio ||
         getAspectRatio(
           meta.width || meta.thumbnail_width || 0,
           meta.height || meta.thumbnail_height || 0,
@@ -172,6 +178,7 @@ Deno.serve(async (req) => {
       video_url: url,
       platform,
       notes: notes || null,
+      author: meta.author || meta.author_name || null,
     })
     .select()
     .single();

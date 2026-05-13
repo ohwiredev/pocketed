@@ -48,6 +48,7 @@ export default function VideoCard({ video, onRemove }: VideoCardProps) {
             aspectRatio: video.aspectRatio === "horizontal" ? "16/9" : "9/16",
           }}
         />
+
         <div className="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent opacity-60 transition-opacity duration-300 group-hover:opacity-80" />
 
         {/* Platform Badge */}
@@ -62,6 +63,7 @@ export default function VideoCard({ video, onRemove }: VideoCardProps) {
           </div>
         </div>
       </div>
+
       <div className="p-4">
         <div className="mb-3 flex items-center gap-2">
           <span className="inline-flex items-center rounded-full bg-primary/10 px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-primary">
@@ -69,12 +71,14 @@ export default function VideoCard({ video, onRemove }: VideoCardProps) {
           </span>
           <div className="h-1 w-1 rounded-full bg-foreground/20" />
           <span className="text-[10px] font-medium text-foreground/40">
-            {new Date(video.createdAt).toLocaleDateString()}
+            {video.author || "Unknown Author"}
           </span>
         </div>
+
         <h3 className="mb-2 line-clamp-2 font-sans text-base font-semibold leading-snug group-hover:text-primary transition-colors">
           {video.title}
         </h3>
+
         {video.notes && (
           <p className="line-clamp-2 text-xs italic text-foreground/60 border-l-2 border-primary/20 pl-2">
             "{video.notes}"
@@ -91,19 +95,20 @@ export default function VideoCard({ video, onRemove }: VideoCardProps) {
           )}
         >
           <DropdownMenu onOpenChange={setIsOpen}>
-            <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-full bg-black/60 text-white backdrop-blur-md hover:bg-black/80 transition-colors">
-              <MoreVertical className="size-4" />
+            <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 backdrop-blur shadow-sm hover:bg-white transition-colors">
+              <MoreVertical className="size-4 text-foreground" />
             </DropdownMenuTrigger>
             <DropdownMenuContent
               align="end"
-              className="bg-white/95 backdrop-blur-xl border-none shadow-2xl"
+              className="min-w-48 bg-white/95 backdrop-blur-xl border-none shadow-2xl p-1.5"
             >
               <DropdownMenuItem
+                variant="destructive"
                 onClick={() => onRemove(video.id)}
-                className="cursor-pointer text-destructive focus:text-destructive"
+                className="cursor-pointer gap-3"
               >
-                <Trash2 className="mr-2 h-4 w-4" />
-                Remove from collection
+                <Trash2 className="h-4 w-4" />
+                <span className="text-sm">Remove from collection</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

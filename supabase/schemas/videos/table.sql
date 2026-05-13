@@ -8,5 +8,6 @@ create table videos (
   platform text,
   aspect_ratio text,
   notes text,
+  author text,
   created_at timestamp with time zone default now()
 );

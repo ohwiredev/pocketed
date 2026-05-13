@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Folder, MoreVertical } from "lucide-react";
+import { Folder, MoreVertical, Pencil, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import {
@@ -37,7 +37,6 @@ export default function CollectionCard({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      whileHover={{ y: -4 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
       className="group relative"
     >
@@ -53,7 +52,7 @@ export default function CollectionCard({
                   <img
                     src={thumb}
                     alt=""
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="h-full w-full object-cover"
                   />
                 ) : (
                   <div className="flex h-full w-full items-center justify-center bg-primary/5">
@@ -91,19 +90,22 @@ export default function CollectionCard({
           </DropdownMenuTrigger>
           <DropdownMenuContent
             align="end"
-            className="w-32 bg-white/95 backdrop-blur-xl border-none shadow-2xl"
+            className="min-w-40 bg-white/95 backdrop-blur-xl border-none shadow-2xl p-1.5"
           >
             <DropdownMenuItem
               onClick={() => onRename?.(collection.id, collection.name)}
-              className="cursor-pointer"
+              className="cursor-pointer gap-2 py-2"
             >
-              Rename
+              <Pencil className="h-4 w-4 text-muted-foreground" />
+              <span>Rename</span>
             </DropdownMenuItem>
             <DropdownMenuItem
+              variant="destructive"
               onClick={() => onDelete?.(collection.id)}
-              className="cursor-pointer text-destructive focus:text-destructive"
+              className="cursor-pointer gap-2 py-2"
             >
-              Delete
+              <Trash2 className="h-4 w-4" />
+              <span>Delete</span>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
