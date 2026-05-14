@@ -26,7 +26,7 @@ const itemVariants = {
 
 export default function FeaturesSection() {
   return (
-    <section>
+    <section id="how-it-works">
       <div className="pb-24">
         <div className="mx-auto w-full max-w-7xl px-6">
           <motion.div

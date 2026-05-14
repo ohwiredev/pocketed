@@ -1,5 +1,5 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { Bookmark, Home, Library, User } from "lucide-react";
+import { Home, Library, User } from "lucide-react";
 import { memo, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
