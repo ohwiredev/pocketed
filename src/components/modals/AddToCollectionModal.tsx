@@ -66,8 +66,7 @@ export default function AddToCollectionModal({
       setShowCreateForm(false);
       setNewCollectionName("");
     }
-  }, [isOpen, video]);
-
+  }, [isOpen, video, checkExistingCollections]);
 
   const handleAddToCollection = async (collectionId: string) => {
     if (!video) return;

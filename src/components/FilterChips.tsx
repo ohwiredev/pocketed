@@ -16,33 +16,75 @@ interface FilterChipsProps {
   activePlatform: PlatformFilter;
   onSelectPlatform: (platform: PlatformFilter) => void;
   videos: Video[];
+  activeTags: string[];
+  onToggleTag: (tag: string) => void;
+  topTags: { label: string; count: number }[];
 }
 
 export default function FilterChips({
   activePlatform,
   onSelectPlatform,
   videos,
+  activeTags,
+  onToggleTag,
+  topTags,
 }: FilterChipsProps) {
   const populatedPlatforms = PLATFORMS.filter(
     (p) => p.value === "all" || videos.some((v) => v.platform === p.value),
   );
 
   return (
-    <div className="no-scrollbar flex w-full items-center gap-2 overflow-x-auto pb-2">
-      {populatedPlatforms.map(({ value, label, icon }) => (
+    <div className="flex flex-col gap-4 w-full">
+      {/* Tag Filters (Primary) */}
+      <div className="no-scrollbar flex w-full items-center gap-2 overflow-x-auto pb-1">
         <button
-          key={value}
-          onClick={() => onSelectPlatform(value)}
+          onClick={() => {
+            // If clicking All, clear all tag filters
+            activeTags.forEach((t) => onToggleTag(t));
+          }}
           className={`flex-none inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-all ${
-            activePlatform === value
+            activeTags.length === 0
               ? "bg-secondary text-secondary-foreground shadow-md shadow-secondary/20 border border-secondary"
               : "bg-white/5 text-foreground/70 hover:bg-white/10 hover:text-foreground border border-border/40"
           }`}
         >
-          {icon && <img src={icon} alt={label} className="size-3.5" />}
-          {label}
+          All
         </button>
-      ))}
+        {topTags.map(({ label }) => {
+          const isActive = activeTags.includes(label);
+          return (
+            <button
+              key={label}
+              onClick={() => onToggleTag(label)}
+              className={`flex-none inline-flex items-center gap-2 rounded-full px-5 py-2 text-sm font-medium transition-all ${
+                isActive
+                  ? "bg-secondary text-secondary-foreground shadow-md shadow-secondary/20 border border-secondary"
+                  : "bg-white/5 text-foreground/70 hover:bg-white/10 hover:text-foreground border border-border/40"
+              }`}
+            >
+              #{label}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Platform Filters (Secondary) */}
+      <div className="no-scrollbar flex w-full items-center gap-2 overflow-x-auto pb-2">
+        {populatedPlatforms.map(({ value, label, icon }) => (
+          <button
+            key={value}
+            onClick={() => onSelectPlatform(value)}
+            className={`flex-none inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-medium transition-all ${
+              activePlatform === value
+                ? "bg-foreground/10 text-foreground shadow-sm border border-border/50"
+                : "bg-transparent text-foreground/60 hover:bg-white/5 hover:text-foreground border border-transparent"
+            }`}
+          >
+            {icon && <img src={icon} alt={label} className="size-3" />}
+            {label}
+          </button>
+        ))}
+      </div>
     </div>
   );
 }

@@ -195,6 +195,24 @@ Deno.serve(async (req) => {
     );
   }
 
+  // Invoke auto-tag function asynchronously (we await it but catch errors so it doesn't block)
+  // In a production app, a Database Webhook on INSERT to 'videos' is preferred.
+  try {
+    // We reuse the existing 'supabase' client which already has the user's Authorization header attached.
+    // This securely forwards the user's JWT to the auto-tag function.
+    supabase.functions
+      .invoke("auto-tag", {
+        body: {
+          video_id: video.id,
+          title: video.title,
+          platform: video.platform,
+        },
+      })
+      .catch((err) => console.error("Auto-tag invocation failed:", err));
+  } catch (err) {
+    console.error("Failed to trigger auto-tag:", err);
+  }
+
   return new Response(JSON.stringify(video), {
     status: 200,
     headers: { "Content-Type": "application/json" },

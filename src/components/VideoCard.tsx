@@ -25,6 +25,7 @@ interface VideoCardProps {
   onRemove?: (id: string) => void;
   onEditTags?: (video: Video) => void;
   onAddToCollection?: (video: Video) => void;
+  onTagClick?: (tag: string) => void;
 }
 
 export default function VideoCard({
@@ -32,6 +33,7 @@ export default function VideoCard({
   onRemove,
   onEditTags,
   onAddToCollection,
+  onTagClick,
 }: VideoCardProps) {
   const [isOpen, setIsOpen] = useState(false);
   const PlatformIcon = () => {
@@ -94,7 +96,15 @@ export default function VideoCard({
             {video.tags.map((tag) => (
               <span
                 key={tag}
-                className="inline-flex items-center rounded-md bg-secondary/80 px-2 py-0.5 text-[10px] font-medium text-secondary-foreground"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onTagClick?.(tag);
+                }}
+                className={cn(
+                  "inline-flex items-center rounded-md bg-secondary/80 px-2 py-0.5 text-[10px] font-medium text-secondary-foreground",
+                  onTagClick &&
+                    "cursor-pointer hover:bg-secondary hover:shadow-sm",
+                )}
               >
                 #{tag}
               </span>

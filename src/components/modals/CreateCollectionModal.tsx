@@ -25,7 +25,7 @@ export default function CreateCollectionModal({
   const [name, setName] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
     if (!name.trim()) return;
 
@@ -52,7 +52,7 @@ export default function CreateCollectionModal({
             Create a new collection to organize your saved videos.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4 py-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="name">Collection name</Label>
             <Input

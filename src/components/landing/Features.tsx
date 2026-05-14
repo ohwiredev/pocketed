@@ -1,8 +1,7 @@
 import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
+import WorksEverywhere from "@/assets/works-everywhere.webp";
 import { Card } from "@/components/ui/card";
-
-import WorksEverywhere from "@/assets/works-everywhere.webp"
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -62,7 +61,7 @@ export default function Features() {
                   />
                 </div>
               </Card>
-              
+
               <div className="sm:max-w-sm">
                 <h3 className="text-foreground text-xl font-semibold">
                   Works everywhere

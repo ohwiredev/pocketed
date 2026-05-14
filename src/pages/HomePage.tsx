@@ -1,10 +1,10 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
-import type { PlatformFilter } from "@/components/FilterChips";
-import FilterChips from "@/components/FilterChips";
+import { AnimatePresence, motion } from "framer-motion";
+import { PackageOpen } from "lucide-react";
+import { useCallback, useState } from "react";
+import type { PlatformFilter } from "@/components/FilterBar";
+import FilterBar from "@/components/FilterBar";
 import AddToCollectionModal from "@/components/modals/AddToCollectionModal";
 import EditTagsModal from "@/components/modals/EditTagsModal";
-import SearchBar from "@/components/SearchBar";
 import VideoCard from "@/components/VideoCard";
 import { useAuth } from "@/hooks/useAuth";
 import { useTitle } from "@/hooks/useTitle";
@@ -17,14 +17,38 @@ export default function HomePage() {
   const { session } = useAuth();
   const { videos, loading, updateVideoTags } = useVideos();
   const [activePlatform, setActivePlatform] = useState<PlatformFilter>("all");
+  const [activeTags, setActiveTags] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [editingVideo, setEditingVideo] = useState<Video | null>(null);
   const [addingVideoToCollection, setAddingVideoToCollection] =
     useState<Video | null>(null);
 
+  // Derive top tags
+  const tagCounts = new Map<string, number>();
+  videos.forEach((v) => {
+    v.tags?.forEach((t) => {
+      tagCounts.set(t, (tagCounts.get(t) || 0) + 1);
+    });
+  });
+  const topTags = Array.from(tagCounts.entries())
+    .map(([label, count]) => ({ label, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 20);
+
+  const toggleTag = (tag: string) => {
+    setActiveTags((prev) =>
+      prev.includes(tag) ? prev.filter((t) => t !== tag) : [...prev, tag],
+    );
+  };
+
   const filteredVideos = videos.filter((video) => {
     const matchesPlatform =
       activePlatform === "all" || video.platform === activePlatform;
+
+    // AND logic for tags
+    const matchesTags =
+      activeTags.length === 0 ||
+      activeTags.every((tag) => video.tags?.includes(tag));
 
     const query = searchQuery.toLowerCase();
 
@@ -35,8 +59,14 @@ export default function HomePage() {
       video.tags?.some((tag) => tag.toLowerCase().includes(query)) ||
       video.notes?.toLowerCase().includes(query);
 
-    return matchesPlatform && matchesSearch;
+    return matchesPlatform && matchesTags && matchesSearch;
   });
+
+  const clearAllFilters = useCallback(() => {
+    setActivePlatform("all");
+    setActiveTags([]);
+    setSearchQuery("");
+  }, []);
 
   const userName =
     session?.user?.user_metadata?.display_name ||
@@ -45,63 +75,100 @@ export default function HomePage() {
 
   const videoCount = videos.length;
 
+  // Check if any filters are active
+  const hasActiveFilters =
+    activeTags.length > 0 || activePlatform !== "all" || searchQuery.length > 0;
+
   return (
-    <main className="container mx-auto max-w-7xl px-4 pt-8 md:px-8">
-      <section className="mb-10 mt-4 flex flex-col items-center text-center">
-        <h1 className="mb-2 font-serif text-3xl font-bold tracking-tight md:text-4xl">
-          Welcome back, {userName}!
-        </h1>
-        <p className="mb-8 text-sm text-foreground/60 max-w-md">
-          You've pocketed{" "}
-          <span className="font-bold text-foreground">{videoCount} videos</span>{" "}
-          so far. What would you like to watch today?
-        </p>
-        <SearchBar value={searchQuery} onChange={setSearchQuery} />
+    <main className="min-h-screen">
+      {/* Welcome Hero (scrolls away) */}
+      <section className="container mx-auto max-w-7xl px-4 md:px-8 pt-8">
+        <div className="mb-6 mt-4 flex flex-col items-center text-center">
+          <h1 className="mb-2 font-serif text-3xl font-bold tracking-tight md:text-4xl">
+            Welcome back, {userName}!
+          </h1>
+          <p className="text-sm text-foreground/60 max-w-md">
+            You've pocketed{" "}
+            <span className="font-bold text-foreground">
+              {videoCount} videos
+            </span>{" "}
+            so far. What would you like to watch today?
+          </p>
+        </div>
       </section>
 
-      {/* Filters & Feed Section */}
-      <section className="mt-8">
-        <div className="mb-8 w-full">
-          <FilterChips
-            activePlatform={activePlatform}
-            onSelectPlatform={setActivePlatform}
-            videos={videos}
-          />
-        </div>
+      {/* Sticky Filter Bar */}
+      <FilterBar
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        activePlatform={activePlatform}
+        onSelectPlatform={setActivePlatform}
+        activeTags={activeTags}
+        onToggleTag={toggleTag}
+        topTags={topTags}
+        videos={videos}
+        filteredCount={filteredVideos.length}
+        totalCount={videoCount}
+        onClearAll={clearAllFilters}
+      />
 
+      {/* Video Feed */}
+      <section className="container mx-auto max-w-7xl px-4 md:px-8 mt-6 pb-8">
         {loading ? (
           <div className="flex justify-center py-20">
             <div className="h-8 w-8 animate-spin rounded-full border-4 border-primary border-t-transparent" />
           </div>
-        ) : (
+        ) : filteredVideos.length > 0 ? (
           <div className="columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4">
-            {filteredVideos.map((video) => (
-              <motion.div
-                key={video.id}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.4 }}
-              >
-                <VideoCard
-                  video={video}
-                  onEditTags={(v) => setEditingVideo(v)}
-                  onAddToCollection={(v) => setAddingVideoToCollection(v)}
-                />
-              </motion.div>
-            ))}
+            <AnimatePresence mode="popLayout">
+              {filteredVideos.map((video) => (
+                <motion.div
+                  key={video.id}
+                  layout
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.95 }}
+                  transition={{ duration: 0.3, ease: "easeOut" }}
+                >
+                  <VideoCard
+                    video={video}
+                    onEditTags={(v) => setEditingVideo(v)}
+                    onAddToCollection={(v) => setAddingVideoToCollection(v)}
+                    onTagClick={(tag) => setActiveTags([tag])}
+                  />
+                </motion.div>
+              ))}
+            </AnimatePresence>
           </div>
-        )}
-
-        {!loading && filteredVideos.length === 0 && (
-          <div className="flex flex-col items-center justify-center py-20 text-center">
-            <p className="text-lg font-medium text-foreground/60">
-              {searchQuery
-                ? `No videos found matching "${searchQuery}"`
-                : activePlatform === "all"
-                  ? "You haven't pocketed any videos yet."
-                  : `No videos saved from ${activePlatform} yet.`}
+        ) : (
+          /* Enhanced Empty State */
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="flex flex-col items-center justify-center py-20 text-center"
+          >
+            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-foreground/[0.04]">
+              <PackageOpen className="size-7 text-foreground/30" />
+            </div>
+            <p className="text-base font-medium text-foreground/60 mb-1">
+              {hasActiveFilters
+                ? "No videos match your filters"
+                : "You haven't pocketed any videos yet."}
             </p>
-          </div>
+            {hasActiveFilters && (
+              <>
+                <p className="text-sm text-foreground/40 mb-4 max-w-sm">
+                  Try removing some filters or searching for something else.
+                </p>
+                <button
+                  onClick={clearAllFilters}
+                  className="inline-flex items-center gap-1.5 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary hover:bg-primary/20 transition-colors cursor-pointer"
+                >
+                  Clear all filters
+                </button>
+              </>
+            )}
+          </motion.div>
         )}
       </section>
 

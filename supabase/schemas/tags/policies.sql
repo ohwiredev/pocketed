@@ -1,7 +1,6 @@
 alter table tags enable row level security;
 
-create policy "Users see own tags"
+create policy "Users manage own tags"
   on tags for all
-  using (
-    video_id in (select id from videos where user_id = auth.uid())
-  );
+  using (user_id = auth.uid())
+  with check (user_id = auth.uid());
