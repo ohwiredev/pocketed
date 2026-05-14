@@ -3,6 +3,7 @@ import { ArrowLeft, Loader2, Pencil, Play, Plus } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import AddVideosModal from "@/components/modals/AddVideosModal";
+import DeleteConfirmationModal from "@/components/modals/DeleteConfirmationModal";
 import EditTagsModal from "@/components/modals/EditTagsModal";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -25,6 +26,7 @@ export default function CollectionDetailPage() {
   } = useCollectionDetail(id);
 
   const [editingVideo, setEditingVideo] = useState<Video | null>(null);
+  const [videoToRemove, setVideoToRemove] = useState<Video | null>(null);
 
   // Actually, let's use the renameCollection from useCollections if needed,
   // or just implement a simple update here.
@@ -154,7 +156,7 @@ export default function CollectionDetailPage() {
             <VideoCard
               key={video.id}
               video={video}
-              onRemove={removeVideoFromCollection}
+              onRemove={() => setVideoToRemove(video)}
               onEditTags={(v) => setEditingVideo(v)}
             />
           ))}
@@ -173,6 +175,18 @@ export default function CollectionDetailPage() {
         onClose={() => setEditingVideo(null)}
         video={editingVideo}
         onSaveTags={updateVideoTags}
+      />
+
+      <DeleteConfirmationModal
+        isOpen={!!videoToRemove}
+        onClose={() => setVideoToRemove(null)}
+        onConfirm={async () => {
+          if (videoToRemove) {
+            await removeVideoFromCollection(videoToRemove.id);
+          }
+        }}
+        title="Remove from Collection"
+        description="Are you sure you want to remove this video from this collection?"
       />
     </main>
   );

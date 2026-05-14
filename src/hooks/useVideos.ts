@@ -73,11 +73,54 @@ export function useVideos() {
     }
   };
 
+  const updateVideoNotes = async (videoId: string, newNotes: string) => {
+    try {
+      const { error: updateError } = await supabase
+        .from("videos")
+        .update({ notes: newNotes })
+        .eq("id", videoId);
+
+      if (updateError) throw updateError;
+
+      mutate(
+        (prevVideos) =>
+          prevVideos?.map((v) =>
+            v.id === videoId ? { ...v, notes: newNotes } : v,
+          ),
+        false,
+      );
+    } catch (err: any) {
+      console.error("Failed to update notes", err.message);
+      throw err;
+    }
+  };
+
+  const deleteVideo = async (videoId: string) => {
+    try {
+      const { error: deleteError } = await supabase
+        .from("videos")
+        .delete()
+        .eq("id", videoId);
+
+      if (deleteError) throw deleteError;
+
+      mutate(
+        (prevVideos) => prevVideos?.filter((v) => v.id !== videoId),
+        false,
+      );
+    } catch (err: any) {
+      console.error("Failed to delete video", err.message);
+      throw err;
+    }
+  };
+
   return {
     videos: data || [],
     loading: isLoading,
     error: error?.message || null,
     refresh: mutate,
     updateVideoTags,
+    updateVideoNotes,
+    deleteVideo,
   };
 }

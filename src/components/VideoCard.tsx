@@ -174,7 +174,7 @@ export default function VideoCard({
                   className="cursor-pointer gap-3"
                 >
                   <Trash2 className="h-4 w-4" />
-                  <span className="text-sm">Remove from collection</span>
+                  <span className="text-sm">Remove Video</span>
                 </DropdownMenuItem>
               )}
             </DropdownMenuContent>

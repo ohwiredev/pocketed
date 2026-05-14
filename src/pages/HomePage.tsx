@@ -1,10 +1,12 @@
 import { AnimatePresence, motion } from "framer-motion";
-import { PackageOpen } from "lucide-react";
+import { PackageOpen, Plus } from "lucide-react";
 import { useCallback, useState } from "react";
 import type { PlatformFilter } from "@/components/FilterBar";
 import FilterBar from "@/components/FilterBar";
 import AddToCollectionModal from "@/components/modals/AddToCollectionModal";
+import DeleteConfirmationModal from "@/components/modals/DeleteConfirmationModal";
 import EditTagsModal from "@/components/modals/EditTagsModal";
+import SaveSheet from "@/components/SaveSheet";
 import VideoCard from "@/components/VideoCard";
 import { useAuth } from "@/hooks/useAuth";
 import { useTitle } from "@/hooks/useTitle";
@@ -15,13 +17,15 @@ export default function HomePage() {
   useTitle("Home");
 
   const { session } = useAuth();
-  const { videos, loading, updateVideoTags } = useVideos();
+  const { videos, loading, updateVideoTags, deleteVideo } = useVideos();
   const [activePlatform, setActivePlatform] = useState<PlatformFilter>("all");
   const [activeTags, setActiveTags] = useState<string[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [editingVideo, setEditingVideo] = useState<Video | null>(null);
   const [addingVideoToCollection, setAddingVideoToCollection] =
     useState<Video | null>(null);
+  const [videoToDelete, setVideoToDelete] = useState<Video | null>(null);
+  const [isSaveSheetOpen, setIsSaveSheetOpen] = useState(false);
 
   // Derive top tags
   const tagCounts = new Map<string, number>();
@@ -30,6 +34,7 @@ export default function HomePage() {
       tagCounts.set(t, (tagCounts.get(t) || 0) + 1);
     });
   });
+
   const topTags = Array.from(tagCounts.entries())
     .map(([label, count]) => ({ label, count }))
     .sort((a, b) => b.count - a.count)
@@ -80,7 +85,7 @@ export default function HomePage() {
     activeTags.length > 0 || activePlatform !== "all" || searchQuery.length > 0;
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen relative">
       {/* Welcome Hero (scrolls away) */}
       <section className="container mx-auto max-w-7xl px-4 md:px-8 pt-8">
         <div className="mb-6 mt-4 flex flex-col items-center text-center">
@@ -135,6 +140,7 @@ export default function HomePage() {
                     onEditTags={(v) => setEditingVideo(v)}
                     onAddToCollection={(v) => setAddingVideoToCollection(v)}
                     onTagClick={(tag) => setActiveTags([tag])}
+                    onRemove={() => setVideoToDelete(video)}
                   />
                 </motion.div>
               ))}
@@ -147,7 +153,7 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col items-center justify-center py-20 text-center"
           >
-            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-foreground/[0.04]">
+            <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl bg-foreground/4">
               <PackageOpen className="size-7 text-foreground/30" />
             </div>
             <p className="text-base font-medium text-foreground/60 mb-1">
@@ -172,6 +178,17 @@ export default function HomePage() {
         )}
       </section>
 
+      {/* Floating Action Button */}
+      <div className="fixed bottom-24 right-6 md:bottom-12 md:right-12 z-50">
+        <button
+          onClick={() => setIsSaveSheetOpen(true)}
+          className="flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg hover:scale-105 active:scale-95 transition-all focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+          aria-label="Add new video"
+        >
+          <Plus className="h-6 w-6" />
+        </button>
+      </div>
+
       <EditTagsModal
         isOpen={!!editingVideo}
         onClose={() => setEditingVideo(null)}
@@ -183,6 +200,23 @@ export default function HomePage() {
         isOpen={!!addingVideoToCollection}
         onClose={() => setAddingVideoToCollection(null)}
         video={addingVideoToCollection}
+      />
+
+      <SaveSheet
+        isOpen={isSaveSheetOpen}
+        onClose={() => setIsSaveSheetOpen(false)}
+      />
+
+      <DeleteConfirmationModal
+        isOpen={!!videoToDelete}
+        onClose={() => setVideoToDelete(null)}
+        onConfirm={async () => {
+          if (videoToDelete) {
+            await deleteVideo(videoToDelete.id);
+          }
+        }}
+        title="Remove Video"
+        description="Are you sure you want to remove this video? This action cannot be undone."
       />
     </main>
   );
