@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { corsHeaders } from "../_shared/cors.ts";
 
 // ── Constants ───────────────────────────────────────────────────────
 
@@ -19,7 +20,7 @@ const SUPABASE_PUBLISHABLE_KEYS = JSON.parse(
 function jsonResponse(body: Record<string, unknown>, status = 200): Response {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...corsHeaders },
   });
 }
 
@@ -112,6 +113,11 @@ Example: ["fitness", "upper body", "no equipment", "beginner", "home workout"]`,
 // ── Handler ─────────────────────────────────────────────────────────
 
 Deno.serve(async (req) => {
+  // Handle CORS preflight
+  if (req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
+  }
+
   // Only accept POST
   if (req.method !== "POST") {
     return jsonResponse({ error: "Method not allowed" }, 405);

@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import { corsHeaders } from "../_shared/cors.ts";
 
 // ── Helpers ─────────────────────────────────────────────────────────
 
@@ -88,11 +89,16 @@ const SUPABASE_PUBLISHABLE_KEYS = JSON.parse(
 );
 
 Deno.serve(async (req) => {
+  // Handle CORS preflight
+  if (req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
+  }
+
   // Only accept POST
   if (req.method !== "POST") {
     return new Response(JSON.stringify({ error: "Method not allowed" }), {
       status: 405,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   }
 
@@ -108,14 +114,14 @@ Deno.serve(async (req) => {
   } catch {
     return new Response(JSON.stringify({ error: "Invalid JSON body" }), {
       status: 400,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   }
 
   if (!url || typeof url !== "string" || !isValidUrl(url)) {
     return new Response(JSON.stringify({ error: "A valid URL is required" }), {
       status: 400,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   }
 
@@ -126,7 +132,7 @@ Deno.serve(async (req) => {
   if (!platform) {
     return new Response(JSON.stringify({ error: "Unsupported platform" }), {
       status: 400,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   }
 
@@ -148,7 +154,7 @@ Deno.serve(async (req) => {
 
     return new Response(JSON.stringify({ error: message }), {
       status: 502,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", ...corsHeaders },
     });
   }
 
@@ -191,7 +197,7 @@ Deno.serve(async (req) => {
         details: error.details,
         hint: error.hint,
       }),
-      { status: 500, headers: { "Content-Type": "application/json" } },
+      { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } },
     );
   }
 
@@ -215,6 +221,6 @@ Deno.serve(async (req) => {
 
   return new Response(JSON.stringify(video), {
     status: 200,
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json", ...corsHeaders },
   });
 });
