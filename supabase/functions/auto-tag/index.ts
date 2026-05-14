@@ -53,7 +53,7 @@ Video title: "${title}"
 Platform: ${platform || "unknown"}
 
 Return ${MIN_TAGS}-${MAX_TAGS} short lowercase tags that describe this video.
-Mix of: topic, subtopic, mood or style, and useful search keywords.
+Mix of: topic, subtopic, mood or style, and useful search keywords. Do not include any platform names like TikTok, Instagram, YouTube.
 Example: ["fitness", "upper body", "no equipment", "beginner", "home workout"]`,
             },
           ],

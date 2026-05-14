@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import type { Video } from "@/types/video";
+import { Link } from "react-router-dom";
 
 interface VideoCardProps {
   video: Video;
@@ -73,11 +74,13 @@ export default function VideoCard({
           {video.platform}
         </div>
 
-        <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-          <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md shadow-lg border border-white/30">
-            <ExternalLink className="size-5" />
+        <Link to={video.videoUrl} target="_blank">
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+            <div className="flex h-12 w-12 items-center justify-center rounded-full bg-white/20 text-white backdrop-blur-md shadow-lg border border-white/30">
+              <ExternalLink className="size-5" />
+            </div>
           </div>
-        </div>
+        </Link>
       </div>
 
       <div className="p-4">
