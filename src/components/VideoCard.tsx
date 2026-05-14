@@ -8,6 +8,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import instagramIcon from "@/assets/icons/instagram-icon.svg";
 import tiktokIcon from "@/assets/icons/tiktok-icon-dark.svg";
 import youtubeIcon from "@/assets/icons/youtube.svg";
@@ -19,7 +20,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { cn } from "@/lib/utils";
 import type { Video } from "@/types/video";
-import { Link } from "react-router-dom";
 
 interface VideoCardProps {
   video: Video;

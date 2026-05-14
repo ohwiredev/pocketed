@@ -14,7 +14,11 @@ const ITEM_SIZE = 48;
 const GAP = 4;
 const ITEM_STEP = ITEM_SIZE + GAP;
 
-const springTransition = { type: "spring", bounce: 0.2, duration: 0.6 } as const;
+const springTransition = {
+  type: "spring",
+  bounce: 0.2,
+  duration: 0.6,
+} as const;
 
 export default memo(function BottomNav() {
   const location = useLocation();
@@ -22,7 +26,7 @@ export default memo(function BottomNav() {
 
   const activeIndex = useMemo(
     () => navItems.findIndex((item) => location.pathname === item.path),
-    [location.pathname]
+    [location.pathname],
   );
 
   return (
