@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { Sparkles } from "lucide-react";
 import { Card } from "@/components/ui/card";
 
+import WorksEverywhere from "@/assets/works-everywhere.webp"
+
 const containerVariants = {
   hidden: { opacity: 0 },
   visible: {
@@ -54,18 +56,13 @@ export default function Features() {
               >
                 <div className="relative size-full">
                   <img
-                    src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?q=80&w=2940&auto=format&fit=crop"
-                    alt="Mobile"
+                    src={WorksEverywhere}
+                    alt="Works Everywhere"
                     className="size-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-primary/20 backdrop-blur-[2px] flex items-center justify-center">
-                    <div className="bg-white/90 p-2 rounded-xl shadow-lg translate-y-4 group-hover:translate-y-2 transition-transform">
-                      <div className="h-2 w-12 bg-primary/20 rounded-full mb-1"></div>
-                      <div className="h-1 w-8 bg-primary/10 rounded-full"></div>
-                    </div>
-                  </div>
                 </div>
               </Card>
+              
               <div className="sm:max-w-sm">
                 <h3 className="text-foreground text-xl font-semibold">
                   Works everywhere

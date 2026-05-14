@@ -1,4 +1,4 @@
-import { createClient } from "@supabase/functions-js";
+import { createClient } from "@supabase/supabase-js";
 
 // ── Helpers ─────────────────────────────────────────────────────────
 

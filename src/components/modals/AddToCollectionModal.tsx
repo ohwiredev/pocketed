@@ -1,5 +1,5 @@
 import { Loader2, Plus, Search } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -41,16 +41,7 @@ export default function AddToCollectionModal({
   const [newCollectionName, setNewCollectionName] = useState("");
   const [showCreateForm, setShowCreateForm] = useState(false);
 
-  useEffect(() => {
-    if (isOpen && video) {
-      checkExistingCollections();
-      setSearchQuery("");
-      setShowCreateForm(false);
-      setNewCollectionName("");
-    }
-  }, [isOpen, video, checkExistingCollections]);
-
-  const checkExistingCollections = async () => {
+  const checkExistingCollections = useCallback(async () => {
     if (!video) return;
     setCheckingExisting(true);
     try {
@@ -66,7 +57,17 @@ export default function AddToCollectionModal({
     } finally {
       setCheckingExisting(false);
     }
-  };
+  }, [video]);
+
+  useEffect(() => {
+    if (isOpen && video) {
+      checkExistingCollections();
+      setSearchQuery("");
+      setShowCreateForm(false);
+      setNewCollectionName("");
+    }
+  }, [isOpen, video]);
+
 
   const handleAddToCollection = async (collectionId: string) => {
     if (!video) return;

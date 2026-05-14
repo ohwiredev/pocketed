@@ -64,7 +64,7 @@ export default function RenameCollectionModal({
             Enter a new name for your collection.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit} className="space-y-4 py-4">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div className="space-y-2">
             <Label htmlFor="rename-collection">Collection name</Label>
             <Input
