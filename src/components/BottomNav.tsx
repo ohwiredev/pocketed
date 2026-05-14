@@ -10,12 +10,11 @@ const navItems = [
   { icon: User, label: "Profile", path: "/profile" },
 ];
 
-// Each nav item is w-12 (48px) with gap-1 (4px) between them
 const ITEM_SIZE = 48;
 const GAP = 4;
 const ITEM_STEP = ITEM_SIZE + GAP;
 
-const springTransition = { type: "spring", bounce: 0.2, duration: 0.6 };
+const springTransition = { type: "spring", bounce: 0.2, duration: 0.6 } as const;
 
 export default memo(function BottomNav() {
   const location = useLocation();
