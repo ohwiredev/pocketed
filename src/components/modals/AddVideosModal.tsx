@@ -2,15 +2,15 @@ import { Loader2, Search } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import {
+  ResponsiveModal,
+  ResponsiveModalContent,
+  ResponsiveModalDescription,
+  ResponsiveModalFooter,
+  ResponsiveModalHeader,
+  ResponsiveModalTitle,
+} from "@/components/ui/responsive-modal";
 import { useVideos } from "@/hooks/useVideos";
 
 interface AddVideosModalProps {
@@ -61,23 +61,25 @@ export default function AddVideosModal({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-xl h-[80vh] flex flex-col p-0">
-        <DialogHeader className="p-6 pb-2">
-          <DialogTitle className="font-serif text-2xl">Add Videos</DialogTitle>
-          <DialogDescription>
+    <ResponsiveModal open={isOpen} onOpenChange={onClose}>
+      <ResponsiveModalContent className="sm:max-w-xl h-[80vh] flex flex-col p-0">
+        <ResponsiveModalHeader className="p-6 pb-2">
+          <ResponsiveModalTitle className="font-serif text-2xl">
+            Add Videos
+          </ResponsiveModalTitle>
+          <ResponsiveModalDescription>
             Select videos from your library to add to this collection.
-          </DialogDescription>
+          </ResponsiveModalDescription>
           <div className="relative mt-4">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
             <Input
               placeholder="Search your library..."
-              className="pl-9"
+              className="pl-9 h-11 sm:h-9"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-        </DialogHeader>
+        </ResponsiveModalHeader>
 
         <div className="flex-1 overflow-y-auto px-6 py-2">
           {loading ? (
@@ -103,12 +105,13 @@ export default function AddVideosModal({
               {filteredVideos.map((video) => (
                 <div
                   key={video.id}
-                  className="flex items-center space-x-3 rounded-lg p-2 hover:bg-muted transition-colors cursor-pointer"
+                  className="flex items-center space-x-3 rounded-lg p-2 hover:bg-muted transition-colors cursor-pointer min-h-[64px]"
                   onClick={() => handleToggle(video.id)}
                 >
                   <Checkbox
                     checked={selectedIds.includes(video.id)}
                     onCheckedChange={() => handleToggle(video.id)}
+                    className="h-6 w-6 sm:h-4 sm:w-4"
                   />
                   <div className="h-12 w-12 shrink-0 overflow-hidden rounded bg-muted">
                     <img
@@ -131,13 +134,19 @@ export default function AddVideosModal({
           )}
         </div>
 
-        <DialogFooter className="m-0 border-t bg-background p-6 pt-4">
-          <Button variant="ghost" onClick={onClose} disabled={isSubmitting}>
+        <ResponsiveModalFooter className="m-0 border-t bg-background p-6 pt-4 flex flex-col sm:flex-row gap-2">
+          <Button
+            variant="ghost"
+            onClick={onClose}
+            disabled={isSubmitting}
+            className="h-11 sm:h-9 order-2 sm:order-1"
+          >
             Cancel
           </Button>
           <Button
             disabled={selectedIds.length === 0 || isSubmitting}
             onClick={handleSubmit}
+            className="h-11 sm:h-9 order-1 sm:order-2"
           >
             {isSubmitting
               ? "Adding..."
@@ -147,8 +156,8 @@ export default function AddVideosModal({
                     selectedIds.length === 1 ? "" : "s"
                   }`}
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveModalFooter>
+      </ResponsiveModalContent>
+    </ResponsiveModal>
   );
 }

@@ -1,13 +1,14 @@
 import { Plus, X } from "lucide-react";
-import { type KeyboardEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import {
+  ResponsiveModal,
+  ResponsiveModalContent,
+  ResponsiveModalFooter,
+  ResponsiveModalHeader,
+  ResponsiveModalTitle,
+} from "@/components/ui/responsive-modal";
 import { cn } from "@/lib/utils";
 import type { Video } from "@/types/video";
 
@@ -46,13 +47,6 @@ export default function EditTagsModal({
     }
   };
 
-  const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      handleAddTag();
-    }
-  };
-
   const handleRemoveTag = (tagToRemove: string) => {
     setTags(tags.filter((t) => t !== tagToRemove));
   };
@@ -77,45 +71,54 @@ export default function EditTagsModal({
     JSON.stringify([...(video.tags || [])].sort());
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-xl bg-white border-none shadow-2xl overflow-hidden p-0">
-        <DialogHeader className="p-6 pb-2">
-          <DialogTitle className="text-2xl font-serif">Edit Tags</DialogTitle>
-        </DialogHeader>
+    <ResponsiveModal open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <ResponsiveModalContent className="sm:max-w-xl bg-white border-none shadow-2xl overflow-hidden p-0">
+        <ResponsiveModalHeader className="p-6 pb-2">
+          <ResponsiveModalTitle className="text-2xl font-serif">
+            Edit Tags
+          </ResponsiveModalTitle>
+        </ResponsiveModalHeader>
 
-        <div className="px-6 space-y-6">
+        <div className="px-6 space-y-6 pb-4 sm:pb-0">
           <div>
             <p className="text-sm font-medium text-foreground/60 mb-3 px-1 line-clamp-1">
               {video.title.split("#")[0].trim()}
             </p>
             <div className="relative group">
-              <div className="flex gap-2">
+              <form
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  handleAddTag();
+                }}
+                className="flex gap-2 flex-1"
+              >
                 <div className="relative flex-1">
                   <Input
                     placeholder="Add a tag..."
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
-                    onKeyDown={handleKeyDown}
-                    className="pr-10 bg-white/50 border-primary/20 focus-visible:ring-primary/30 focus-visible:border-primary transition-all duration-300 rounded-xl"
+                    className="pr-10 bg-white/50 border-primary/20 focus-visible:ring-primary/30 focus-visible:border-primary transition-all duration-300 rounded-xl h-12 sm:h-10"
+                    enterKeyHint="done"
                   />
                   {inputValue && (
                     <button
+                      type="button"
                       onClick={() => setInputValue("")}
-                      className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground/30 hover:text-foreground/50"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-foreground/30 hover:text-foreground/50 h-8 w-8 flex items-center justify-center"
                     >
                       <X className="h-4 w-4" />
                     </button>
                   )}
                 </div>
                 <Button
-                  onClick={handleAddTag}
+                  type="submit"
                   size="icon"
-                  className="rounded-xl shadow-lg shadow-primary/10 transition-transform active:scale-95"
+                  className="rounded-xl shadow-lg shadow-primary/10 transition-transform active:scale-95 h-12 w-12 sm:h-10 sm:w-10 shrink-0"
                   disabled={!inputValue.trim()}
                 >
                   <Plus className="h-5 w-5" />
                 </Button>
-              </div>
+              </form>
               <p className="text-[10px] text-foreground/40 mt-2 ml-1 flex items-center gap-1">
                 <span className="px-1 py-0.5 rounded bg-muted font-mono text-[9px]">
                   ENTER
@@ -150,13 +153,13 @@ export default function EditTagsModal({
                   {tags.map((tag) => (
                     <div
                       key={tag}
-                      className="group flex items-center gap-1.5 rounded-full bg-secondary px-3 py-1.5 text-xs font-semibold text-secondary-foreground shadow-sm"
+                      className="group flex items-center gap-1.5 rounded-full bg-secondary pl-3 pr-1 py-1.5 text-xs font-semibold text-secondary-foreground shadow-sm min-h-[32px]"
                     >
                       <span className="opacity-70 text-[10px]">#</span>
                       {tag}
                       <button
                         onClick={() => handleRemoveTag(tag)}
-                        className="ml-1 rounded-full p-0.5 bg-black/10 hover:bg-black/20 text-white transition-colors"
+                        className="ml-1 rounded-full p-1.5 bg-black/10 hover:bg-black/20 text-white transition-colors"
                       >
                         <X className="h-3 w-3" />
                       </button>
@@ -168,19 +171,19 @@ export default function EditTagsModal({
           </div>
         </div>
 
-        <div className="flex items-center justify-end gap-3 p-6 bg-primary/5 mt-2">
+        <ResponsiveModalFooter className="m-0 flex flex-col sm:flex-row items-center justify-end gap-2 bg-primary/5">
           <Button
             variant="ghost"
             onClick={onClose}
             disabled={isSaving}
-            className="hover:bg-primary/10"
+            className="hover:bg-primary/10 w-full sm:w-auto order-2 sm:order-1 h-12 sm:h-10"
           >
             Cancel
           </Button>
           <Button
             onClick={handleSave}
             disabled={isSaving || !hasChanges}
-            className="transition-all duration-300 active:scale-95"
+            className="transition-all duration-300 active:scale-95 w-full sm:w-auto order-1 sm:order-2 h-12 sm:h-10"
           >
             {isSaving ? (
               <div className="flex items-center gap-2">
@@ -191,8 +194,8 @@ export default function EditTagsModal({
               "Save Tags"
             )}
           </Button>
-        </div>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveModalFooter>
+      </ResponsiveModalContent>
+    </ResponsiveModal>
   );
 }

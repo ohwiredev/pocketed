@@ -1,15 +1,15 @@
 import { Loader2, Plus, Search } from "lucide-react";
 import { useCallback, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import {
+  ResponsiveModal,
+  ResponsiveModalContent,
+  ResponsiveModalDescription,
+  ResponsiveModalFooter,
+  ResponsiveModalHeader,
+  ResponsiveModalTitle,
+} from "@/components/ui/responsive-modal";
 import { useCollections } from "@/hooks/useCollections";
 import { supabase } from "@/lib/supabase";
 import type { Video } from "@/types/video";
@@ -114,27 +114,27 @@ export default function AddToCollectionModal({
   const isLoading = collectionsLoading || checkingExisting;
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md h-[70vh] flex flex-col p-0">
-        <DialogHeader className="p-6 pb-2">
-          <DialogTitle className="font-serif text-2xl">
+    <ResponsiveModal open={isOpen} onOpenChange={onClose}>
+      <ResponsiveModalContent className="sm:max-w-md h-[70vh] flex flex-col p-0">
+        <ResponsiveModalHeader className="p-6 pb-2">
+          <ResponsiveModalTitle className="font-serif text-2xl">
             Add to Collection
-          </DialogTitle>
-          <DialogDescription>
+          </ResponsiveModalTitle>
+          <ResponsiveModalDescription>
             Choose a collection to add "{video?.title}" to.
-          </DialogDescription>
+          </ResponsiveModalDescription>
           {!showCreateForm && (
             <div className="relative mt-4">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder="Search collections..."
-                className="pl-9"
+                className="pl-9 h-11 sm:h-9"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
               />
             </div>
           )}
-        </DialogHeader>
+        </ResponsiveModalHeader>
 
         <div className="flex-1 overflow-y-auto px-6 py-2">
           {isLoading ? (
@@ -159,6 +159,7 @@ export default function AddToCollectionModal({
                   onKeyDown={(e) => {
                     if (e.key === "Enter") handleCreateCollection();
                   }}
+                  className="h-11 sm:h-9"
                 />
               </div>
             </div>
@@ -184,7 +185,7 @@ export default function AddToCollectionModal({
                 return (
                   <div
                     key={collection.id}
-                    className="flex items-center justify-between space-x-3 rounded-lg border p-3"
+                    className="flex items-center justify-between space-x-3 rounded-lg border p-3 min-h-[64px]"
                   >
                     <div className="flex-1 min-w-0">
                       <p className="text-sm font-medium truncate">
@@ -199,6 +200,7 @@ export default function AddToCollectionModal({
                       size="sm"
                       disabled={isAlreadyIn || isSubmitting === collection.id}
                       onClick={() => handleAddToCollection(collection.id)}
+                      className="h-10 sm:h-9"
                     >
                       {isSubmitting === collection.id ? (
                         <Loader2 className="h-4 w-4 animate-spin" />
@@ -215,15 +217,20 @@ export default function AddToCollectionModal({
           )}
         </div>
 
-        <DialogFooter className="m-0 border-t bg-background p-6 pt-4 flex sm:justify-between items-center">
+        <ResponsiveModalFooter className="m-0 border-t bg-background p-6 pt-4 flex flex-col sm:flex-row sm:justify-between items-center gap-2">
           {showCreateForm ? (
             <>
-              <Button variant="ghost" onClick={() => setShowCreateForm(false)}>
+              <Button
+                variant="ghost"
+                onClick={() => setShowCreateForm(false)}
+                className="w-full sm:w-auto order-2 sm:order-1 h-11 sm:h-9"
+              >
                 Cancel
               </Button>
               <Button
                 disabled={!newCollectionName.trim() || isCreating}
                 onClick={handleCreateCollection}
+                className="w-full sm:w-auto order-1 sm:order-2 h-11 sm:h-9"
               >
                 {isCreating ? (
                   <>
@@ -240,16 +247,21 @@ export default function AddToCollectionModal({
               <Button
                 variant="ghost"
                 onClick={() => setShowCreateForm(true)}
-                className="gap-2"
+                className="gap-2 w-full sm:w-auto h-11 sm:h-9 order-2 sm:order-1"
               >
                 <Plus className="h-4 w-4" />
                 New Collection
               </Button>
-              <Button onClick={onClose}>Done</Button>
+              <Button
+                onClick={onClose}
+                className="w-full sm:w-auto h-11 sm:h-9 order-1 sm:order-2"
+              >
+                Done
+              </Button>
             </>
           )}
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveModalFooter>
+      </ResponsiveModalContent>
+    </ResponsiveModal>
   );
 }

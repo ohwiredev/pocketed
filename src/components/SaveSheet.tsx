@@ -1,13 +1,13 @@
 import { CheckCircle2, Loader2, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import {
+  ResponsiveModal,
+  ResponsiveModalContent,
+  ResponsiveModalHeader,
+  ResponsiveModalTitle,
+} from "@/components/ui/responsive-modal";
 import { useVideos } from "@/hooks/useVideos";
 import { supabase } from "@/lib/supabase";
 import type { Video } from "@/types/video";
@@ -98,18 +98,20 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
     }
   };
 
-  const handleTagAdd = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && tagInput.trim()) {
-      e.preventDefault();
-      const newTag = tagInput.trim().toLowerCase().replace(/^#/, "");
-      if (!tags.includes(newTag)) {
-        const newTags = [...tags, newTag];
-        setTags(newTags);
-        setTagInput("");
-        if (savedVideo) {
-          updateVideoTags(savedVideo.id, newTags);
-        }
+  const addTag = () => {
+    const trimmed = tagInput.trim();
+    if (!trimmed) return;
+
+    const newTag = trimmed.toLowerCase().replace(/^#/, "");
+    if (!tags.includes(newTag)) {
+      const newTags = [...tags, newTag];
+      setTags(newTags);
+      setTagInput("");
+      if (savedVideo) {
+        updateVideoTags(savedVideo.id, newTags);
       }
+    } else {
+      setTagInput("");
     }
   };
 
@@ -129,24 +131,33 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent
+    <ResponsiveModal open={isOpen} onOpenChange={(open) => !open && onClose()}>
+      <ResponsiveModalContent
         className="sm:max-w-md p-0 overflow-hidden"
         aria-describedby={undefined}
       >
         {saveState === "input" || saveState === "error" ? (
           <div className="p-6">
-            <DialogHeader className="mb-4">
-              <DialogTitle className="text-xl font-serif">
+            <ResponsiveModalHeader className="mb-4 p-0">
+              <ResponsiveModalTitle className="text-xl font-serif">
                 Save a Video
-              </DialogTitle>
-            </DialogHeader>
-            <div className="space-y-4">
+              </ResponsiveModalTitle>
+            </ResponsiveModalHeader>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSave();
+              }}
+              className="space-y-4"
+            >
               <Input
                 placeholder="Paste TikTok, Instagram, or YouTube URL..."
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
                 autoFocus
+                className="h-12 sm:h-10"
+                type="url"
+                enterKeyHint="go"
               />
               {saveState === "error" && (
                 <p className="text-sm text-destructive font-medium">
@@ -154,29 +165,29 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
                 </p>
               )}
               <Button
-                className="w-full"
-                onClick={handleSave}
+                type="submit"
+                className="w-full h-12 sm:h-10"
                 disabled={!url.trim()}
               >
                 Save
               </Button>
-            </div>
+            </form>
           </div>
         ) : saveState === "loading" ? (
-          <div className="p-12 flex flex-col items-center justify-center space-y-4">
+          <div className="p-12 flex flex-col items-center justify-center space-y-4 min-h-[300px]">
             <Loader2 className="h-8 w-8 animate-spin text-primary" />
             <p className="text-sm text-muted-foreground font-medium animate-pulse">
               Fetching metadata and tags...
             </p>
           </div>
         ) : (
-          <div className="p-6">
-            <DialogHeader className="mb-6 flex flex-row items-center gap-2 space-y-0">
+          <div className="p-6 pb-4 sm:pb-6">
+            <ResponsiveModalHeader className="mb-6 flex flex-row items-center gap-2 space-y-0 p-0 text-left">
               <CheckCircle2 className="h-6 w-6 text-green-500" />
-              <DialogTitle className="text-xl font-serif text-green-600 dark:text-green-400">
+              <ResponsiveModalTitle className="text-xl font-serif text-green-600 dark:text-green-400">
                 Pocketed!
-              </DialogTitle>
-            </DialogHeader>
+              </ResponsiveModalTitle>
+            </ResponsiveModalHeader>
 
             {savedVideo && (
               <div className="space-y-6">
@@ -214,20 +225,27 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
                         {tag}
                         <button
                           onClick={() => handleTagRemove(tag)}
-                          className="ml-1 opacity-50 hover:opacity-100"
+                          className="ml-1 opacity-50 hover:opacity-100 p-1"
                         >
                           <X className="h-3 w-3" />
                         </button>
                       </div>
                     ))}
                   </div>
-                  <Input
-                    placeholder="Add a tag and press Enter..."
-                    value={tagInput}
-                    onChange={(e) => setTagInput(e.target.value)}
-                    onKeyDown={handleTagAdd}
-                    className="h-8 text-sm bg-transparent border-dashed"
-                  />
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      addTag();
+                    }}
+                  >
+                    <Input
+                      placeholder="Add a tag and press Enter..."
+                      value={tagInput}
+                      onChange={(e) => setTagInput(e.target.value)}
+                      className="h-10 sm:h-8 text-sm bg-transparent border-dashed"
+                      enterKeyHint="done"
+                    />
+                  </form>
                 </div>
 
                 <div className="space-y-2">
@@ -243,14 +261,18 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
                   />
                 </div>
 
-                <Button className="w-full" onClick={onClose} size="lg">
+                <Button
+                  className="w-full h-12 sm:h-10 mt-2"
+                  onClick={onClose}
+                  size="lg"
+                >
                   Done
                 </Button>
               </div>
             )}
           </div>
         )}
-      </DialogContent>
-    </Dialog>
+      </ResponsiveModalContent>
+    </ResponsiveModal>
   );
 }

@@ -2,13 +2,13 @@ import { AlertTriangle, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+  ResponsiveModal,
+  ResponsiveModalContent,
+  ResponsiveModalDescription,
+  ResponsiveModalFooter,
+  ResponsiveModalHeader,
+  ResponsiveModalTitle,
+} from "@/components/ui/responsive-modal";
 
 interface DeleteConfirmationModalProps {
   isOpen: boolean;
@@ -40,26 +40,28 @@ export default function DeleteConfirmationModal({
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[400px]">
-        <DialogHeader className="flex flex-col items-center text-center space-y-4 pt-4">
+    <ResponsiveModal open={isOpen} onOpenChange={onClose}>
+      <ResponsiveModalContent className="sm:max-w-[400px]">
+        <ResponsiveModalHeader className="flex flex-col items-center text-center space-y-4 pt-4">
           <div className="flex h-12 w-12 items-center justify-center rounded-full bg-destructive/10 text-destructive">
             <AlertTriangle className="h-6 w-6" />
           </div>
-          <div className="space-y-2">
-            <DialogTitle className="font-serif text-2xl">{title}</DialogTitle>
-            <DialogDescription className="text-center text-muted-foreground line-clamp-3">
+          <div className="space-y-2 flex flex-col items-center text-center">
+            <ResponsiveModalTitle className="font-serif text-2xl text-center w-full">
+              {title}
+            </ResponsiveModalTitle>
+            <ResponsiveModalDescription className="text-center text-muted-foreground line-clamp-3 w-full">
               {description}
-            </DialogDescription>
+            </ResponsiveModalDescription>
           </div>
-        </DialogHeader>
+        </ResponsiveModalHeader>
 
-        <DialogFooter className="flex flex-col sm:flex-row gap-2 mt-4">
+        <ResponsiveModalFooter className="m-0 flex flex-col sm:flex-row gap-2 mt-4 px-4 pb-4 sm:px-0 sm:pb-0">
           <Button
             variant="ghost"
             onClick={onClose}
             disabled={isDeleting}
-            className="flex-1 order-2 sm:order-1"
+            className="sm:flex-1 order-2 sm:order-1 h-11 sm:h-9"
           >
             Cancel
           </Button>
@@ -67,7 +69,7 @@ export default function DeleteConfirmationModal({
             variant="destructive"
             onClick={handleConfirm}
             disabled={isDeleting}
-            className="flex-1 order-1 sm:order-2 shadow-sm"
+            className="sm:flex-1 order-1 sm:order-2 h-11 sm:h-9"
           >
             {isDeleting ? (
               <>
@@ -78,8 +80,8 @@ export default function DeleteConfirmationModal({
               "Delete"
             )}
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </ResponsiveModalFooter>
+      </ResponsiveModalContent>
+    </ResponsiveModal>
   );
 }

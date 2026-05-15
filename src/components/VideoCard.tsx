@@ -13,11 +13,11 @@ import instagramIcon from "@/assets/icons/instagram-icon.svg";
 import tiktokIcon from "@/assets/icons/tiktok-icon-dark.svg";
 import youtubeIcon from "@/assets/icons/youtube.svg";
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+  ResponsiveDropdownMenu,
+  ResponsiveDropdownMenuContent,
+  ResponsiveDropdownMenuItem,
+  ResponsiveDropdownMenuTrigger,
+} from "@/components/ui/responsive-dropdown";
 import { cn } from "@/lib/utils";
 import type { Video } from "@/types/video";
 
@@ -132,40 +132,42 @@ export default function VideoCard({
               : "opacity-100 md:opacity-0 md:group-hover:opacity-100",
           )}
         >
-          <DropdownMenu onOpenChange={setIsOpen}>
-            <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 backdrop-blur shadow-sm hover:bg-white transition-colors">
+          <ResponsiveDropdownMenu onOpenChange={setIsOpen}>
+            <ResponsiveDropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-full bg-white/90 backdrop-blur shadow-sm hover:bg-white transition-colors">
               <MoreVertical className="size-4 text-foreground" />
-            </DropdownMenuTrigger>
-            <DropdownMenuContent
+            </ResponsiveDropdownMenuTrigger>
+            <ResponsiveDropdownMenuContent
               align="end"
               className="min-w-48 bg-white/95 backdrop-blur-xl border-none shadow-2xl p-1.5"
             >
               {onEditTags && (
-                <DropdownMenuItem
+                <ResponsiveDropdownMenuItem
                   onClick={(e) => {
                     e.stopPropagation();
                     onEditTags(video);
                   }}
                   className="cursor-pointer gap-3"
                 >
-                  <Tags className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm">Edit Tags</span>
-                </DropdownMenuItem>
+                  <Tags className="h-5 w-5 md:h-4 md:w-4 text-muted-foreground" />
+                  <span className="text-base md:text-sm">Edit Tags</span>
+                </ResponsiveDropdownMenuItem>
               )}
               {onAddToCollection && (
-                <DropdownMenuItem
+                <ResponsiveDropdownMenuItem
                   onClick={(e) => {
                     e.stopPropagation();
                     onAddToCollection(video);
                   }}
                   className="cursor-pointer gap-3"
                 >
-                  <FolderPlus className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm">Add to collection</span>
-                </DropdownMenuItem>
+                  <FolderPlus className="h-5 w-5 md:h-4 md:w-4 text-muted-foreground" />
+                  <span className="text-base md:text-sm">
+                    Add to collection
+                  </span>
+                </ResponsiveDropdownMenuItem>
               )}
               {onRemove && (
-                <DropdownMenuItem
+                <ResponsiveDropdownMenuItem
                   variant="destructive"
                   onClick={(e) => {
                     e.stopPropagation();
@@ -173,12 +175,12 @@ export default function VideoCard({
                   }}
                   className="cursor-pointer gap-3"
                 >
-                  <Trash2 className="h-4 w-4" />
-                  <span className="text-sm">Remove Video</span>
-                </DropdownMenuItem>
+                  <Trash2 className="h-5 w-5 md:h-4 md:w-4" />
+                  <span className="text-base md:text-sm">Remove Video</span>
+                </ResponsiveDropdownMenuItem>
               )}
-            </DropdownMenuContent>
-          </DropdownMenu>
+            </ResponsiveDropdownMenuContent>
+          </ResponsiveDropdownMenu>
         </div>
       )}
     </motion.div>
