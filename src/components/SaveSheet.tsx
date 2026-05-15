@@ -49,6 +49,11 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
     setSaveState("loading");
     setErrorMsg("");
 
+    // Blur active element to hide keyboard on mobile immediately
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
     try {
       const { data, error } = await supabase.functions.invoke("save-video", {
         body: { url },
@@ -133,8 +138,9 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
   return (
     <ResponsiveModal open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <ResponsiveModalContent
-        className="sm:max-w-md p-0 overflow-hidden"
+        className="sm:max-w-md p-0"
         aria-describedby={undefined}
+        key={saveState}
       >
         {saveState === "input" || saveState === "error" ? (
           <div className="p-6">
