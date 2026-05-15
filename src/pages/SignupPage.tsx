@@ -6,10 +6,16 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
+import { useMeta } from "@/hooks/useMeta";
 import { useTitle } from "@/hooks/useTitle";
 
 export default function SignupPage() {
   useTitle("Sign Up");
+  useMeta({
+    description:
+      "Create a Pocketed account and start saving videos from TikTok, Instagram, and YouTube.",
+    canonical: "https://pocketed.app/signup",
+  });
   const navigate = useNavigate();
 
   const { signUpWithEmail, loading, error, session, isInitialized } = useAuth();

@@ -1,8 +1,10 @@
 import { useSearchParams } from "react-router-dom";
+import { useMeta } from "@/hooks/useMeta";
 import { useTitle } from "@/hooks/useTitle";
 
 export default function SavePage() {
   useTitle("Save");
+  useMeta({ description: "Save a new video to your Pocketed library." });
   const [searchParams] = useSearchParams();
 
   const urlToSave = searchParams.get("url") || "";

@@ -6,10 +6,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
+import { useMeta } from "@/hooks/useMeta";
 import { useTitle } from "@/hooks/useTitle";
 
 export default function LoginPage() {
   useTitle("Login");
+  useMeta({
+    description: "Sign in to Pocketed, your AI-powered personal video library.",
+    canonical: "https://pocketed.app/login",
+  });
   const navigate = useNavigate();
 
   const { signInWithEmail, loading, error, session, isInitialized } = useAuth();

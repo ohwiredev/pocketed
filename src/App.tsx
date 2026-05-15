@@ -14,9 +14,11 @@ import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import OnboardingPage from "./pages/OnboardingPage";
+import PrivacyPage from "./pages/PrivacyPage";
 import ProfilePage from "./pages/ProfilePage";
 import SavePage from "./pages/SavePage";
 import SignupPage from "./pages/SignupPage";
+import TermsPage from "./pages/TermsPage";
 import VideoDetailPage from "./pages/VideoDetailPage";
 
 const ProtectedRoute = () => {
@@ -40,6 +42,8 @@ function App() {
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
+        <Route path="/privacy" element={<PrivacyPage />} />
+        <Route path="/terms" element={<TermsPage />} />
 
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>

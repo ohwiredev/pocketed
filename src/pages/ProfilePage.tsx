@@ -12,10 +12,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
+import { useMeta } from "@/hooks/useMeta";
 import { useTitle } from "@/hooks/useTitle";
 
 export default function ProfilePage() {
   useTitle("Profile");
+  useMeta({ description: "Manage your Pocketed account settings and preferences." });
   const { session, signOut, updateProfile } = useAuth();
 
   const user = session?.user;

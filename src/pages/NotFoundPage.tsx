@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ArrowLeft, Home } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { useMeta } from "@/hooks/useMeta";
 import { useTitle } from "@/hooks/useTitle";
 
 const containerVariants = {
@@ -29,6 +30,7 @@ const itemVariants = {
 
 export default function NotFoundPage() {
   useTitle("Page Not Found");
+  useMeta({ description: "The page you're looking for doesn't exist." });
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden bg-linear-to-b from-muted to-background px-6">
       {/* Decorative Background Elements */}
@@ -43,7 +45,7 @@ export default function NotFoundPage() {
             repeat: Infinity,
             ease: "easeInOut",
           }}
-          className="bg-primary/5 absolute top-1/4 -left-1/4 size-[500px] rounded-full blur-3xl"
+          className="bg-primary/5 absolute top-1/4 -left-1/4 size-125 rounded-full blur-3xl"
         />
         <motion.div
           animate={{
@@ -56,7 +58,7 @@ export default function NotFoundPage() {
             ease: "easeInOut",
             delay: 1,
           }}
-          className="bg-secondary/5 absolute -right-1/4 bottom-1/4 size-[400px] rounded-full blur-3xl"
+          className="bg-secondary/5 absolute -right-1/4 bottom-1/4 size-100 rounded-full blur-3xl"
         />
       </div>
 

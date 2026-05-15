@@ -6,10 +6,12 @@ import CreateCollectionModal from "@/components/modals/CreateCollectionModal";
 import RenameCollectionModal from "@/components/modals/RenameCollectionModal";
 import { Button } from "@/components/ui/button";
 import { useCollections } from "@/hooks/useCollections";
+import { useMeta } from "@/hooks/useMeta";
 import { useTitle } from "@/hooks/useTitle";
 
 export default function CollectionsPage() {
   useTitle("Collections");
+  useMeta({ description: "Organize your saved videos into curated collections." });
   const {
     collections,
     loading,

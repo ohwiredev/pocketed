@@ -2,12 +2,30 @@ import path from "node:path";
 import babel from "@rolldown/plugin-babel";
 import tailwindcss from "@tailwindcss/vite";
 import react, { reactCompilerPreset } from "@vitejs/plugin-react";
-import { defineConfig } from "vite";
+import { defineConfig, type Plugin } from "vite";
 import { VitePWA } from "vite-plugin-pwa";
+
+function checkRequiredEnv(): Plugin {
+  const required = ["VITE_SUPABASE_URL", "VITE_SUPABASE_PUBLISHABLE_KEY"];
+  return {
+    name: "check-required-env",
+    configResolved(config) {
+      for (const name of required) {
+        if (!config.env[name]) {
+          throw new Error(
+            `Missing required environment variable: ${name}\n` +
+              `Create a .env file based on .env.example with the required values.`,
+          );
+        }
+      }
+    },
+  };
+}
 
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    checkRequiredEnv(),
     react(),
     tailwindcss(),
     babel({ presets: [reactCompilerPreset()] }),

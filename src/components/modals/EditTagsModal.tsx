@@ -53,12 +53,12 @@ export default function EditTagsModal({
 
   const handleSave = async () => {
     if (!video) return;
-    
+
     // Blur to hide keyboard on mobile
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
-    
+
     setIsSaving(true);
     try {
       await onSaveTags(video.id, tags);
@@ -103,7 +103,7 @@ export default function EditTagsModal({
                     placeholder="Add a tag..."
                     value={inputValue}
                     onChange={(e) => setInputValue(e.target.value)}
-                    className="pr-10 bg-white/50 border-primary/20 focus-visible:ring-primary/30 focus-visible:border-primary transition-all duration-300 rounded-xl h-12 sm:h-10"
+                    className="max-sm:text-sm pr-10 bg-white/50 border-primary/20 focus-visible:ring-primary/30 focus-visible:border-primary transition-all duration-300 rounded-xl h-10"
                     enterKeyHint="done"
                   />
                   {inputValue && (
@@ -119,13 +119,13 @@ export default function EditTagsModal({
                 <Button
                   type="submit"
                   size="icon"
-                  className="rounded-xl shadow-lg shadow-primary/10 transition-transform active:scale-95 h-12 w-12 sm:h-10 sm:w-10 shrink-0"
+                  className="rounded-xl shadow-lg shadow-primary/10 transition-transform active:scale-95 h-10 w-10 shrink-0"
                   disabled={!inputValue.trim()}
                 >
                   <Plus className="h-5 w-5" />
                 </Button>
               </form>
-              <p className="text-[10px] text-foreground/40 mt-2 ml-1 flex items-center gap-1">
+              <p className="text-[10px] text-foreground/40 mt-3 ml-1 flex items-center gap-1">
                 <span className="px-1 py-0.5 rounded bg-muted font-mono text-[9px]">
                   ENTER
                 </span>
@@ -140,7 +140,7 @@ export default function EditTagsModal({
             </h3>
             <div
               className={cn(
-                "min-h-[120px] max-h-[240px] overflow-y-auto rounded-2xl border border-primary/10 bg-primary/5 p-4 transition-all duration-300",
+                "min-h-30 max-h-60 overflow-y-auto rounded-2xl border border-primary/10 bg-primary/5 p-4 transition-all duration-300",
                 tags.length === 0 &&
                   "flex items-center justify-center border-dashed",
               )}
@@ -161,10 +161,11 @@ export default function EditTagsModal({
                       key={tag}
                       className="group flex items-center gap-1.5 rounded-full bg-secondary pl-3 pr-1 py-1.5 text-xs font-semibold text-secondary-foreground shadow-sm min-h-[32px]"
                     >
-                      <span className="opacity-70 text-[10px]">#</span>
-                      {tag}
+                      <span className="opacity-70 text-[10px]">#{tag}</span>
+
                       <button
                         onClick={() => handleRemoveTag(tag)}
+                        type="button"
                         className="ml-1 rounded-full p-1.5 bg-black/10 hover:bg-black/20 text-white transition-colors"
                       >
                         <X className="h-3 w-3" />

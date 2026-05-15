@@ -1,5 +1,5 @@
 import { CheckCircle2, Loader2, X } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -29,19 +29,6 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
   const [notes, setNotes] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
-
-  // Reset state when modal opens
-  useEffect(() => {
-    if (isOpen) {
-      setUrl("");
-      setSaveState("input");
-      setErrorMsg("");
-      setSavedVideo(null);
-      setNotes("");
-      setTags([]);
-      setTagInput("");
-    }
-  }, [isOpen]);
 
   const handleSave = async () => {
     if (!url.trim()) return;
@@ -141,11 +128,12 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
   return (
     <ResponsiveModal open={isOpen} onOpenChange={onClose}>
       <ResponsiveModalContent
-        className="sm:max-w-md min-h-[32dvh] max-h-[92dvh] p-0"
+        key={isOpen ? "open" : "closed"}
+        className="sm:max-w-md p-0"
         aria-describedby={undefined}
       >
         {saveState === "input" || saveState === "error" ? (
-          <div className="p-6 min-h-[35dvh]">
+          <div className="p-6">
             <ResponsiveModalHeader className="mb-4 p-0">
               <ResponsiveModalTitle className="text-xl font-serif">
                 Save a Video
@@ -234,6 +222,7 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
                         {tag}
                         <button
                           onClick={() => handleTagRemove(tag)}
+                          type="button"
                           className="ml-1 opacity-50 hover:opacity-100 p-1"
                         >
                           <X className="h-3 w-3" />
@@ -266,7 +255,7 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     onBlur={handleNotesBlur}
-                    className="w-full min-h-[80px] p-3 text-sm rounded-xl border bg-transparent resize-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
+                    className="w-full min-h-20 p-3 text-sm rounded-xl border bg-transparent resize-none focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-primary"
                   />
                 </div>
 

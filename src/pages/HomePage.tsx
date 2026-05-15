@@ -9,12 +9,14 @@ import EditTagsModal from "@/components/modals/EditTagsModal";
 import SaveSheet from "@/components/SaveSheet";
 import VideoCard from "@/components/VideoCard";
 import { useAuth } from "@/hooks/useAuth";
+import { useMeta } from "@/hooks/useMeta";
 import { useTitle } from "@/hooks/useTitle";
 import { useVideos } from "@/hooks/useVideos";
 import type { Video } from "@/types/video";
 
 export default function HomePage() {
   useTitle("Home");
+  useMeta({ description: "Browse your pocketed videos, search by title or tags, and filter by platform." });
 
   const { session } = useAuth();
   const { videos, loading, updateVideoTags, deleteVideo } = useVideos();

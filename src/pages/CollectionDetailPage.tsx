@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import VideoCard from "@/components/VideoCard";
 import { useCollectionDetail } from "@/hooks/useCollectionDetail";
 import { useCollections } from "@/hooks/useCollections";
+import { useMeta } from "@/hooks/useMeta";
 import { useTitle } from "@/hooks/useTitle";
 import type { Video } from "@/types/video";
 
@@ -59,6 +60,7 @@ export default function CollectionDetailPage() {
   };
 
   useTitle(localName || "Collection");
+  useMeta({ description: localName ? `Browse videos in the "${localName}" collection.` : "Browse a collection of saved videos." });
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 
