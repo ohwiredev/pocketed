@@ -133,7 +133,7 @@ export default function AddToCollectionModal({
 
   return (
     <ResponsiveModal open={isOpen} onOpenChange={onClose}>
-      <ResponsiveModalContent className="sm:max-w-md max-h-[85vh] flex flex-col p-0">
+      <ResponsiveModalContent className="sm:max-w-md min-h-[60vh] max-h-[92vh] flex flex-col p-0">
         <ResponsiveModalHeader className="p-6 pb-2">
           <ResponsiveModalTitle className="font-serif text-2xl">
             Add to Collection

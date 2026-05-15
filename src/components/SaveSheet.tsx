@@ -141,7 +141,7 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
   return (
     <ResponsiveModal open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <ResponsiveModalContent
-        className="sm:max-w-md p-0"
+        className="sm:max-w-md min-h-[50vh] p-0"
         aria-describedby={undefined}
       >
         {saveState === "input" || saveState === "error" ? (
@@ -164,7 +164,8 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
                 onChange={(e) => setUrl(e.target.value)}
                 autoFocus
                 className="h-12 sm:h-10"
-                type="url"
+                type="text"
+                inputMode="url"
                 enterKeyHint="go"
               />
               {saveState === "error" && (
@@ -189,7 +190,7 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
             </p>
           </div>
         ) : (
-          <div className="p-6 pb-4 sm:pb-6">
+          <div className="p-6 pb-8 sm:pb-6">
             <ResponsiveModalHeader className="mb-6 flex flex-row items-center gap-2 space-y-0 p-0 text-left">
               <CheckCircle2 className="h-6 w-6 text-green-500" />
               <ResponsiveModalTitle className="text-xl font-serif text-green-600 dark:text-green-400">
