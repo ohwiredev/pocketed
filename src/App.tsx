@@ -45,11 +45,13 @@ function App() {
         <Route path="/privacy" element={<PrivacyPage />} />
         <Route path="/terms" element={<TermsPage />} />
 
+        {/* Public share-target route - no auth required, no app chrome */}
+        <Route path="/save" element={<SavePage />} />
+
         <Route element={<ProtectedRoute />}>
           <Route element={<MainLayout />}>
             <Route path="/home" element={<HomePage />} />
             <Route path="/collections" element={<CollectionsPage />} />
-            <Route path="/save" element={<SavePage />} />
             <Route path="/profile" element={<ProfilePage />} />
             <Route path="/video/:id" element={<VideoDetailPage />} />
             <Route path="/collection/:id" element={<CollectionDetailPage />} />

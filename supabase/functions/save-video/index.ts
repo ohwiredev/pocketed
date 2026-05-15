@@ -170,6 +170,32 @@ Deno.serve(async (req) => {
     },
   );
 
+  // ── Check for existing duplicate ──────────────────────────────
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (user) {
+    const { data: existing } = await supabase
+      .from("videos")
+      .select("*")
+      .eq("user_id", user.id)
+      .eq("video_url", url)
+      .maybeSingle();
+
+    if (existing) {
+      console.log("Duplicate video detected for user:", user.id, "url:", url);
+      return new Response(
+        JSON.stringify({ status: "duplicate", video: existing }),
+        {
+          status: 200,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        },
+      );
+    }
+  }
+
   const { data: video, error } = await supabase
     .from("videos")
     .insert({

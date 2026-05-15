@@ -1,6 +1,6 @@
 import { Eye, EyeOff } from "lucide-react";
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import trademark from "@/assets/brand/trademark.svg";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { useAuth } from "@/hooks/useAuth";
 import { useMeta } from "@/hooks/useMeta";
 import { useTitle } from "@/hooks/useTitle";
+import { getPendingShare } from "@/lib/shareTarget";
 
 export default function SignupPage() {
   useTitle("Sign Up");
@@ -17,6 +18,10 @@ export default function SignupPage() {
     canonical: "https://pocketed.app/signup",
   });
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+
+  const redirectTo = searchParams.get("redirectTo") || "/home";
+  const hasPendingShare = !!getPendingShare();
 
   const { signUpWithEmail, loading, error, session, isInitialized } = useAuth();
   const [email, setEmail] = useState("");
@@ -27,9 +32,9 @@ export default function SignupPage() {
 
   useEffect(() => {
     if (isInitialized && session) {
-      navigate("/home");
+      navigate(redirectTo, { replace: true });
     }
-  }, [isInitialized, session, navigate]);
+  }, [isInitialized, session, navigate, redirectTo]);
 
   const handleSubmit = async (e: React.SubmitEvent) => {
     e.preventDefault();
@@ -42,7 +47,7 @@ export default function SignupPage() {
     );
 
     if (!error && !needsEmailVerification) {
-      navigate("/home");
+      navigate(redirectTo, { replace: true });
     }
 
     if (!error && needsEmailVerification) {
@@ -65,9 +70,14 @@ export default function SignupPage() {
               />
             </Link>
             <h1 className="mt-6 text-balance text-xl font-semibold">
-              <span className="text-muted-foreground">Welcome to Pockted!</span>{" "}
+              <span className="text-muted-foreground">Welcome to Pocketed!</span>{" "}
               Create an Account to Get Started
             </h1>
+            {hasPendingShare && (
+              <p className="mt-3 rounded-lg bg-primary/10 px-3 py-2 text-center text-xs font-medium text-primary">
+                You have a video waiting to be saved. Sign up and we'll save it right away.
+              </p>
+            )}
           </div>
 
           <div className="mt-6 space-y-2">
