@@ -19,6 +19,7 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
 
 interface ResponsiveModalProps {
@@ -32,15 +33,16 @@ export function ResponsiveModal({
   onOpenChange,
   children,
 }: ResponsiveModalProps) {
-  return (
-    <>
-      <Dialog open={open} onOpenChange={onOpenChange}>
-        <div className="hidden md:block">{children}</div>
-      </Dialog>
-      <Drawer open={open} onOpenChange={onOpenChange}>
-        <div className="md:hidden">{children}</div>
-      </Drawer>
-    </>
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  return isDesktop ? (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      {children}
+    </Dialog>
+  ) : (
+    <Drawer open={open} onOpenChange={onOpenChange}>
+      {children}
+    </Drawer>
   );
 }
 
@@ -53,15 +55,12 @@ export function ResponsiveModalTrigger({
   asChild,
   children,
 }: ResponsiveModalTriggerProps) {
-  return (
-    <>
-      <DialogTrigger asChild={asChild} className="hidden md:block">
-        {children}
-      </DialogTrigger>
-      <DrawerTrigger asChild={asChild} className="md:hidden">
-        {children}
-      </DrawerTrigger>
-    </>
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  return isDesktop ? (
+    <DialogTrigger asChild={asChild}>{children}</DialogTrigger>
+  ) : (
+    <DrawerTrigger asChild={asChild}>{children}</DrawerTrigger>
   );
 }
 
@@ -73,15 +72,14 @@ export function ResponsiveModalContent({
   children,
   ...props
 }: ResponsiveModalContentProps) {
-  return (
-    <>
-      <DialogContent className={cn(className)} {...props}>
-        {children}
-      </DialogContent>
-      <DrawerContent className={cn(className)}>
-        {children}
-      </DrawerContent>
-    </>
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  return isDesktop ? (
+    <DialogContent className={cn(className)} {...props}>
+      {children}
+    </DialogContent>
+  ) : (
+    <DrawerContent className={cn(className)}>{children}</DrawerContent>
   );
 }
 
@@ -89,11 +87,12 @@ export function ResponsiveModalHeader({
   className,
   ...props
 }: React.ComponentProps<typeof DialogHeader>) {
-  return (
-    <>
-      <DialogHeader className={cn(className)} {...props} />
-      <DrawerHeader className={cn("text-left", className)} {...props} />
-    </>
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  return isDesktop ? (
+    <DialogHeader className={cn(className)} {...props} />
+  ) : (
+    <DrawerHeader className={cn("text-left", className)} {...props} />
   );
 }
 
@@ -101,11 +100,12 @@ export function ResponsiveModalTitle({
   className,
   ...props
 }: React.ComponentProps<typeof DialogTitle>) {
-  return (
-    <>
-      <DialogTitle className={cn(className)} {...props} />
-      <DrawerTitle className={cn(className)} {...props} />
-    </>
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  return isDesktop ? (
+    <DialogTitle className={cn(className)} {...props} />
+  ) : (
+    <DrawerTitle className={cn(className)} {...props} />
   );
 }
 
@@ -113,11 +113,12 @@ export function ResponsiveModalDescription({
   className,
   ...props
 }: React.ComponentProps<typeof DialogDescription>) {
-  return (
-    <>
-      <DialogDescription className={cn(className)} {...props} />
-      <DrawerDescription className={cn(className)} {...props} />
-    </>
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  return isDesktop ? (
+    <DialogDescription className={cn(className)} {...props} />
+  ) : (
+    <DrawerDescription className={cn(className)} {...props} />
   );
 }
 
@@ -125,21 +126,19 @@ export function ResponsiveModalFooter({
   className,
   ...props
 }: React.ComponentProps<typeof DialogFooter>) {
-  return (
-    <>
-      <DialogFooter className={cn(className)} {...props} />
-      <DrawerFooter className={cn("pt-2", className)} {...props} />
-    </>
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  return isDesktop ? (
+    <DialogFooter className={cn(className)} {...props} />
+  ) : (
+    <DrawerFooter className={cn("pt-2", className)} {...props} />
   );
 }
 
 export function ResponsiveModalClose({
   ...props
 }: React.ComponentProps<typeof DialogClose>) {
-  return (
-    <>
-      <DialogClose {...props} />
-      <DrawerClose {...props} />
-    </>
-  );
+  const isDesktop = useMediaQuery("(min-width: 768px)");
+
+  return isDesktop ? <DialogClose {...props} /> : <DrawerClose {...props} />;
 }
