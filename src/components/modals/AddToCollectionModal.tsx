@@ -76,8 +76,8 @@ export default function AddToCollectionModal({
       document.activeElement.blur();
     }
 
-    // Wait for keyboard dismissal to start
-    await new Promise((resolve) => setTimeout(resolve, 150));
+    // Wait for keyboard dismissal to fully complete
+    await new Promise((resolve) => setTimeout(resolve, 300));
 
     setIsSubmitting(collectionId);
     try {
@@ -107,8 +107,8 @@ export default function AddToCollectionModal({
       document.activeElement.blur();
     }
 
-    // Wait for keyboard dismissal to start
-    await new Promise((resolve) => setTimeout(resolve, 150));
+    // Wait for keyboard dismissal to fully complete
+    await new Promise((resolve) => setTimeout(resolve, 300));
 
     setIsCreating(true);
     try {
@@ -133,7 +133,7 @@ export default function AddToCollectionModal({
 
   return (
     <ResponsiveModal open={isOpen} onOpenChange={onClose}>
-      <ResponsiveModalContent className="sm:max-w-md min-h-[60vh] max-h-[92vh] flex flex-col p-0">
+      <ResponsiveModalContent className="sm:max-w-md max-h-[92svh] flex flex-col p-0">
         <ResponsiveModalHeader className="p-6 pb-2">
           <ResponsiveModalTitle className="font-serif text-2xl">
             Add to Collection

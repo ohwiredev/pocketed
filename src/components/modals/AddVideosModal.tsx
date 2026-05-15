@@ -54,8 +54,8 @@ export default function AddVideosModal({
         document.activeElement.blur();
       }
 
-      // Wait for keyboard dismissal to start
-      await new Promise((resolve) => setTimeout(resolve, 150));
+      // Wait for the virtual keyboard to fully dismiss before layout changes
+      await new Promise((resolve) => setTimeout(resolve, 300));
 
       setIsSubmitting(true);
       await onAdd(selectedIds);
@@ -70,7 +70,7 @@ export default function AddVideosModal({
 
   return (
     <ResponsiveModal open={isOpen} onOpenChange={onClose}>
-      <ResponsiveModalContent className="sm:max-w-xl min-h-[60vh] max-h-[92vh] flex flex-col p-0">
+      <ResponsiveModalContent className="sm:max-w-xl max-h-[92svh] flex flex-col p-0">
         <ResponsiveModalHeader className="p-6 pb-2">
           <ResponsiveModalTitle className="font-serif text-2xl">
             Add Videos
