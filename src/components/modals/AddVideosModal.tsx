@@ -49,6 +49,14 @@ export default function AddVideosModal({
     if (selectedIds.length === 0) return;
 
     try {
+      // Blur to hide keyboard on mobile
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
+
+      // Wait for keyboard dismissal to start
+      await new Promise((resolve) => setTimeout(resolve, 150));
+
       setIsSubmitting(true);
       await onAdd(selectedIds);
       setSelectedIds([]);
@@ -62,7 +70,7 @@ export default function AddVideosModal({
 
   return (
     <ResponsiveModal open={isOpen} onOpenChange={onClose}>
-      <ResponsiveModalContent className="sm:max-w-xl h-[80vh] flex flex-col p-0">
+      <ResponsiveModalContent className="sm:max-w-xl max-h-[85vh] flex flex-col p-0">
         <ResponsiveModalHeader className="p-6 pb-2">
           <ResponsiveModalTitle className="font-serif text-2xl">
             Add Videos

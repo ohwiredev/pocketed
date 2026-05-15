@@ -70,6 +70,15 @@ export default function AddToCollectionModal({
 
   const handleAddToCollection = async (collectionId: string) => {
     if (!video) return;
+
+    // Blur to hide keyboard on mobile
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
+    // Wait for keyboard dismissal to start
+    await new Promise((resolve) => setTimeout(resolve, 150));
+
     setIsSubmitting(collectionId);
     try {
       const { error } = await supabase
@@ -92,6 +101,15 @@ export default function AddToCollectionModal({
 
   const handleCreateCollection = async () => {
     if (!newCollectionName.trim() || !video) return;
+
+    // Blur to hide keyboard on mobile
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
+    // Wait for keyboard dismissal to start
+    await new Promise((resolve) => setTimeout(resolve, 150));
+
     setIsCreating(true);
     try {
       const newCollection = await createCollection(newCollectionName.trim());
@@ -115,7 +133,7 @@ export default function AddToCollectionModal({
 
   return (
     <ResponsiveModal open={isOpen} onOpenChange={onClose}>
-      <ResponsiveModalContent className="sm:max-w-md h-[70vh] flex flex-col p-0">
+      <ResponsiveModalContent className="sm:max-w-md max-h-[85vh] flex flex-col p-0">
         <ResponsiveModalHeader className="p-6 pb-2">
           <ResponsiveModalTitle className="font-serif text-2xl">
             Add to Collection
@@ -170,7 +188,12 @@ export default function AddToCollectionModal({
               </p>
               <Button
                 variant="link"
-                onClick={() => setShowCreateForm(true)}
+                onClick={() => {
+                  if (document.activeElement instanceof HTMLElement) {
+                    document.activeElement.blur();
+                  }
+                  setShowCreateForm(true);
+                }}
                 className="mt-2 text-primary"
               >
                 Create one now
@@ -222,7 +245,12 @@ export default function AddToCollectionModal({
             <>
               <Button
                 variant="ghost"
-                onClick={() => setShowCreateForm(false)}
+                onClick={() => {
+                  if (document.activeElement instanceof HTMLElement) {
+                    document.activeElement.blur();
+                  }
+                  setShowCreateForm(false);
+                }}
                 className="w-full sm:w-auto order-2 sm:order-1 h-11 sm:h-9"
               >
                 Cancel
@@ -246,7 +274,12 @@ export default function AddToCollectionModal({
             <>
               <Button
                 variant="ghost"
-                onClick={() => setShowCreateForm(true)}
+                onClick={() => {
+                  if (document.activeElement instanceof HTMLElement) {
+                    document.activeElement.blur();
+                  }
+                  setShowCreateForm(true);
+                }}
                 className="gap-2 w-full sm:w-auto h-11 sm:h-9 order-2 sm:order-1"
               >
                 <Plus className="h-4 w-4" />

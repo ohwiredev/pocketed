@@ -29,6 +29,11 @@ export default function CreateCollectionModal({
     e.preventDefault();
     if (!name.trim()) return;
 
+    // Blur to hide keyboard on mobile
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+
     try {
       setIsSubmitting(true);
       await onCreate(name);

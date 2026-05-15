@@ -53,6 +53,12 @@ export default function EditTagsModal({
 
   const handleSave = async () => {
     if (!video) return;
+    
+    // Blur to hide keyboard on mobile
+    if (document.activeElement instanceof HTMLElement) {
+      document.activeElement.blur();
+    }
+    
     setIsSaving(true);
     try {
       await onSaveTags(video.id, tags);
@@ -72,7 +78,7 @@ export default function EditTagsModal({
 
   return (
     <ResponsiveModal open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <ResponsiveModalContent className="sm:max-w-xl bg-white border-none shadow-2xl overflow-hidden p-0">
+      <ResponsiveModalContent className="sm:max-w-xl bg-white border-none shadow-2xl p-0">
         <ResponsiveModalHeader className="p-6 pb-2">
           <ResponsiveModalTitle className="text-2xl font-serif">
             Edit Tags

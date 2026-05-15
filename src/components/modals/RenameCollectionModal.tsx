@@ -43,6 +43,10 @@ export default function RenameCollectionModal({
     }
 
     try {
+      // Blur to hide keyboard on mobile
+      if (document.activeElement instanceof HTMLElement) {
+        document.activeElement.blur();
+      }
       setIsSubmitting(true);
       await onRename(collectionId, name);
       onClose();
