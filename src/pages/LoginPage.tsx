@@ -62,7 +62,8 @@ export default function LoginPage() {
             </h1>
             {hasPendingShare && (
               <p className="mt-3 rounded-lg bg-primary/10 px-3 py-2 text-center text-xs font-medium text-primary">
-                You have a video waiting to be saved. Sign in and we'll finish the job.
+                You have a video waiting to be saved. Sign in and we'll finish
+                the job.
               </p>
             )}
           </div>

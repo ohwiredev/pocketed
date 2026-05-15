@@ -16,7 +16,10 @@ import type { Video } from "@/types/video";
 
 export default function HomePage() {
   useTitle("Home");
-  useMeta({ description: "Browse your pocketed videos, search by title or tags, and filter by platform." });
+  useMeta({
+    description:
+      "Browse your pocketed videos, search by title or tags, and filter by platform.",
+  });
 
   const { session } = useAuth();
   const { videos, loading, updateVideoTags, deleteVideo } = useVideos();

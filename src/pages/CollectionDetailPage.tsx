@@ -60,7 +60,11 @@ export default function CollectionDetailPage() {
   };
 
   useTitle(localName || "Collection");
-  useMeta({ description: localName ? `Browse videos in the "${localName}" collection.` : "Browse a collection of saved videos." });
+  useMeta({
+    description: localName
+      ? `Browse videos in the "${localName}" collection.`
+      : "Browse a collection of saved videos.",
+  });
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
 

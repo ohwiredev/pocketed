@@ -4,7 +4,11 @@ const BASE_URL = "https://pocketed.app";
 
 function getMeta(name: string, isProperty = false): string {
   const attr = isProperty ? "property" : "name";
-  return document.querySelector(`meta[${attr}="${name}"]`)?.getAttribute("content") || "";
+  return (
+    document
+      .querySelector(`meta[${attr}="${name}"]`)
+      ?.getAttribute("content") || ""
+  );
 }
 
 function setMeta(name: string, content: string, isProperty = false) {
@@ -21,7 +25,10 @@ function setMeta(name: string, content: string, isProperty = false) {
 }
 
 function getCanonical(): string {
-  return document.querySelector('link[rel="canonical"]')?.getAttribute("href") || BASE_URL;
+  return (
+    document.querySelector('link[rel="canonical"]')?.getAttribute("href") ||
+    BASE_URL
+  );
 }
 
 function setCanonical(href: string) {

@@ -70,12 +70,15 @@ export default function SignupPage() {
               />
             </Link>
             <h1 className="mt-6 text-balance text-xl font-semibold">
-              <span className="text-muted-foreground">Welcome to Pocketed!</span>{" "}
+              <span className="text-muted-foreground">
+                Welcome to Pocketed!
+              </span>{" "}
               Create an Account to Get Started
             </h1>
             {hasPendingShare && (
               <p className="mt-3 rounded-lg bg-primary/10 px-3 py-2 text-center text-xs font-medium text-primary">
-                You have a video waiting to be saved. Sign up and we'll save it right away.
+                You have a video waiting to be saved. Sign up and we'll save it
+                right away.
               </p>
             )}
           </div>

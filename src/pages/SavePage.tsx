@@ -12,6 +12,7 @@ import { useTitle } from "@/hooks/useTitle";
 import {
   clearPendingShare,
   detectPlatform,
+  extractUrlFromShareInput,
   getPendingShare,
   isRunningStandalone,
   normalizeUrl,
@@ -46,10 +47,31 @@ const fadeSlide = {
   transition: { duration: 0.25, ease: "easeOut" as const },
 };
 
+function resolveSharedUrl(searchParams: URLSearchParams): string {
+  const fromParams = extractUrlFromShareInput(
+    searchParams.get("url") || searchParams.get("text") || "",
+  );
+  if (fromParams) return fromParams;
+
+  const pending = getPendingShare();
+  if (pending?.url) return pending.url;
+
+  // Fallback: try to extract from the full href if the browser appended params there.
+  try {
+    const href = new URL(window.location.href);
+    return extractUrlFromShareInput(
+      href.searchParams.get("url") || href.searchParams.get("text") || "",
+    );
+  } catch {
+    return "";
+  }
+}
+
 export default function SavePage() {
   useTitle("Save to Pocketed");
   useMeta({
-    description: "Save a video to your Pocketed library from TikTok, Instagram, or YouTube.",
+    description:
+      "Save a video to your Pocketed library from TikTok, Instagram, or YouTube.",
   });
 
   const navigate = useNavigate();
@@ -69,22 +91,8 @@ export default function SavePage() {
     reset,
   } = useSaveVideoFlow();
 
-  // Resolve URL immediately from query param, text param, pending share, or href fallback
-  const resolvedInitialUrl = (() => {
-    const fromParams = searchParams.get("url") || searchParams.get("text") || "";
-    if (fromParams) return normalizeUrl(fromParams);
-    const pending = getPendingShare();
-    if (pending?.url) return pending.url;
-    // Fallback: try to extract from full href (some PWA share targets pass URL this way)
-    try {
-      const href = new URL(window.location.href);
-      const hrefUrl = href.searchParams.get("url") || href.searchParams.get("text") || "";
-      if (hrefUrl) return normalizeUrl(hrefUrl);
-    } catch {}
-    return "";
-  })();
-
-  const [url, setUrl] = useState(resolvedInitialUrl);
+  const resolvedSharedUrl = resolveSharedUrl(searchParams);
+  const [url, setUrl] = useState(resolvedSharedUrl);
   const [tagInput, setTagInput] = useState("");
   const [pageState, setPageState] = useState<SavePageState>("idle");
   const [loadMsgIdx, setLoadMsgIdx] = useState(0);
@@ -106,13 +114,13 @@ export default function SavePage() {
     return () => clearInterval(interval);
   }, [pageState]);
 
-  // Persist the URL as pending share on mount
+  // Sync shared URLs from query params or storage into local state.
   useEffect(() => {
-    const urlParam = searchParams.get("url") || searchParams.get("text") || "";
-    if (urlParam) {
-      savePendingShare(normalizeUrl(urlParam), "share_target");
-    }
-  }, []);
+    if (!resolvedSharedUrl) return;
+
+    setUrl((currentUrl) => currentUrl || resolvedSharedUrl);
+    savePendingShare(resolvedSharedUrl, "share_target");
+  }, [resolvedSharedUrl]);
 
   // Sync flow state to page state
   useEffect(() => {
@@ -205,7 +213,6 @@ export default function SavePage() {
         <div className="w-full max-w-sm">
           <AnimatePresence mode="wait">
             <motion.div {...fadeProps} className="space-y-6">
-
               {/* Idle */}
               {pageState === "idle" && (
                 <div className="space-y-4 text-center">
@@ -260,10 +267,7 @@ export default function SavePage() {
                   </div>
 
                   <div className="space-y-3">
-                    <Button
-                      className="w-full h-12"
-                      onClick={handleConfirmSave}
-                    >
+                    <Button className="w-full h-12" onClick={handleConfirmSave}>
                       Save to Pocketed
                     </Button>
                     <Button
@@ -465,7 +469,8 @@ export default function SavePage() {
                       We couldn't save that video
                     </h1>
                     <p className="text-sm text-muted-foreground">
-                      {errorMsg || "The link might be private, deleted, or unsupported"}
+                      {errorMsg ||
+                        "The link might be private, deleted, or unsupported"}
                     </p>
                   </div>
 
@@ -553,7 +558,6 @@ export default function SavePage() {
                   </div>
                 </div>
               )}
-
             </motion.div>
           </AnimatePresence>
         </div>

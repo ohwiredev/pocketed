@@ -84,6 +84,8 @@ export default defineConfig({
           method: "GET",
           enctype: "application/x-www-form-urlencoded",
           params: {
+            title: "title",
+            text: "text",
             url: "url",
           },
         },

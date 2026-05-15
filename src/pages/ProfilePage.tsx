@@ -17,7 +17,9 @@ import { useTitle } from "@/hooks/useTitle";
 
 export default function ProfilePage() {
   useTitle("Profile");
-  useMeta({ description: "Manage your Pocketed account settings and preferences." });
+  useMeta({
+    description: "Manage your Pocketed account settings and preferences.",
+  });
   const { session, signOut, updateProfile } = useAuth();
 
   const user = session?.user;

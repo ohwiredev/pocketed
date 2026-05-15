@@ -11,7 +11,9 @@ import { useTitle } from "@/hooks/useTitle";
 
 export default function CollectionsPage() {
   useTitle("Collections");
-  useMeta({ description: "Organize your saved videos into curated collections." });
+  useMeta({
+    description: "Organize your saved videos into curated collections.",
+  });
   const {
     collections,
     loading,

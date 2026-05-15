@@ -101,7 +101,9 @@ const DrawerContent = React.forwardRef<
         )}
         <div
           className="flex-1 overflow-y-auto overscroll-y-contain"
-          style={keyboardPadding ? { paddingBottom: keyboardPadding } : undefined}
+          style={
+            keyboardPadding ? { paddingBottom: keyboardPadding } : undefined
+          }
         >
           {children}
         </div>
