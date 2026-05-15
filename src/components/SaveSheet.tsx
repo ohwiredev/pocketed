@@ -46,13 +46,16 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
   const handleSave = async () => {
     if (!url.trim()) return;
 
-    setSaveState("loading");
-    setErrorMsg("");
-
     // Blur active element to hide keyboard on mobile immediately
     if (document.activeElement instanceof HTMLElement) {
       document.activeElement.blur();
     }
+
+    // Wait for the virtual keyboard to start dismissing before layout changes
+    await new Promise((resolve) => setTimeout(resolve, 150));
+
+    setSaveState("loading");
+    setErrorMsg("");
 
     try {
       const { data, error } = await supabase.functions.invoke("save-video", {
@@ -140,7 +143,6 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
       <ResponsiveModalContent
         className="sm:max-w-md p-0"
         aria-describedby={undefined}
-        key={saveState}
       >
         {saveState === "input" || saveState === "error" ? (
           <div className="p-6">
