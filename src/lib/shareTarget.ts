@@ -71,5 +71,5 @@ export function normalizeUrl(url: string): string {
 
 /** Check if the app is running in standalone/PWA mode */
 export function isRunningStandalone(): boolean {
-  return window.navigator?.standalone || window.matchMedia("(display-mode: standalone)").matches;
+  return (window.navigator as Navigator & { standalone?: boolean }).standalone || window.matchMedia("(display-mode: standalone)").matches;
 }
