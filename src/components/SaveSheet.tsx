@@ -141,7 +141,7 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
   return (
     <ResponsiveModal open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <ResponsiveModalContent
-        className="sm:max-w-md min-h-[50vh] p-0"
+        className="sm:max-w-md p-0"
         aria-describedby={undefined}
       >
         {saveState === "input" || saveState === "error" ? (
