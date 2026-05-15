@@ -70,7 +70,7 @@ export default function AddVideosModal({
 
   return (
     <ResponsiveModal open={isOpen} onOpenChange={onClose}>
-      <ResponsiveModalContent className="sm:max-w-xl max-h-[92vh] flex flex-col p-0">
+      <ResponsiveModalContent className="sm:max-w-xl max-h-[92dvh] flex flex-col p-0">
         <ResponsiveModalHeader className="p-6 pb-2">
           <ResponsiveModalTitle className="font-serif text-2xl">
             Add Videos
