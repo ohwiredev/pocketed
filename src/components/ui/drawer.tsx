@@ -3,21 +3,45 @@ import { Drawer as DrawerPrimitive } from "vaul";
 
 import { cn } from "@/lib/utils";
 
+interface DrawerProps {
+  children?: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  snapPoints?: string[];
+  activeSnapPoint?: number | string | null;
+  setActiveSnapPoint?: (snapPoint: number | string | null) => void;
+  shouldScaleBackground?: boolean;
+  modal?: boolean;
+}
+
 const Drawer = ({
+  children,
+  snapPoints,
+  activeSnapPoint,
+  setActiveSnapPoint,
   shouldScaleBackground = true,
+  modal = true,
   ...props
-}: React.ComponentProps<typeof DrawerPrimitive.Root>) => (
+}: DrawerProps) => (
   <DrawerPrimitive.Root
     shouldScaleBackground={shouldScaleBackground}
     repositionInputs={true}
+    modal={modal}
+    snapPoints={snapPoints}
+    activeSnapPoint={activeSnapPoint}
+    setActiveSnapPoint={setActiveSnapPoint}
     {...props}
-  />
+  >
+    {children}
+  </DrawerPrimitive.Root>
 );
 Drawer.displayName = "Drawer";
 
 const DrawerTrigger = DrawerPrimitive.Trigger;
 
 const DrawerPortal = DrawerPrimitive.Portal;
+
+const DrawerHandle = DrawerPrimitive.Handle;
 
 const DrawerClose = DrawerPrimitive.Close;
 
@@ -42,13 +66,14 @@ const DrawerContent = React.forwardRef<
     <DrawerPrimitive.Content
       ref={ref}
       className={cn(
-        "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto max-h-[96%] flex-col rounded-t-[10px] border bg-background shadow-2xl pb-[env(safe-area-inset-bottom)]",
+        "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto max-h-[96dvh] flex-col rounded-t-[10px] border bg-background shadow-2xl",
+        "pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]",
         className,
       )}
       {...props}
     >
       <div className="mx-auto mt-4 h-2 w-[100px] shrink-0 rounded-full bg-muted" />
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto overscroll-y-contain">
         {children}
       </div>
     </DrawerPrimitive.Content>
@@ -111,6 +136,7 @@ export {
   DrawerContent,
   DrawerDescription,
   DrawerFooter,
+  DrawerHandle,
   DrawerHeader,
   DrawerOverlay,
   DrawerPortal,
