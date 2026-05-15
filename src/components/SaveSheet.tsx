@@ -145,7 +145,7 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
         aria-describedby={undefined}
       >
         {saveState === "input" || saveState === "error" ? (
-          <div className="p-6">
+          <div className="p-6 min-h-[320px]">
             <ResponsiveModalHeader className="mb-4 p-0">
               <ResponsiveModalTitle className="text-xl font-serif">
                 Save a Video
