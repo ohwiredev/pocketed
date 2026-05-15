@@ -59,9 +59,6 @@ export default function EditTagsModal({
       document.activeElement.blur();
     }
     
-    // Wait for the virtual keyboard to fully dismiss before layout changes
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    
     setIsSaving(true);
     try {
       await onSaveTags(video.id, tags);

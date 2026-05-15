@@ -51,8 +51,8 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
       document.activeElement.blur();
     }
 
-    // Wait for the virtual keyboard to fully dismiss before layout changes
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    // Wait for the virtual keyboard to start dismissing before layout changes
+    await new Promise((resolve) => setTimeout(resolve, 150));
 
     setSaveState("loading");
     setErrorMsg("");
@@ -141,7 +141,7 @@ export default function SaveSheet({ isOpen, onClose }: SaveSheetProps) {
   return (
     <ResponsiveModal open={isOpen} onOpenChange={(open) => !open && onClose()}>
       <ResponsiveModalContent
-        className="sm:max-w-md p-0"
+        className="sm:max-w-md min-h-[50vh] p-0"
         aria-describedby={undefined}
       >
         {saveState === "input" || saveState === "error" ? (
