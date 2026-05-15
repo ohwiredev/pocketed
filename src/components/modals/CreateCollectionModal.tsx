@@ -34,6 +34,9 @@ export default function CreateCollectionModal({
       document.activeElement.blur();
     }
 
+    // Wait for the virtual keyboard to fully dismiss
+    await new Promise((resolve) => setTimeout(resolve, 300));
+
     try {
       setIsSubmitting(true);
       await onCreate(name);
@@ -48,7 +51,7 @@ export default function CreateCollectionModal({
 
   return (
     <ResponsiveModal open={isOpen} onOpenChange={onClose}>
-      <ResponsiveModalContent className="sm:max-w-md">
+      <ResponsiveModalContent className="sm:max-w-md min-h-[32dvh] max-h-[92dvh] p-0">
         <ResponsiveModalHeader>
           <ResponsiveModalTitle className="font-serif text-2xl">
             New Collection
