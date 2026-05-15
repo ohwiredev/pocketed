@@ -97,6 +97,7 @@ export default function SavePage() {
   const [pageState, setPageState] = useState<SavePageState>("idle");
   const [loadMsgIdx, setLoadMsgIdx] = useState(0);
   const autoSaveAttempted = useRef<string | null>(null);
+  const isSavingRef = useRef(false);
 
   const platform = url ? detectPlatform(url) : null;
   const platformLabel = platform ? PLATFORM_LABELS[platform] : null;
@@ -145,14 +146,15 @@ export default function SavePage() {
   }, [isInitialized, session, url, pageState]);
 
   const handleConfirmSave = () => {
-    if (!url.trim()) return;
+    if (!url.trim() || isSavingRef.current) return;
+    isSavingRef.current = true;
     autoSaveAttempted.current = url;
     setPageState("saving");
-    save(url);
+    save(url).finally(() => { isSavingRef.current = false; });
   };
 
   const handleManualSave = () => {
-    if (!url.trim()) return;
+    if (!url.trim() || isSavingRef.current) return;
     const normalized = normalizeUrl(url.trim());
     setUrl(normalized);
     savePendingShare(normalized, "manual");
@@ -160,9 +162,11 @@ export default function SavePage() {
   };
 
   const handleRetry = () => {
+    if (isSavingRef.current) return;
+    isSavingRef.current = true;
     autoSaveAttempted.current = url;
     setPageState("saving");
-    save(url);
+    save(url).finally(() => { isSavingRef.current = false; });
   };
 
   const handleDone = () => {

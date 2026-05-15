@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import type { Video } from "@/types/video";
 
@@ -46,8 +46,11 @@ export function useSaveVideoFlow(): SaveFlowResult {
   const [notes, setNotesState] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
+  const isSavingRef = useRef(false);
+
   const save = useCallback(async (url: string) => {
-    if (!url.trim()) return;
+    if (!url.trim() || isSavingRef.current) return;
+    isSavingRef.current = true;
 
     // Blur active element to hide keyboard on mobile immediately
     if (document.activeElement instanceof HTMLElement) {
@@ -101,6 +104,8 @@ export function useSaveVideoFlow(): SaveFlowResult {
         err instanceof Error ? err.message : "An unknown error occurred",
       );
       setState("error");
+    } finally {
+      isSavingRef.current = false;
     }
   }, []);
 

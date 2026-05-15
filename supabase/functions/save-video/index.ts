@@ -4,7 +4,32 @@ import { corsHeaders } from "../_shared/cors.ts";
 // ── Helpers ─────────────────────────────────────────────────────────
 
 function getAspectRatio(width: number, height: number): string {
-  return height > width ? "verticle" : "horizontal";
+  return height > width ? "vertical" : "horizontal";
+}
+
+function normalizeUrl(url: string): string {
+  try {
+    const u = new URL(url);
+    if (u.hostname === "youtu.be") {
+      const vid = u.pathname.slice(1).split("?")[0];
+      if (vid) return `https://www.youtube.com/watch?v=${vid}`;
+    }
+    if (
+      u.hostname.includes("tiktok.com") ||
+      u.hostname.includes("instagram.com") ||
+      u.hostname.includes("youtube.com")
+    ) {
+      const clean = new URL(u.origin + u.pathname);
+      if (u.hostname.includes("youtube.com")) {
+        const v = u.searchParams.get("v");
+        if (v) clean.searchParams.set("v", v);
+      }
+      return clean.toString();
+    }
+    return u.toString();
+  } catch {
+    return url;
+  }
 }
 
 type Platform = "tiktok" | "instagram" | "youtube";
@@ -170,6 +195,10 @@ Deno.serve(async (req) => {
     },
   );
 
+  // ── Normalize URL for consistent duplicate detection ──────────
+
+  const normalizedUrl = normalizeUrl(url);
+
   // ── Check for existing duplicate ──────────────────────────────
 
   const {
@@ -181,11 +210,11 @@ Deno.serve(async (req) => {
       .from("videos")
       .select("*")
       .eq("user_id", user.id)
-      .eq("video_url", url)
+      .eq("video_url", normalizedUrl)
       .maybeSingle();
 
     if (existing) {
-      console.log("Duplicate video detected for user:", user.id, "url:", url);
+      console.log("Duplicate video detected for user:", user.id, "url:", normalizedUrl);
       return new Response(
         JSON.stringify({ status: "duplicate", video: existing }),
         {
@@ -207,7 +236,7 @@ Deno.serve(async (req) => {
           meta.thumbnail_width || meta.width || 0,
           meta.thumbnail_height || meta.height || 0,
         ),
-      video_url: url,
+      video_url: normalizedUrl,
       platform,
       notes: notes || null,
       author: meta.author || meta.author_name || null,
