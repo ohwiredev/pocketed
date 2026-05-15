@@ -60,25 +60,55 @@ DrawerOverlay.displayName = DrawerPrimitive.Overlay.displayName;
 const DrawerContent = React.forwardRef<
   React.ElementRef<typeof DrawerPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof DrawerPrimitive.Content>
->(({ className, children, ...props }, ref) => (
-  <DrawerPortal>
-    <DrawerOverlay />
-    <DrawerPrimitive.Content
-      ref={ref}
-      className={cn(
-        "fixed inset-x-0 bottom-0 z-50 mt-24 flex h-auto max-h-[96dvh] flex-col rounded-t-[10px] border bg-background shadow-2xl",
-        "pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]",
-        className,
-      )}
-      {...props}
-    >
-      <div className="mx-auto mt-4 h-2 w-[100px] shrink-0 rounded-full bg-muted" />
-      <div className="flex-1 overflow-y-auto overscroll-y-contain">
-        {children}
-      </div>
-    </DrawerPrimitive.Content>
-  </DrawerPortal>
-));
+>(({ className, children, ...props }, ref) => {
+  const [keyboardPadding, setKeyboardPadding] = React.useState(0);
+  const [keyboardOpen, setKeyboardOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const vv = window.visualViewport;
+    if (!vv) return;
+
+    const handle = () => {
+      const diff = window.innerHeight - vv.height;
+      if (diff > 100) {
+        setKeyboardPadding(diff);
+        setKeyboardOpen(true);
+      } else {
+        setKeyboardPadding(0);
+        setKeyboardOpen(false);
+      }
+    };
+
+    vv.addEventListener("resize", handle);
+    return () => vv.removeEventListener("resize", handle);
+  }, []);
+
+  return (
+    <DrawerPortal>
+      <DrawerOverlay />
+      <DrawerPrimitive.Content
+        ref={ref}
+        className={cn(
+          "fixed inset-x-0 bottom-0 z-50 flex h-auto max-h-[96dvh] flex-col rounded-t-[10px] border bg-background shadow-2xl",
+          "pb-[env(safe-area-inset-bottom)] pt-[env(safe-area-inset-top)]",
+          keyboardOpen ? "" : "mt-24",
+          className,
+        )}
+        {...props}
+      >
+        {!keyboardOpen && (
+          <div className="mx-auto mt-4 h-2 w-[100px] shrink-0 rounded-full bg-muted" />
+        )}
+        <div
+          className="flex-1 overflow-y-auto overscroll-y-contain"
+          style={keyboardPadding ? { paddingBottom: keyboardPadding } : undefined}
+        >
+          {children}
+        </div>
+      </DrawerPrimitive.Content>
+    </DrawerPortal>
+  );
+});
 DrawerContent.displayName = "DrawerContent";
 
 const DrawerHeader = ({
