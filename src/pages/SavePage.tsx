@@ -20,6 +20,7 @@ import {
 
 type SavePageState =
   | "idle"
+  | "confirm"
   | "auth-required"
   | "saving"
   | "saved"
@@ -68,7 +69,22 @@ export default function SavePage() {
     reset,
   } = useSaveVideoFlow();
 
-  const [url, setUrl] = useState("");
+  // Resolve URL immediately from query param, text param, pending share, or href fallback
+  const resolvedInitialUrl = (() => {
+    const fromParams = searchParams.get("url") || searchParams.get("text") || "";
+    if (fromParams) return normalizeUrl(fromParams);
+    const pending = getPendingShare();
+    if (pending?.url) return pending.url;
+    // Fallback: try to extract from full href (some PWA share targets pass URL this way)
+    try {
+      const href = new URL(window.location.href);
+      const hrefUrl = href.searchParams.get("url") || href.searchParams.get("text") || "";
+      if (hrefUrl) return normalizeUrl(hrefUrl);
+    } catch {}
+    return "";
+  })();
+
+  const [url, setUrl] = useState(resolvedInitialUrl);
   const [tagInput, setTagInput] = useState("");
   const [pageState, setPageState] = useState<SavePageState>("idle");
   const [loadMsgIdx, setLoadMsgIdx] = useState(0);
@@ -90,18 +106,13 @@ export default function SavePage() {
     return () => clearInterval(interval);
   }, [pageState]);
 
-  // On mount: resolve URL from search params or stored pending share
+  // Persist the URL as pending share on mount
   useEffect(() => {
-    const urlParam = searchParams.get("url");
-    const pending = getPendingShare();
-    const rawUrl = urlParam || pending?.url || "";
-
-    if (rawUrl) {
-      const normalized = normalizeUrl(rawUrl);
-      setUrl(normalized);
-      savePendingShare(normalized, pending?.source || "share_target");
+    const urlParam = searchParams.get("url") || searchParams.get("text") || "";
+    if (urlParam) {
+      savePendingShare(normalizeUrl(urlParam), "share_target");
     }
-  }, [searchParams]);
+  }, []);
 
   // Sync flow state to page state
   useEffect(() => {
@@ -114,32 +125,30 @@ export default function SavePage() {
     else if (flowState === "duplicate") setPageState("duplicate");
   }, [flowState]);
 
-  // Auto-start save when ready
+  // When URL is resolved and auth is ready, show confirm or auth-required
   useEffect(() => {
     if (!isInitialized || !url || pageState !== "idle") return;
-    if (autoSaveAttempted.current === url) return;
 
     if (session) {
-      autoSaveAttempted.current = url;
-      setPageState("saving");
-      save(url);
+      setPageState("confirm");
     } else {
       setPageState("auth-required");
     }
-  }, [isInitialized, session, url, pageState, save]);
+  }, [isInitialized, session, url, pageState]);
+
+  const handleConfirmSave = () => {
+    if (!url.trim()) return;
+    autoSaveAttempted.current = url;
+    setPageState("saving");
+    save(url);
+  };
 
   const handleManualSave = () => {
     if (!url.trim()) return;
     const normalized = normalizeUrl(url.trim());
     setUrl(normalized);
     savePendingShare(normalized, "manual");
-    autoSaveAttempted.current = normalized;
-    if (session) {
-      setPageState("saving");
-      save(normalized);
-    } else {
-      setPageState("auth-required");
-    }
+    handleConfirmSave();
   };
 
   const handleRetry = () => {
@@ -153,6 +162,7 @@ export default function SavePage() {
     reset();
     if (isRunningStandalone()) {
       window.close();
+      return;
     }
     navigate("/home");
   };
@@ -227,6 +237,43 @@ export default function SavePage() {
                       Save
                     </Button>
                   </form>
+                </div>
+              )}
+
+              {/* Confirm: URL prefilled from share target, one tap to save */}
+              {pageState === "confirm" && (
+                <div className="space-y-6 text-center">
+                  <div className="space-y-2">
+                    <h1 className="text-xl font-semibold">Save this video?</h1>
+                    <p className="text-sm text-muted-foreground">
+                      We'll fetch the title, thumbnail, and add smart tags
+                    </p>
+                  </div>
+
+                  <div className="rounded-xl border bg-muted/30 p-3 text-left">
+                    {platformLabel && (
+                      <p className="text-xs text-muted-foreground mb-1">
+                        From {platformLabel}
+                      </p>
+                    )}
+                    <p className="truncate text-sm font-medium">{url}</p>
+                  </div>
+
+                  <div className="space-y-3">
+                    <Button
+                      className="w-full h-12"
+                      onClick={handleConfirmSave}
+                    >
+                      Save to Pocketed
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      className="w-full h-12 text-muted-foreground"
+                      onClick={handleCancel}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
                 </div>
               )}
 
