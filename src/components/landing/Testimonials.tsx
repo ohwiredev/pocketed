@@ -28,36 +28,63 @@ const itemVariants = {
 export default function TestimonialSection() {
   const testimonials = [
     {
-      name: "Priya",
-      role: "Home cook",
-      stars: 5,
-      avatar:
-        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2787&auto=format&fit=crop",
-      content:
-        "I saved a pasta recipe on TikTok in January. Found it in Pocketed in about four seconds. That used to take me twenty minutes of scrolling.",
-    },
-    {
-      name: "Marcus",
-      role: "Personal trainer",
-      stars: 5,
-      avatar:
-        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=2787&auto=format&fit=crop",
-      content:
-        "I follow so many fitness creators. Pocketed is the only reason I can actually find the workouts I want when I want them.",
-    },
-    {
-      name: "Leila",
-      role: "Frequent traveller",
+      name: "Sarah Chen",
+      role: "K-Pop Stan",
       stars: 5,
       avatar:
         "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=2787&auto=format&fit=crop",
       content:
-        "I travel a lot and save every recommendation I come across. Pocketed turned a mess of saved posts into something I can actually use.",
+        "I save hundreds of fancams and edits every week. Pocketed actually lets me find the exact video I'm looking for instead of scrolling through thousands of likes.",
+    },
+    {
+      name: "Marcus Thompson",
+      role: "Personal Trainer",
+      stars: 5,
+      avatar:
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=2787&auto=format&fit=crop",
+      content:
+        "I follow over 200 fitness creators. Before Pocketed, I'd spend 20+ minutes trying to find a specific workout. Now it takes seconds.",
+    },
+    {
+      name: "Emily Rodriguez",
+      role: "Content Creator",
+      stars: 5,
+      avatar:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=2787&auto=format&fit=crop",
+      content:
+        "I save every video that inspires me. Pocketed turned my chaotic TikTok likes into an organized system I actually use daily.",
+    },
+    {
+      name: "James Park",
+      role: "Medical Student",
+      stars: 5,
+      avatar:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2787&auto=format&fit=crop",
+      content:
+        "I save study tips and educational content constantly. Pocketed's search is so good I can find exact videos by just typing what I remember.",
+    },
+    {
+      name: "Priya Sharma",
+      role: "Travel Blogger",
+      stars: 5,
+      avatar:
+        "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=2787&auto=format&fit=crop",
+      content:
+        "I travel constantly and save travel tips everywhere. Pocketed turned all that random saved content into a proper resource I reference constantly.",
+    },
+    {
+      name: "Alex Kim",
+      role: "Home Cook",
+      stars: 5,
+      avatar:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?q=80&w=2787&auto=format&fit=crop",
+      content:
+        "My TikTok saved folder had over 3,000 videos. Pocketed made it actually searchable. I found recipes I saved months ago in seconds.",
     },
   ];
 
   return (
-    <section>
+    <section className="bg-background">
       <div className="py-24">
         <div className="@container mx-auto w-full max-w-7xl px-6">
           <motion.h2

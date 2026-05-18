@@ -1,5 +1,5 @@
 import CallToAction from "@/components/landing/CTA";
-import Features from "@/components/landing/Features";
+import Pricing from "@/components/landing/Pricing";
 import Footer from "@/components/landing/Footer";
 import HeroSection from "@/components/landing/Hero";
 import HowItWorks from "@/components/landing/HowItWorks";
@@ -22,7 +22,7 @@ export default function LandingPage() {
     <main className="min-h-screen bg-linear-to-b from-muted to-background">
       <HeroSection />
       <HowItWorks />
-      <Features />
+      <Pricing />
       <Testimonials />
       <CallToAction />
       <Footer />

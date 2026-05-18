@@ -214,7 +214,12 @@ Deno.serve(async (req) => {
       .maybeSingle();
 
     if (existing) {
-      console.log("Duplicate video detected for user:", user.id, "url:", normalizedUrl);
+      console.log(
+        "Duplicate video detected for user:",
+        user.id,
+        "url:",
+        normalizedUrl,
+      );
       return new Response(
         JSON.stringify({ status: "duplicate", video: existing }),
         {

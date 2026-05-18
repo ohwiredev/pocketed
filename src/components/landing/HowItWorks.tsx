@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
-import { CalendarCheck, Plus, Sparkles, Target } from "lucide-react";
+import { CalendarCheck, Sparkles, Target } from "lucide-react";
+import TaggingPreview from "@/assets/ai-that-gets-it.webp";
+import FindIT from "@/assets/find-it.webp";
 import { Card } from "@/components/ui/card";
 
 const containerVariants = {
@@ -24,83 +26,146 @@ const itemVariants = {
   },
 };
 
-export default function FeaturesSection() {
+export default function HowItWorks() {
   return (
-    <section id="how-it-works">
-      <div className="pb-24">
+    <section id="how-it-works" className="bg-background">
+      <div className="pb-24 pt-10">
         <div className="mx-auto w-full max-w-7xl px-6">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-foreground max-w-2xl text-balance font-serif text-5xl">
-              Three taps. Done.
-            </h2>
-          </motion.div>
+          ></motion.div>
+
           <motion.div
-            className="mt-16 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3"
+            className="mt-20 flex flex-col gap-24 md:gap-32 relative"
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
             viewport={{ once: true, margin: "-100px" }}
           >
-            <motion.div variants={itemVariants}>
-              <Card
-                variant="default"
-                className="overflow-hidden p-6 h-full gap-0"
-              >
-                <Target className="text-primary size-5" />
-                <h3 className="text-foreground mt-5 text-lg font-semibold">
-                  Step 1 - See it
-                </h3>
-                <p className="text-muted-foreground mt-3 text-balance text-sm md:text-base">
-                  Scrolling TikTok, Instagram, or YouTube and something catches
-                  your eye. A recipe, a workout, a travel spot. Whatever it is.
-                </p>
+            {/* Elegant dashed timeline line in the center for desktop */}
+            <div className="absolute left-1/2 top-10 bottom-10 w-px border-l border-dashed border-foreground/10 -translate-x-1/2 hidden md:block -z-10" />
 
-                <MeetingIllustration />
-              </Card>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Card
-                variant="default"
-                className="group overflow-hidden px-6 pt-6 h-full gap-0"
-              >
-                <CalendarCheck className="text-primary size-5" />
-                <h3 className="text-foreground mt-5 text-lg font-semibold">
-                  Step 2 - Pocket it
-                </h3>
-                <p className="text-muted-foreground mt-3 text-balance text-sm md:text-base">
-                  Hit share and tap Pocketed. Or click the bookmarklet on
-                  desktop. The video is saved instantly title, thumbnail, and
-                  tags handled automatically.
-                </p>
-
-                <CodeReviewIllustration />
-              </Card>
-            </motion.div>
-
-            <motion.div variants={itemVariants}>
-              <Card
-                variant="default"
-                className="group overflow-hidden px-6 pt-6 h-full gap-0"
-              >
-                <Sparkles className="text-primary size-5" />
-                <h3 className="text-foreground mt-5 text-lg font-semibold">
-                  Step 3 - Find it
-                </h3>
-                <p className="text-muted-foreground mt-3 text-balance text-sm md:text-base">
-                  Search by topic, filter by tag, or browse your collections.
-                  That video you saved six months ago? Found in two seconds.
-                </p>
-
-                <div className="mask-b-from-50 -mx-2 -mt-2 px-2 pt-2">
-                  <AIAssistantIllustration />
+            {/* Step 1: Text Left, Image Right */}
+            <motion.div
+              variants={itemVariants}
+              className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center"
+            >
+              {/* Text side */}
+              <div className="order-2 md:order-1 flex flex-col justify-center">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-black/70 text-xs font-semibold tracking-wider uppercase mb-4 w-fit">
+                  <Target className="size-3.5 animate-pulse" />
+                  Step 01
                 </div>
-              </Card>
+                <h3 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl font-serif mb-4">
+                  See something that stops you
+                </h3>
+                <p className="text-muted-foreground text-lg leading-relaxed max-w-xl">
+                  Scrolling and something stops you. A recipe, a place, a
+                  workout. No need to screenshot or copy links anymore.
+                </p>
+              </div>
+
+              {/* Image side */}
+              <div className="order-1 md:order-2 relative group">
+                {/* Glow backdrop effect */}
+                <div className="absolute -inset-4 rounded-3xl bg-linear-to-tr from-indigo-500/10 to-purple-500/10 opacity-70 blur-xl group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+
+                <Card
+                  className="aspect-video overflow-hidden p-0 border border-foreground/10 shadow-xl hover:shadow-2xl hover:border-indigo-500/20 transition-all duration-300 hover:scale-[1.02]"
+                  variant="soft"
+                >
+                  <div className="relative size-full">
+                    <img
+                      src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=600&auto=format&fit=crop"
+                      alt="See content"
+                      className="size-full object-cover"
+                    />
+                  </div>
+                </Card>
+              </div>
+            </motion.div>
+
+            {/* Step 2: Image Left, Text Right */}
+            <motion.div
+              variants={itemVariants}
+              className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center"
+            >
+              {/* Image side */}
+              <div className="order-1 md:order-1 relative group">
+                {/* Glow backdrop effect */}
+                <div className="absolute -inset-4 rounded-3xl bg-linear-to-tr from-emerald-500/10 to-teal-500/10 opacity-70 blur-xl group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+
+                <Card
+                  className="aspect-video overflow-hidden p-0 border border-foreground/10 shadow-xl hover:shadow-2xl hover:border-emerald-500/20 transition-all duration-300 hover:scale-[1.02]"
+                  variant="soft"
+                >
+                  <div className="relative size-full">
+                    <img
+                      src={TaggingPreview}
+                      alt="Pocket content"
+                      className="size-full object-cover"
+                    />
+                  </div>
+                </Card>
+              </div>
+
+              {/* Text side */}
+              <div className="order-2 md:order-2 flex flex-col justify-center">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-black/70 text-xs font-semibold tracking-wider uppercase mb-4 w-fit">
+                  <CalendarCheck className="size-3.5 animate-pulse" />
+                  Step 02
+                </div>
+                <h3 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl font-serif mb-4">
+                  Pocket it instantly
+                </h3>
+                <p className="text-muted-foreground text-lg leading-relaxed max-w-xl">
+                  Share sheet, tap Pocketed. Title, thumbnail, and tags are
+                  handled instantly with intelligent categorization.
+                </p>
+              </div>
+            </motion.div>
+
+            {/* Step 3: Text Left, Image Right */}
+            <motion.div
+              variants={itemVariants}
+              className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center"
+            >
+              {/* Text side */}
+              <div className="order-2 md:order-1 flex flex-col justify-center">
+                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-black/70 text-xs font-semibold tracking-wider uppercase mb-4 w-fit">
+                  <Sparkles className="size-3.5 animate-pulse" />
+                  Step 03
+                </div>
+                <h3 className="text-3xl font-bold tracking-tight text-foreground md:text-4xl font-serif mb-4">
+                  Find it when you need it
+                </h3>
+                <p className="text-muted-foreground text-lg leading-relaxed max-w-xl">
+                  Search by anything a topic, a vibe, or a half remembered
+                  phrase. Pocketed retrieves it instantly.
+                </p>
+              </div>
+
+              {/* Image side */}
+              <div className="order-1 md:order-2 relative group">
+                {/* Glow backdrop effect */}
+                <div className="absolute -inset-4 rounded-3xl bg-gradient-to-tr from-sky-500/10 to-blue-500/10 opacity-70 blur-xl group-hover:opacity-100 transition-opacity duration-500 -z-10" />
+
+                <Card
+                  className="aspect-video overflow-hidden p-0 border border-foreground/10 shadow-xl hover:shadow-2xl hover:border-sky-500/20 transition-all duration-300 hover:scale-[1.02]"
+                  variant="soft"
+                >
+                  <div className="relative size-full">
+                    <img
+                      src={FindIT}
+                      alt="Find content"
+                      className="size-full object-cover"
+                    />
+                  </div>
+                </Card>
+              </div>
             </motion.div>
           </motion.div>
         </div>
@@ -108,74 +173,3 @@ export default function FeaturesSection() {
     </section>
   );
 }
-
-const MeetingIllustration = () => {
-  return (
-    <Card
-      aria-hidden
-      className="mt-9 aspect-video p-0 overflow-hidden relative border-none shadow-2xl"
-    >
-      <img
-        src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?q=80&w=2874&auto=format&fit=crop"
-        alt="Video content"
-        className="size-full object-cover"
-      />
-    </Card>
-  );
-};
-
-const CodeReviewIllustration = () => {
-  return (
-    <div aria-hidden className="relative mt-6">
-      <Card className="aspect-video w-4/5 translate-y-4 p-0 overflow-hidden transition-transform duration-200 ease-in-out group-hover:-rotate-3 border-none shadow-xl">
-        <img
-          src="https://images.unsplash.com/photo-1622737133809-d95047b9e673?q=80&w=2832&auto=format&fit=crop"
-          alt="Save video"
-          className="size-full object-cover"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex flex-col justify-end p-3">
-          <div className="h-2 w-3/4 bg-white/80 rounded-full mb-1"></div>
-          <div className="h-2 w-1/2 bg-white/50 rounded-full"></div>
-        </div>
-      </Card>
-      <Card className="absolute -top-4 right-0 flex w-2/5 aspect-square items-center justify-center translate-y-4 transition-transform duration-200 ease-in-out group-hover:rotate-12 bg-primary text-primary-foreground shadow-2xl rounded-2xl border-none">
-        <div className="flex flex-col items-center gap-1">
-          <Plus className="size-6" />
-          <span className="text-[10px] font-bold uppercase tracking-wider">
-            Save
-          </span>
-        </div>
-      </Card>
-    </div>
-  );
-};
-
-const AIAssistantIllustration = () => {
-  return (
-    <Card
-      aria-hidden
-      className="mt-6 aspect-video translate-y-4 p-3 transition-transform duration-200 group-hover:translate-y-0 shadow-lg border-none bg-background/80 backdrop-blur-md"
-    >
-      <div className="flex items-center gap-2 mb-3">
-        <div className="size-6 rounded-lg bg-primary/10 flex items-center justify-center">
-          <Sparkles className="size-3.5 text-primary" />
-        </div>
-        <div className="h-2 w-20 bg-foreground/10 rounded-full"></div>
-      </div>
-      <div className="space-y-2 mb-4">
-        <div className="h-2.5 w-full bg-foreground/5 rounded-full"></div>
-        <div className="h-2.5 w-5/6 bg-foreground/5 rounded-full"></div>
-      </div>
-      <div className="grid grid-cols-2 gap-2">
-        <div className="aspect-video rounded-md bg-muted flex flex-col p-1.5 justify-end overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-          <div className="h-1 w-3/4 bg-white/80 rounded-full relative z-10"></div>
-        </div>
-        <div className="aspect-video rounded-md bg-muted flex flex-col p-1.5 justify-end overflow-hidden relative">
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-          <div className="h-1 w-3/4 bg-white/80 rounded-full relative z-10"></div>
-        </div>
-      </div>
-    </Card>
-  );
-};

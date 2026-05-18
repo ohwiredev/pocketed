@@ -150,7 +150,9 @@ export default function SavePage() {
     isSavingRef.current = true;
     autoSaveAttempted.current = url;
     setPageState("saving");
-    save(url).finally(() => { isSavingRef.current = false; });
+    save(url).finally(() => {
+      isSavingRef.current = false;
+    });
   };
 
   const handleManualSave = () => {
@@ -166,7 +168,9 @@ export default function SavePage() {
     isSavingRef.current = true;
     autoSaveAttempted.current = url;
     setPageState("saving");
-    save(url).finally(() => { isSavingRef.current = false; });
+    save(url).finally(() => {
+      isSavingRef.current = false;
+    });
   };
 
   const handleDone = () => {
